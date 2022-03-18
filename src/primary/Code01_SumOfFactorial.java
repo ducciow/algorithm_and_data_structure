@@ -11,7 +11,7 @@ public class Code01_SumOfFactorial {
         System.out.println(sumOfFac(10));
     }
 
-    public static int sumOfFac(int N){
+    public static int sumOfFac(int N) {
         int res = 0;
         int fac = 1;
         for (int i = 1; i <= N; i++) {
