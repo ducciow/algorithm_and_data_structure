@@ -7,9 +7,11 @@ package primary;
  * @Note:   1. Integer in JAVA is signed: [-2**31, 2**31 - 1]
  *          2. The highest digit is for sign, the rest digits are for value
  *          3. Value of negative integers: flip and +1
+ *          ======
  *          4. "<<": add 0 in the rightmost
  *          5. ">>": add 1/0 in the leftmost according to the original sign
  *          6. ">>>": add 0 in the leftmost
+ *          ======
  *          7. -n == ~n + 1
  *          8. Integer.MIN_VALUE and 0: negating remains the same
  */

@@ -8,12 +8,12 @@ import java.util.Arrays;
  * @Description: Comparator for testing
  * @Note:
  */
-public class Code07_Comparator {
+public class Code07_SelfValidator {
     public static void main(String[] args) {
-        tester();
+        goValidate();
     }
 
-    public static int[] generateArr(int maxLen, int maxVal) {
+    public static int[] genRandArr(int maxLen, int maxVal) {
         int len = (int) (Math.random() * maxLen);
         int[] res = new int[len];
         for (int i = 0; i < len; i++) {
@@ -35,12 +35,12 @@ public class Code07_Comparator {
         return true;
     }
 
-    public static void tester() {
+    public static void goValidate() {
         int numTest = 10000;
         int maxLen = 50;
         int maxVal = 1000;
         for (int i = 0; i < numTest; i++) {
-            int[] arr = generateArr(maxLen, maxVal);
+            int[] arr = genRandArr(maxLen, maxVal);
             //Code02_SelectionSort.selectionSort(arr);
             //Code03_BubbleSort.bubbleSort(arr);
             Code04_InsertionSort.insertionSort(arr);
