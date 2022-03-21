@@ -1,4 +1,4 @@
-package primary;
+package primary.class01;
 
 /**
  * @Author: duccio

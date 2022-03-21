@@ -1,4 +1,6 @@
-package primary;
+package primary.class02;
+
+import primary.class01.Code04_InsertionSort;
 
 import java.util.Arrays;
 

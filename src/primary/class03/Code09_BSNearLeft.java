@@ -1,4 +1,4 @@
-package primary;
+package primary.class03;
 
 import java.util.Arrays;
 

@@ -1,32 +1,32 @@
-package primary;
+package primary.class01;
 
 import java.util.Arrays;
 
 /**
  * @Author: duccio
  * @Date: 17, 03, 2022
- * @Description: Selection Sort
+ * @Description: Bubble Sort
  * @Note:
  */
-public class Code02_SelectionSort {
+public class Code03_BubbleSort {
     public static void main(String[] args) {
         int[] arr = {1, 4, 2, 8, 5, 7};
         System.out.println(Arrays.toString(arr));
-        selectionSort(arr);
+        bubbleSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 
-    public static void selectionSort(int[] arr) {
+    public static void bubbleSort(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
         }
         int N = arr.length;
-        for (int start = 0; start < N; start++) {
-            int minIdx = start;
-            for (int i = start + 1; i < N; i++) {
-                minIdx = arr[i] < arr[minIdx] ? i : minIdx;
+        for (int end = N - 1; end > 0; end--) {
+            for (int i = 1; i <= end; i++) {
+                if (arr[i - 1] > arr[i]) {
+                    swap(arr, i - 1, i);
+                }
             }
-            swap(arr, start, minIdx);
         }
     }
 
