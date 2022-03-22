@@ -47,10 +47,10 @@ public class Code07_SelfValidator {
             //Code03_BubbleSort.bubbleSort(arr);
             Code04_InsertionSort.insertionSort(arr);
             if (!isSorted(arr)) {
-                System.out.println("Fail on case: " + Arrays.toString(arr));
+                System.out.println("Failed on case: " + Arrays.toString(arr));
                 break;
             }
         }
-        System.out.println("Test succeed!");
+        System.out.println("Test passed!");
     }
 }

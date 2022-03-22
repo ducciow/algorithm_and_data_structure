@@ -143,7 +143,7 @@ public class Code13_LinkedListToQueueAndStack {
                     int num1 = myQueue.poll();
                     int num2 = testQueue.poll();
                     if (num1 != num2) {
-                        System.out.println("Fail on poll()");
+                        System.out.println("Failed on poll()");
                         System.out.println(num1);
                         System.out.println(num2);
                         return;
@@ -152,27 +152,27 @@ public class Code13_LinkedListToQueueAndStack {
             } else {
                 if (!myQueue.isEmpty()) {
                     if (!myQueue.peek().equals(testQueue.peek())) {
-                        System.out.println("Fail on peek()");
+                        System.out.println("Failed on peek()");
                         return;
                     }
                 }
             }
         }
         if (myQueue.size() != testQueue.size()) {
-            System.out.println("Fail on size()..");
+            System.out.println("Failed on size()..");
             return;
         }
         while (!myQueue.isEmpty()) {
             int num1 = myQueue.poll();
             int num2 = testQueue.poll();
             if (num1 != num2) {
-                System.out.println("Fail on poll()..");
+                System.out.println("Failed on poll()..");
                 System.out.println(num1);
                 System.out.println(num2);
                 return;
             }
         }
-        System.out.println("Test succeed!");
+        System.out.println("Test passed!");
     }
 
     public static void validMyStack() {
@@ -182,11 +182,11 @@ public class Code13_LinkedListToQueueAndStack {
         Stack<Integer> testStack = new Stack<>();
         for (int i = 0; i < numTest; i++) {
             if (myStack.isEmpty() != testStack.isEmpty()) {
-                System.out.println("Fail on isEmpty()");
+                System.out.println("Failed on isEmpty()");
                 return;
             }
             if (myStack.size() != testStack.size()) {
-                System.out.println("Fail on size()");
+                System.out.println("Failed on size()");
                 return;
             }
             double decide = Math.random();
@@ -199,7 +199,7 @@ public class Code13_LinkedListToQueueAndStack {
                     int num1 = myStack.pop();
                     int num2 = testStack.pop();
                     if (num1 != num2) {
-                        System.out.println("Fail on pop()");
+                        System.out.println("Failed on pop()");
                         System.out.println(num1);
                         System.out.println(num2);
                         return;
@@ -208,27 +208,27 @@ public class Code13_LinkedListToQueueAndStack {
             } else {
                 if (!myStack.isEmpty()) {
                     if (!myStack.peek().equals(testStack.peek())) {
-                        System.out.println("Fail on peek()");
+                        System.out.println("Failed on peek()");
                         return;
                     }
                 }
             }
         }
         if (myStack.size() != testStack.size()) {
-            System.out.println("Fail on size()..");
+            System.out.println("Failed on size()..");
             return;
         }
         while (!myStack.isEmpty()) {
             int num1 = myStack.pop();
             int num2 = testStack.pop();
             if (num1 != num2) {
-                System.out.println("Fail on pop()..");
+                System.out.println("Failed on pop()..");
                 System.out.println(num1);
                 System.out.println(num2);
                 return;
             }
         }
-        System.out.println("Test succeed!");
+        System.out.println("Test passed!");
     }
 
 }

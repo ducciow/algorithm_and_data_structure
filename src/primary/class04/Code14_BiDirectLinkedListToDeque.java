@@ -120,10 +120,10 @@ public class Code14_BiDirectLinkedListToDeque {
         int maxValue = 200000000;
         for (int i = 0; i < testTime; i++) {
             if (myDeque.isEmpty() != testDeque.isEmpty()) {
-                System.out.println("Fail on isEmpty()");
+                System.out.println("Failed on isEmpty()");
             }
             if (myDeque.size() != testDeque.size()) {
-                System.out.println("Fail on size()");
+                System.out.println("Failed on size()");
             }
             double decide = Math.random();
             if (decide < 0.33) {
@@ -147,7 +147,7 @@ public class Code14_BiDirectLinkedListToDeque {
                         num2 = testDeque.pollLast();
                     }
                     if (num1 != num2) {
-                        System.out.println("Fail on poll");
+                        System.out.println("Failed on poll");
                     }
                 }
             } else {
@@ -162,22 +162,22 @@ public class Code14_BiDirectLinkedListToDeque {
                         num2 = testDeque.peekLast();
                     }
                     if (num1 != num2) {
-                        System.out.println("Fail on peek()");
+                        System.out.println("Failed on peek()");
                     }
                 }
             }
         }
         if (myDeque.size() != testDeque.size()) {
-            System.out.println("Fail on size()..");
+            System.out.println("Failed on size()..");
         }
         while (!myDeque.isEmpty()) {
             int num1 = myDeque.pollHead();
             int num2 = testDeque.pollFirst();
             if (num1 != num2) {
-                System.out.println("Fail on poll..");
+                System.out.println("Failed on poll..");
             }
         }
-        System.out.println("Test succeed!");
+        System.out.println("Test passed!");
     }
 
 }

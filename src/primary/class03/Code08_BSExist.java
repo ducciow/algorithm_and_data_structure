@@ -64,12 +64,12 @@ public class Code08_BSExist {
             int target = (int) (Math.random() * maxVal);
             int idx = find(arr, target);
             if (!check(arr, target, idx)) {
-                System.out.println("Fail on case: " + Arrays.toString(arr));
+                System.out.println("Failed on case: " + Arrays.toString(arr));
                 System.out.println(target);
                 System.out.println(idx);
                 return;
             }
         }
-        System.out.println("Test succeed!");
+        System.out.println("Test passed!");
     }
 }

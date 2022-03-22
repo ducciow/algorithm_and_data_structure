@@ -65,13 +65,13 @@ public class Code09_BSNearLeft {
             int idx = leftMostNoSmaller(arr, target);
             int idx1 = naiveFind(arr, target);
             if (idx != idx1) {
-                System.out.println("Fail on case: " + Arrays.toString(arr));
+                System.out.println("Failed on case: " + Arrays.toString(arr));
                 System.out.println(target);
                 System.out.println(idx);
                 return;
             }
         }
-        System.out.println("Test succeed!");
+        System.out.println("Test passed!");
     }
 
 }

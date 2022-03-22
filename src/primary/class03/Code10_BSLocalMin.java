@@ -81,13 +81,13 @@ public class Code10_BSLocalMin {
             int target = (int) (Math.random() * maxVal);
             int idx = findLocalMin(arr);
             if (!check(arr, idx)) {
-                System.out.println("Fail on case: " + Arrays.toString(arr));
+                System.out.println("Failed on case: " + Arrays.toString(arr));
                 System.out.println(target);
                 System.out.println(idx);
                 return;
             }
         }
-        System.out.println("Test succeed!");
+        System.out.println("Test passed!");
     }
 
 }
