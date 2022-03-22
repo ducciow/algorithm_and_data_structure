@@ -18,11 +18,11 @@ package primary.class01;
 public class Code00_PrintBinary {
 
     public static void main(String[] args) {
-        int num = 1;
-        printBinary(num);
-        printBinary(num << 1);
-        printBinary(num << 2);
-        printBinary(num << 3);
+//        int num = 1;
+//        printBinary(num);
+//        printBinary(num << 1);
+//        printBinary(num << 2);
+//        printBinary(num << 3);
     }
 
     public static void printBinary(int num) {
