@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @Description: Comparator for testing
  * @Note:
  */
-public class Code07_SelfValidator {
+public class Code07_MyValidator {
     public static void main(String[] args) {
         goValidate();
     }
