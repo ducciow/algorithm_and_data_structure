@@ -6,12 +6,12 @@ import java.util.Arrays;
  * @Author: duccio
  * @Date: 19, 03, 2022
  * @Description: Binary searching an array for one local minimum
- * @Note:   1. Array can be unsorted, but adjacency items must be different
+ * @Note:   1. Given array is unsorted, but adjacency items must be different
  *          2. Be careful about boundaries !!!
  */
 public class Code10_BSLocalMin {
     public static void main(String[] args) {
-        goValidate();
+        validate();
     }
 
     public static int findLocalMin(int[] arr) {
@@ -72,7 +72,7 @@ public class Code10_BSLocalMin {
         }
     }
 
-    public static void goValidate() {
+    public static void validate() {
         int numTest = 10000;
         int maxLen = 50;
         int maxVal = 200;

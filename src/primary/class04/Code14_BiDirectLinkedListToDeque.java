@@ -11,7 +11,7 @@ import java.util.LinkedList;
  */
 public class Code14_BiDirectLinkedListToDeque {
     public static void main(String[] args) {
-        validMyDeque();
+        validateMyDeque();
     }
 
     // bi-directional node
@@ -113,7 +113,7 @@ public class Code14_BiDirectLinkedListToDeque {
         }
     }
 
-    public static void validMyDeque() {
+    public static void validateMyDeque() {
         MyDeque<Integer> myDeque = new MyDeque<>();
         Deque<Integer> testDeque = new LinkedList<>();
         int testTime = 5000000;

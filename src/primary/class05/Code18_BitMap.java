@@ -11,7 +11,7 @@ import java.util.HashSet;
  */
 public class Code18_BitMap {
     public static void main(String[] args) {
-        goValidate();
+        validate();
     }
 
     public static class BitMap {
@@ -38,7 +38,7 @@ public class Code18_BitMap {
         }
     }
 
-    public static void goValidate() {
+    public static void validate() {
         int testTime = 10000000;
         int max = 10000;
         BitMap bitMap = new BitMap(max);

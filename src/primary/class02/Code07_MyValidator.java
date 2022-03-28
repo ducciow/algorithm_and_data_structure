@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 public class Code07_MyValidator {
     public static void main(String[] args) {
-        goValidate();
+        validate();
     }
 
     public static int[] genRandArr(int maxLen, int maxVal) {
@@ -37,7 +37,7 @@ public class Code07_MyValidator {
         return true;
     }
 
-    public static void goValidate() {
+    public static void validate() {
         int numTest = 10000;
         int maxLen = 50;
         int maxVal = 1000;

@@ -13,9 +13,9 @@ import java.util.Stack;
 public class Code13_LinkedListToQueueAndStack {
     public static void main(String[] args) {
         System.out.println("Test on MyQueue:");
-        validMyQueue();
+        validateMyQueue();
         System.out.println("Test on MyStack:");
-        validMyStack();
+        validateMyStack();
     }
 
     // Node
@@ -119,7 +119,7 @@ public class Code13_LinkedListToQueueAndStack {
         }
     }
 
-    public static void validMyQueue() {
+    public static void validateMyQueue() {
         int numTest = 100000;
         int maxVal = 200;
         MyQueue<Integer> myQueue = new MyQueue<>();
@@ -175,7 +175,7 @@ public class Code13_LinkedListToQueueAndStack {
         System.out.println("Test passed!");
     }
 
-    public static void validMyStack() {
+    public static void validateMyStack() {
         int numTest = 100000;
         int maxVal = 200;
         MyStack<Integer> myStack = new MyStack<>();

@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 public class Code08_BSExist {
     public static void main(String[] args) {
-        goValidate();
+        validate();
     }
 
     public static int find(int[] arr, int target) {
@@ -54,7 +54,7 @@ public class Code08_BSExist {
         return true;
     }
 
-    public static void goValidate() {
+    public static void validate() {
         int numTest = 10000;
         int maxLen = 50;
         int maxVal = 200;

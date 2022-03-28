@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 public class Code33_MergeSort {
     public static void main(String[] args) {
-        goValidate();
+        validate();
     }
 
     public static void merge(int[] arr, int L, int M, int R) {
@@ -102,7 +102,7 @@ public class Code33_MergeSort {
         return true;
     }
 
-    public static void goValidate() {
+    public static void validate() {
         int testTime = 50000;
         int maxSize = 100;
         int maxValue = 100;

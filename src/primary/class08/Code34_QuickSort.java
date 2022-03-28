@@ -15,7 +15,7 @@ import java.util.Stack;
  */
 public class Code34_QuickSort {
     public static void main(String[] args) {
-        goValidate();
+        validate();
     }
 
     public static void quickSort1(int[] arr) {
@@ -130,7 +130,7 @@ public class Code34_QuickSort {
         return true;
     }
 
-    public static void goValidate() {
+    public static void validate() {
 
 //        int[] arr = {1,4,2,8,5,4};
 //        System.out.println(partition1(arr, 0, 5));
