@@ -6,8 +6,8 @@ import java.util.Arrays;
  * @Author: duccio
  * @Date: 19, 03, 2022
  * @Description: Binary searching an array for one local minimum
- * @Note:   1. Given array is unsorted, but adjacency items must be different
- *          2. Be careful about boundaries !!!
+ * @Note:   1. The given array is unsorted, but adjacency items must be different
+ *          2. By the given condition, the local minimum must exit
  */
 public class Code10_BSLocalMin {
     public static void main(String[] args) {
