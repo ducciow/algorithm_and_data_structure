@@ -7,9 +7,13 @@ import java.util.Arrays;
  * @Date: 25, 03, 2022
  * @Description: Merge sort: recursion version (top-down)
  *                           iteration version (bottom-up)
- * @Note:   For iteration version, be careful about the possible index overflow
+ * @Note:   For iteration version, be careful about the possible index overflow:
+ *              1. check before doubling step size
+ *              2. check before compute M, resulting in L being checked by the way
+ *              3. use M + min() for computing R
  */
 public class Code33_MergeSort {
+
     public static void main(String[] args) {
         validate();
     }
@@ -68,7 +72,7 @@ public class Code33_MergeSort {
                 L = R + 1;
             }
 
-            if (step > N >> 1) {  // avoid overflow
+            if (step > (N >> 1)) {  // avoid overflow
                 break;
             }
             step <<= 1;
