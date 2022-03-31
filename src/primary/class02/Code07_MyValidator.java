@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 18, 03, 2022
- * @Description: Comparator for testing
+ * @Description: My own validator for testing
  * @Note:
  */
 public class Code07_MyValidator {

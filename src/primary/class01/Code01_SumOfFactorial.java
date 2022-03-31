@@ -4,7 +4,7 @@ package primary.class01;
  * @Author: duccio
  * @Date: 17, 03, 2022
  * @Description: Return the sum of factorials up to N
- * @Note:
+ * @Note:   Bookkeeping the former factorial for efficiency
  */
 public class Code01_SumOfFactorial {
     public static void main(String[] args) {

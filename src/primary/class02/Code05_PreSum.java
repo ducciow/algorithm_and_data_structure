@@ -4,8 +4,8 @@ package primary.class02;
  * @Author: duccio
  * @Date: 18, 03, 2022
  * @Description: Return the sum ranging from index L to R
- * @Note:   Sol1. Use 2-d table: directly return the value
- *          Sol2. Use 1-d array: one subtraction before returning <---
+ * @Note:   Sol1. Use 2-d table storing the required outcome: directly return the value by row and column indexing
+ *          Sol2. Use 1-d array storing the accumulative sum: one subtraction before returning <---
  */
 public class Code05_PreSum {
 

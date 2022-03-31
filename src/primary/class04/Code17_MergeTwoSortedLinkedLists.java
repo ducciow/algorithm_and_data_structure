@@ -7,7 +7,7 @@ package primary.class04;
  * https://leetcode.com/problems/merge-two-sorted-lists/
  * @Note:
  */
-public class Code17_MergeTwoSortedLinkedList {
+public class Code17_MergeTwoSortedLinkedLists {
 
     // do not submit
     public static class ListNode {

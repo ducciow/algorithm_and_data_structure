@@ -6,7 +6,12 @@ import java.util.Arrays;
  * @Author: duccio
  * @Date: 19, 03, 2022
  * @Description: Binary searching a sorted array for the index of a given value
- * @Note:   Array in this case must be sorted
+ * @Note:   Binary Search
+ *          ======
+ *          1. Array must be sorted
+ *          2. mid = L + ((R - L) >> 1) avoids overflow
+ *          3. For loop condition: L <= R means there are at least one numbers
+ *                                 L < R means at least two numbers, so needs one extra check after the loop
  */
 public class Code08_BSExist {
     public static void main(String[] args) {

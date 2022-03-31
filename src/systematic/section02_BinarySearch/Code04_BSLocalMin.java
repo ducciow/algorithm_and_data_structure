@@ -6,7 +6,10 @@ import java.util.Arrays;
  * @Author: duccio
  * @Date: 28, 03, 2022
  * @Description: Binary searching an array for one local minimum
- * @Note:   1. The given array is unsorted, but adjacency items must be different
+ * @Note:   1. Check either the two ends meet the condition
+ *          2. By checking the condition of mid value, decide the next searching direction
+ *          ======
+ *          1. The given array is unsorted, but adjacency values must be different
  *          2. By the given condition, the local minimum must exit
  */
 public class Code04_BSLocalMin {

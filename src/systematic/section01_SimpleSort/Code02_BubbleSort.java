@@ -4,7 +4,10 @@ package systematic.section01_SimpleSort;
  * @Author: duccio
  * @Date: 28, 03, 2022
  * @Description: Bubble sort
- * @Note:   After each iteration, the biggest is fixed
+ * @Note:   1. Iterate through the array, with the ending position decreasing
+ *          2. For each iteration, compare every pair and swap if the order is wrong
+ *          ======
+ *          After each iteration, the biggest is fixed
  */
 public class Code02_BubbleSort {
 

@@ -4,7 +4,10 @@ package systematic.section01_SimpleSort;
  * @Author: duccio
  * @Date: 28, 03, 2022
  * @Description:
- * @Note:   1. It is actually swapping until meet the right position, rather than directly inserting into the position
+ * @Note:   1. Iterate through the array, with ending position increasing
+ *          2. For each iteration, insert the value of the end index into the right position
+ *          ======
+ *          1. It is actually swapping until meet the right position, rather than directly inserting into the position
  *          2. After each iteration, the former segment is fixed
  *          3. Time complexity varies based on how the original list is sorted
  */

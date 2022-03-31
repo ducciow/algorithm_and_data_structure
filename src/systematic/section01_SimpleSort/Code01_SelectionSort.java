@@ -4,7 +4,10 @@ package systematic.section01_SimpleSort;
  * @Author: duccio
  * @Date: 28, 03, 2022
  * @Description: Selection sort
- * @Note:   After each iteration, the smallest is fixed
+ * @Note:   1. Iterate through the array, with the starting position increasing
+ *          2. For each iteration, select the smallest value and swap it once to the very front
+ *          ======
+ *          After each iteration, the smallest is fixed
  */
 public class Code01_SelectionSort {
 

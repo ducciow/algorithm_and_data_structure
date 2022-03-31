@@ -25,7 +25,6 @@ public class Code13_LinkedListToQueueAndStack {
 
         public Node(V val) {
             value = val;
-            next = null;
         }
     }
 
@@ -37,8 +36,6 @@ public class Code13_LinkedListToQueueAndStack {
 
         public MyQueue() {
             size = 0;
-            head = null;
-            tail = null;
         }
 
         public boolean isEmpty() {
@@ -86,7 +83,6 @@ public class Code13_LinkedListToQueueAndStack {
 
         public MyStack() {
             size = 0;
-            top = null;
         }
 
         public boolean isEmpty() {

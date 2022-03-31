@@ -5,8 +5,10 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 28, 03, 2022
- * @Description: Binary searching if a given sorted array has the target value
- * @Note:   1. Array must be sorted
+ * @Description: Binary search whether a given sorted array has the target value
+ * @Note:   Binary Search
+ *          ======
+ *          1. Array must be sorted
  *          2. mid = L + ((R - L) >> 1) avoids overflow
  *          3. For loop condition: L <= R means there are at least one numbers
  *                                 L < R means at least two numbers, so needs one extra check after the loop

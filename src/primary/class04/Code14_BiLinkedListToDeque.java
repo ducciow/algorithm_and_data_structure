@@ -9,33 +9,29 @@ import java.util.LinkedList;
  * @Description: Implement Deque that can offer/poll from both ends, using bi-directional linked list
  * @Note:   Uni-directional linked list is not sufficient for polling from tail
  */
-public class Code14_BiDirectLinkedListToDeque {
+public class Code14_BiLinkedListToDeque {
     public static void main(String[] args) {
         validateMyDeque();
     }
 
     // bi-directional node
-    public static class Node<V> {
+    public static class BiNode<V> {
         V value;
-        Node<V> next;
-        Node<V> pre;
+        BiNode<V> next;
+        BiNode<V> pre;
 
-        public Node(V val) {
+        public BiNode(V val) {
             value = val;
-            next = null;
-            pre = null;
         }
     }
 
     public static class MyDeque<V> {
         int size;
-        Node<V> head;
-        Node<V> tail;
+        BiNode<V> head;
+        BiNode<V> tail;
 
         public MyDeque() {
             size = 0;
-            head = null;
-            tail = null;
         }
 
         public boolean isEmpty() {
@@ -47,7 +43,7 @@ public class Code14_BiDirectLinkedListToDeque {
         }
 
         public void offerHead(V val) {
-            Node<V> cur = new Node<>(val);
+            BiNode<V> cur = new BiNode<>(val);
             if (head == null) {
                 head = cur;
                 tail = cur;
@@ -60,7 +56,7 @@ public class Code14_BiDirectLinkedListToDeque {
         }
 
         public void offerTail(V val) {
-            Node<V> cur = new Node<>(val);
+            BiNode<V> cur = new BiNode<>(val);
             if (tail == null) {
                 head = cur;
                 tail = cur;

@@ -9,7 +9,7 @@ import static systematic.section01_SimpleSort.Code03_InsertionSort.insertionSort
 /**
  * @Author: duccio
  * @Date: 28, 03, 2022
- * @Description: Validate those three sorting implementations
+ * @Description: Validate those three sorting implementations using my own validator
  * @Note:
  */
 public class Code04_SortValidator {

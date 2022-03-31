@@ -19,7 +19,6 @@ public class Code12_ReverseList {
 
         public Node(int val) {
             value = val;
-            next = null;
         }
     }
 
@@ -31,8 +30,6 @@ public class Code12_ReverseList {
 
         public BiNode(int val) {
             value = val;
-            next = null;
-            pre = null;
         }
     }
 
