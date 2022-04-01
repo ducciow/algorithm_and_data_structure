@@ -5,7 +5,8 @@ package systematic.section05_MergeSort;
  * @Date: 31, 03, 2022
  * @Description: Given an integer array, count the reverse pairs (i, j), where i > 2 * j
  *      https://leetcode.com/problems/reverse-pairs/
- * @Note:   1. Can add (not nest) a O(N) operation in sub-process, which still results in O(N*logN) in the whole.
+ * @Note:   1. Can add (not nest) a O(N) operation in sub-process, which still results in O(N*logN) in the whole,
+ *              which means computing the answer and merge itself are disjoint.
  *          2. Which means, as long as the pointer indices do not go back within one iteration.
  *          2. Be careful about potential overflow.
  */
