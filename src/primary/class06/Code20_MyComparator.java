@@ -1,15 +1,12 @@
 package primary.class06;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * @Author: duccio
  * @Date: 23, 03, 2022
  * @Description: Implement own version of comparator
- * @Note:
+ * @Note:   TreeMap does not add repeated keys, ie. only keeps the oldest one
  */
 public class Code20_MyComparator {
 
@@ -28,19 +25,20 @@ public class Code20_MyComparator {
     public static class MyComparator implements Comparator<Student> {
         @Override
         public int compare(Student o1, Student o2) {
-            if (o1.id < o2.id) {
-                return -1;
-            } else if (o1.id > o2.id) {
-                return 1;
-            } else {
-                return 0;
-            }
+//            if (o1.id < o2.id) {
+//                return -1;
+//            } else if (o1.id > o2.id) {
+//                return 1;
+//            } else {
+//                return 0;
+//            }
+            return o1.id - o2.id;
         }
     }
 
 
     public static void main(String[] args) {
-        Student s1 = new Student("a", 5, 27);
+        Student s1 = new Student("a", 4, 27);
         Student s2 = new Student("b", 1, 17);
         Student s3 = new Student("c", 4, 29);
         Student s4 = new Student("d", 3, 9);
@@ -52,7 +50,7 @@ public class Code20_MyComparator {
             System.out.println(student.name + ", " + student.id + "," + student.age);
         }
 
-        System.out.println("====");
+        System.out.println("=======");
         Arrays.sort(students, new MyComparator());
         for (Student student : students) {
             System.out.println(student.name + ", " + student.id + "," + student.age);
@@ -67,11 +65,6 @@ public class Code20_MyComparator {
         arrList.add(s4);
         arrList.add(s5);
 
-        for (Student s : arrList) {
-            System.out.println(s.name + ", " + s.id + ", " + s.age);
-        }
-
-        System.out.println("====");
         arrList.sort(new MyComparator());
         for (Student s : arrList) {
             System.out.println(s.name + ", " + s.id + ", " + s.age);
@@ -87,6 +80,19 @@ public class Code20_MyComparator {
         heap.add(s5);
         while (!heap.isEmpty()) {
             Student s = heap.poll();
+            System.out.println(s.name + ", " + s.id + ", " + s.age);
+        }
+
+        // TreeMap and Lambda expression
+        System.out.println("=========");
+        TreeMap<Student, String> treeMap = new TreeMap<>(
+                (a, b) -> a.id != b.id ? (a.id - b.id) : (a.hashCode() - b.hashCode()));
+        treeMap.put(s1, "A");
+        treeMap.put(s2, "B");
+        treeMap.put(s3, "C");
+        treeMap.put(s4, "D");
+        treeMap.put(s5, "E");
+        for (Student s : treeMap.keySet()) {
             System.out.println(s.name + ", " + s.id + ", " + s.age);
         }
     }
