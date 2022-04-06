@@ -7,7 +7,7 @@ import java.util.TreeMap;
  * @Author: duccio
  * @Date: 19, 03, 2022
  * @Description: Fundamentals of HashMap and TreeMap
- * @Note:   1. HashMap is in O(1) for CURD
+ * @Note:   1. HashMap is in O(1) for CURD of simple data type like Integer, and is O(str.length) for String
  *          2. Key of classes like Integer and String in HashMap is based on values, not variable addresses
  *          3. Key of self-defined classes like Node in HashMap is based on addresses
  *          ======
