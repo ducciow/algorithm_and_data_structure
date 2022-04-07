@@ -5,8 +5,8 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 31, 03, 2022
- * @Description: Given an integer array, return its small sum, where a small sum means the sum of smaller values that are before
- *      every item, eg, {1, 4, 2, 8, 5, 7} -> 0 + 1 + 1 + 7 + 7 + 12 = 28
+ * @Description: Given an integer array, return its small sum, where a small sum means the sum of smaller values that
+ *      are before every item, eg, {1, 4, 2, 8, 5, 7} -> 0 + 1 + 1 + 7 + 7 + 12 = 28
  * @Note:   1. Collect sub- small sums along merge sort.
  *          2. When merge two groups, for an item n in the left group, if there are k items in the right group bigger
  *              than n, then the sub- small sum increases k*n, meaning n is k times smaller than an item to its right.
