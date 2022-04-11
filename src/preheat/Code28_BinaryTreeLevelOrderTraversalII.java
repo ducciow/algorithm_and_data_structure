@@ -12,7 +12,7 @@ import java.util.Queue;
  *      https://leetcode.com/problems/binary-tree-level-order-traversal-ii
  * @Note:
  */
-public class Code28_BinaryTreeLevelOrderTraversal {
+public class Code28_BinaryTreeLevelOrderTraversalII {
 
     public static class TreeNode {
         public int val;
