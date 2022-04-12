@@ -7,7 +7,7 @@ package preheat;
  *      https://leetcode.com/problems/maximum-depth-of-binary-tree
  * @Note:
  */
-public class Code25_MaxDepthOfBinaryTree {
+public class Code25_MaxDepthOfBT {
 
     public static class TreeNode {
         public int val;

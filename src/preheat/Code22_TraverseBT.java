@@ -6,7 +6,7 @@ package preheat;
  * @Description: Pre-, In-, and Post-order traversal of a binary tree
  * @Note:
  */
-public class Code22_TraverseBinaryTree {
+public class Code22_TraverseBT {
     public static class Node {
         int val;
         Node left;

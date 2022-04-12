@@ -3,13 +3,12 @@ package preheat;
 /**
  * @Author: duccio
  * @Date: 24, 03, 2022
- * @Description: Check if a given binary tree is a binary search tree
+ * @Description: Check if a given binary tree is a binary search tree, ie., for each subtree, left < root < right.
  *      https://leetcode.com/problems/validate-binary-search-tree/
- * @Note:   "Binary search tree": for each subtree, left < root < right
- *          Sol1. Its in-order traversal is strictly increasing
+ * @Note:   Sol1. Its in-order traversal is strictly increasing
  *          Sol2. Recursion <---
  */
-public class Code30_BinarySearchTree {
+public class Code30_IsBST {
 
     public static class TreeNode {
         public int val;
@@ -19,6 +18,10 @@ public class Code30_BinarySearchTree {
         TreeNode(int val) {
             this.val = val;
         }
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        return process(root).isBST;
     }
 
     public static class Info {
@@ -31,10 +34,6 @@ public class Code30_BinarySearchTree {
             this.max = max;
             this.min = min;
         }
-    }
-
-    public boolean isValidBST(TreeNode root) {
-        return process(root).isBST;
     }
 
     public static Info process(TreeNode root) {

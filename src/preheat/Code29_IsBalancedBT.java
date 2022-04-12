@@ -3,11 +3,11 @@ package preheat;
 /**
  * @Author: duccio
  * @Date: 24, 03, 2022
- * @Description: Check if a given binary tree is balanced
+ * @Description: Check if a given binary tree is balanced, ie., for each subtree, |height(left) - height(right)| <= 1.
  *      https://leetcode.com/problems/balanced-binary-tree
- * @Note:   "Balanced tree": for each subtree, |height(left) - height(right)| <= 1
+ * @Note:
  */
-public class Code29_BalancedBinaryTree {
+public class Code29_IsBalancedBT {
     public static class TreeNode {
         public int val;
         public TreeNode left;
@@ -18,6 +18,10 @@ public class Code29_BalancedBinaryTree {
         }
     }
 
+    public static boolean isBalanced(TreeNode root) {
+        return process(root).isBalanced;
+    }
+
     public static class Info {
         boolean isBalanced;
         int height;
@@ -26,10 +30,6 @@ public class Code29_BalancedBinaryTree {
             isBalanced = isB;
             height = h;
         }
-    }
-
-    public static boolean isBalanced(TreeNode root) {
-        return process(root).isBalanced;
     }
 
     public static Info process(TreeNode root) {

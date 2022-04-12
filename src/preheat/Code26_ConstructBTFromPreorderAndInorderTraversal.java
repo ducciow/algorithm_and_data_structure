@@ -9,7 +9,7 @@ import java.util.HashMap;
  *      https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
  * @Note:
  */
-public class Code26_ConstructBinaryTreeFromPreorderAndInorderTraversal {
+public class Code26_ConstructBTFromPreorderAndInorderTraversal {
 
     public static class TreeNode {
         int val;
