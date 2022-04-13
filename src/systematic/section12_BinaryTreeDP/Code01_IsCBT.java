@@ -6,18 +6,23 @@ import java.util.Queue;
 /**
  * @Author: duccio
  * @Date: 12, 04, 2022
- * @Description: Given a binary tree, check if it is completed, ie., either it is full or going to be full.
+ * @Description: Given a binary tree, check if it is complete, ie., either it is full or going to be full.
  * @Note:   Sol1. Non-recursive: 1. Level traversal.
  *                               2. Any node having no left child cannot have right child.
  *                               3. When meet a node that does not have both children, all successor nodes must be
  *                                  leaf nodes.
  *          ======
- *          Sol2. BTDP:
+ *          Sol2. BTDP: 1. Info: isComplete, isFull, height.
+ *                      2. Four cases that a subtree is complete:
+ *                          a) left is full, right is full, and left height == right height.
+ *                          b) left is complete, right is full, and left height == right height + 1.
+ *                          c) left is full, right is full, and left height == right height + 1.
+ *                          d) left is full, right is complete, and left height == right height.
  */
 public class Code01_IsCBT {
 
     public static void main(String[] args) {
-
+        validate();
     }
 
     public static class Node {
@@ -59,8 +64,46 @@ public class Code01_IsCBT {
     }
 
     public static boolean isCBT2(Node root) {
-        //todo
-        return true;
+        if (root == null) {
+            return true;
+        }
+        return process(root).isComplete;
+    }
+
+    public static class Info {
+        boolean isComplete;
+        boolean isFull;
+        int height;
+
+        public Info(boolean c, boolean f, int h) {
+            isComplete = c;
+            isFull = f;
+            height = h;
+        }
+    }
+
+    public static Info process(Node node) {
+        if (node == null) {
+            return new Info(true, true, 0);
+        }
+        Info leftInfo = process(node.left);
+        Info rightInfo = process(node.right);
+
+        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+        boolean isFull = false;
+        boolean isComplete = false;
+        if (leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height) {
+            isFull = true;
+            isComplete = true;
+        } else if (leftInfo.isComplete && rightInfo.isFull && leftInfo.height == rightInfo.height + 1) {
+            isComplete = true;
+        } else if (leftInfo.isFull & rightInfo.isFull && leftInfo.height == rightInfo.height + 1) {
+            isComplete = true;
+        } else if (leftInfo.isFull && rightInfo.isComplete && leftInfo.height == rightInfo.height) {
+            isComplete = true;
+        }
+
+        return new Info(isComplete, isFull, height);
     }
 
 
@@ -79,6 +122,16 @@ public class Code01_IsCBT {
     }
 
     public static void validate() {
-        // todo
+        int numTest = 10000;
+        int maxL = 5;
+        int maxV = 100;
+        for (int i = 0; i < numTest; i++) {
+            Node root = genRandBT(maxL, maxV);
+            if (isCBT1(root) != isCBT2(root)) {
+                System.out.println("Failed");
+                return;
+            }
+        }
+        System.out.println("Test passed!");
     }
 }

@@ -11,10 +11,8 @@ import java.util.ArrayList;
  *          3. To see if a left/right subtree is BST, check left/right maxSize == allSize.
  *          4. If current subtree is BST, maxSize = left maxSize + right maxSize + 1.
  *          5. Otherwise, maxSize = max(left maxSize, right maxSize).
- *          ======
- *          If the task asks for the head node of max sub BST, modify Info as maxHead, maxSize, max, min accordingly.
  */
-public class Code06_MaxSubBST {
+public class Code06_MaxSubBSTSize {
 
     public static void main(String[] args) {
         validate();
