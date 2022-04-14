@@ -51,7 +51,7 @@ public class Code01_LowestLexicography {
             ret.add("");
         } else {
             for (int i = 0; i < strs.length; i++) {
-                String[] remains = remove(strs, i);
+                String[] remains = copyExcept(strs, i);
                 TreeSet<String> remainPermutation = processPermutation(remains);
                 for (String oneOrdering : remainPermutation) {
                     ret.add(strs[i] + oneOrdering);
@@ -61,7 +61,7 @@ public class Code01_LowestLexicography {
         return ret;
     }
 
-    public static String[] remove(String[] strs, int idx) {
+    public static String[] copyExcept(String[] strs, int idx) {
         String[] ret = new String[strs.length - 1];
         int j = 0;
         for (int i = 0; i < strs.length; i++) {
