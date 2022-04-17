@@ -19,7 +19,7 @@ public class Code01_UnionFindSet {
         private static class Node<V> {
             V val;
 
-            public Node(V v) {
+            private Node(V v) {
                 val = v;
             }
         }
@@ -73,6 +73,10 @@ public class Code01_UnionFindSet {
                 sizeMap.put(big, sizeA + sizeB);
                 sizeMap.remove(small);
             }
+        }
+
+        public int numSets() {
+            return sizeMap.size();
         }
 
     }
