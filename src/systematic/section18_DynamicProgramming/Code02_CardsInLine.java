@@ -12,6 +12,8 @@ package systematic.section18_DynamicProgramming;
  *          Ver2. Use two naive cache tables.
  *          Ver3. DP, where varying arguments are two indices that cards can be taken.
  *                No need to initialize all cells to be -1.
+ *          ======
+ *          Attempt on a shrinking range.
  */
 public class Code02_CardsInLine {
 
