@@ -9,7 +9,7 @@ package systematic.section18_DynamicProgramming;
  *          Ver2. DP with loop for a cell.
  *          Ver3. DP without loop for a cell.
  *          ======
- *          1. In this problem, the base cases sufficient for brute force is not enough for dependent calculation.
+ *          1. In this problem, the base case sufficient for brute force is not enough for dependent calculation.
  *          2. When looking for dependent cells, it might get extra observations, typically regarding boundaries that
  *             are required for dependent calculation.
  */
