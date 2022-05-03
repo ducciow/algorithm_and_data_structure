@@ -12,7 +12,7 @@ package systematic.section18_DynamicProgramming;
  *          1. Similar to count ways, except minimizing returned values instead of summing up.
  *          2. When minimize according to the dependent cell, notice that it should add an extra 1.
  */
-public class Code16_MinCoinWaysNoLimit {
+public class Code16_MinCoinsNoLimit {
 
     public static void main(String[] args) {
         validate();

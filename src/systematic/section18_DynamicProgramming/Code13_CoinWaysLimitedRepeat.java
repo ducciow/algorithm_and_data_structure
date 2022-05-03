@@ -23,9 +23,6 @@ public class Code13_CoinWaysLimitedRepeat {
         int[] nums;
 
         public Info(int[] arr) {
-            int N = arr.length;
-            values = new int[N];
-            nums = new int[N];
             construct(arr);
         }
 
@@ -34,6 +31,9 @@ public class Code13_CoinWaysLimitedRepeat {
             for (int coin : arr) {
                 map.put(coin, map.getOrDefault(coin, 0) + 1);
             }
+            int N = map.size();
+            values = new int[N];
+            nums = new int[N];
             int idx = 0;
             for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
                 values[idx] = entry.getKey();
@@ -66,10 +66,10 @@ public class Code13_CoinWaysLimitedRepeat {
         if (coins == null || coins.length == 0 || target < 0) {
             return 0;
         }
-        int N = coins.length;
         Info info = new Info(coins);
         int[] values = info.values;
         int[] nums = info.nums;
+        int N = values.length;
         int[][] dp = new int[N + 1][target + 1];
         dp[N][0] = 1;
         for (int i = N - 1; i >= 0; i--) {
@@ -86,10 +86,10 @@ public class Code13_CoinWaysLimitedRepeat {
         if (coins == null || coins.length == 0 || target < 0) {
             return 0;
         }
-        int N = coins.length;
         Info info = new Info(coins);
         int[] values = info.values;
         int[] nums = info.nums;
+        int N = values.length;
         int[][] dp = new int[N + 1][target + 1];
         dp[N][0] = 1;
         for (int i = N - 1; i >= 0; i--) {
