@@ -24,7 +24,7 @@ public class Code01_KMP {
         char[] chars1 = str1.toCharArray();
         char[] chars2 = str2.toCharArray();
         // O(M)
-        int[] substrInfo = getSubstrInfo(chars2);
+        int[] nextArr = getNextArray(chars2);
         int idx1 = 0;
         int idx2 = 0;
         // O(N)
@@ -32,8 +32,8 @@ public class Code01_KMP {
             if (chars1[idx1] == chars2[idx2]) {
                 idx1++;
                 idx2++;
-            } else if (substrInfo[idx2] > -1) {
-                idx2 = substrInfo[idx2];
+            } else if (nextArr[idx2] > -1) {
+                idx2 = nextArr[idx2];
             } else {
                 idx1++;
             }
@@ -41,15 +41,15 @@ public class Code01_KMP {
         return idx2 == chars2.length ? idx1 - idx2 : -1;
     }
 
-    private static int[] getSubstrInfo(char[] chars) {
+    private static int[] getNextArray(char[] chars) {
         if (chars == null || chars.length < 2) {
             return new int[]{-1};
         }
         int[] ret = new int[chars.length];
         ret[0] = -1;
         ret[1] = 0;
+        int compare = 0;
         int idx = 2;
-        int compare = ret[1];
         while (idx < chars.length) {
             if (chars[idx - 1] == chars[compare]) {
                 ret[idx++] = ++compare;
