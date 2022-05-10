@@ -13,7 +13,8 @@ import java.util.Stack;
  *               Quick sort 2: iteration version
  * @Note:   1. Unlike merge sort, the process of bigger group does not require the returning from smaller group.
  *          2. Unlike merge sort, the base case is L >= R.
- *          3. Partition ver2 needs an extra swap at the end, unlike ver1.
+ *          3. Partition ver2 needs an extra swap at the end if the more-area starts from R (partition2). While if the
+ *             more-area starts from R+1, it is no need for an extra swap but return's a little different (partition21).
  *          4. For iteration version, a stack or queue is used, amd make sure it will end by checking base case.
  *          ======
  *          1. Time: O(N*logN), worst O(N**2).
@@ -77,6 +78,24 @@ public class Code01_QuickSort {
         swap(arr, bigger, R);
         return new int[]{less + 1, bigger};
     }
+
+    public static int[] partition21(int[] arr, int L, int R) {
+        int pivot = arr[R];
+        int less = L - 1;
+        int more = R + 1;
+        int i = L;
+        while (i < more) {
+            if (arr[i] < pivot) {
+                swap(arr, ++less, i++);
+            } else if (arr[i] == pivot) {
+                i++;
+            } else {
+                swap(arr, --more, i);
+            }
+        }
+        return new int[] {less + 1, more - 1};
+    }
+
 
     private static void process3(int[] arr, int L, int R) {
         if (L >= R) {
