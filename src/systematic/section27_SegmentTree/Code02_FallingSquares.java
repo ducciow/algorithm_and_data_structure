@@ -18,7 +18,8 @@ import java.util.TreeSet;
  *      https://leetcode.com/problems/falling-squares/
  * @Note:   1. Modify original segment tree so that its pushUp collects the maximum value.
  *          2. Only needs update and query.
- *          3. The input range needs to be compressed to avoid hitting memory limit.
+ *          3. The input range needs to be compressed to avoid hitting memory limit. To do so, TreeSet is used because
+ *             it is sorted, and HashSet gives wrong output.
  */
 public class Code02_FallingSquares {
 
