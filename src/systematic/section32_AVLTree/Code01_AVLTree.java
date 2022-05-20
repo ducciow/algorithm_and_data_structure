@@ -15,14 +15,15 @@ package systematic.section32_AVLTree;
  *          3. etc.
  *          ======
  *          Extra operations for AVL Tree:
- *          1. to maintain the balance, according to four scenarios:
+ *          1. to define balance: |height(left) - height(right)| <= 1
+ *          2. to maintain the balance, according to four scenarios:
  *             a) LL (left subtree's left subtree is higher): right rotation.
  *             b) LR (left subtree's right subtree is higher): left then right rotation.
  *             c) LL && LR: right rotation.
  *             d) RR (right subtree's right subtree is higher): left rotation.
  *             e) RL (right subtree's left subtree is higher): right then left rotation.
  *             f) RR && RL: left rotation.
- *          2. to maintain every node on the path involved in add/delete in O(logN).
+ *          3. to maintain every node on the path involved in add/delete in O(logN).
  */
 public class Code01_AVLTree {
 
@@ -70,22 +71,22 @@ public class Code01_AVLTree {
             if (cur == null) {
                 return null;
             }
-            int Lh = cur.l == null ? 0 : cur.l.h;
-            int Rh = cur.r == null ? 0 : cur.r.h;
-            if (Math.abs(Lh - Rh) > 1) {
-                if (Lh > Rh) {
-                    int LLh = cur.l == null || cur.l.l == null ? 0 : cur.l.l.h;
-                    int LRh = cur.l == null || cur.l.r == null ? 0 : cur.l.r.h;
-                    if (LLh >= LRh) {  // LL or LL and LR
+            int LH = cur.l == null ? 0 : cur.l.h;
+            int RH = cur.r == null ? 0 : cur.r.h;
+            if (Math.abs(LH - RH) > 1) {
+                if (LH > RH) {
+                    int LLH = cur.l == null || cur.l.l == null ? 0 : cur.l.l.h;
+                    int LRH = cur.l == null || cur.l.r == null ? 0 : cur.l.r.h;
+                    if (LLH >= LRH) {  // LL or LL and LR
                         cur = rightRotate(cur);
                     } else {  // LR
                         cur.l = leftRotate(cur.l);
                         cur = rightRotate(cur);
                     }
                 } else {
-                    int RLh = cur.r == null || cur.r.l == null ? 0 : cur.r.l.h;
-                    int RRh = cur.r == null || cur.r.r == null ? 0 : cur.r.r.h;
-                    if (RRh >= RLh) {
+                    int RLH = cur.r == null || cur.r.l == null ? 0 : cur.r.l.h;
+                    int RRH = cur.r == null || cur.r.r == null ? 0 : cur.r.r.h;
+                    if (RRH >= RLH) {
                         cur = leftRotate(cur);
                     } else {
                         cur.r = rightRotate(cur.r);
