@@ -19,8 +19,8 @@ public class Code00_Intro {
 
     /*
         Given two countable sets A and B, if
-            there is a mapping f: A -> B that is surjective(onto), and
-            there is a mapping g: B -> A that is surjective(onto)
+            there is a mapping f: A -> B that is injective, and
+            there is a mapping g: B -> A that is injective
         then, |A| == |B|.
      */
 
