@@ -9,6 +9,8 @@ package systematic.section42_QuadrangleInequality;
  * @Note:   Ver1. dp with iteration.
  *          Ver2. dp without iteration.
  *          Ver3. another better strategy.
+ *          ======
+ *          The ordering of filling in the dp table is important.
  */
 public class Code02_SplitArrayLargestSum {
 
