@@ -3,8 +3,19 @@ package systematic.section44_DC3;
 /**
  * @Author: duccio
  * @Date: 07, 06, 2022
- * @Description: An Implementation of DC3: given an integer array, sort all its suffix subarrays.
- * @Note:
+ * @Description: An Implementation of DC3: given an integer array, sort all its suffix arrays.
+ * @Note:   1. Divide the original array into 3 groups 0, 1, 2 by index % 3.
+ *          2. Construct an array by concatenating the elements of group 1 and 2 to get group 1+2.
+ *          3. Use radix sort to sort group 1+2 only by comparing the first consecutive 3 digits starting at each
+ *             position. If the result does not have a tie, go proceed. Otherwise, use sorted ordering to replace
+ *             elements and do recursive call. Because the part belonging to the same group are adjacent in the
+ *             group 1+2, it suffices to get the result by just comparing their ordering.
+ *          4. Sort group 0 by comparing the first digit + following ordering from sorted group 1+2.
+ *          5. Merge group 0 and group 1+2 by comparing the first second digits + following ordering from
+ *             sorted group 1+2.
+ *          ======
+ *          1. Time complexity: O(N).
+ *          2. Some extra 0's are appended to maintain tail suffix arrays.
  */
 public class Code00_DC3 {
 
