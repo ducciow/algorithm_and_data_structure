@@ -4,10 +4,10 @@ package systematic.section01_SimpleSort;
  * @Author: duccio
  * @Date: 28, 03, 2022
  * @Description: Bubble sort
- * @Note:   1. Iterate through the array, with the ending position decreasing
- *          2. For each iteration, compare every pair and swap if the order is wrong
+ * @Note:   1. Outer iteration: track the ending position of unsorted part, decreasing from N-1 to 1.
+ *          2. Inner iteration: compare every pair in the unsorted part, swap if their ordering is wrong.
  *          ======
- *          After each iteration, the biggest is fixed
+ *          After each inner iteration, the biggest is fixed.
  */
 public class Code02_BubbleSort {
 

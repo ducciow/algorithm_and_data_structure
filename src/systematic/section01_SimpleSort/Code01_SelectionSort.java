@@ -3,11 +3,11 @@ package systematic.section01_SimpleSort;
 /**
  * @Author: duccio
  * @Date: 28, 03, 2022
- * @Description: Selection sort
- * @Note:   1. Iterate through the array, with the starting position increasing
- *          2. For each iteration, select the smallest value and swap it once to the very front
+ * @Description: Selection Sort
+ * @Note:   1. Outer iteration: track the starting position of unsorted part, increasing from 0 to N-1.
+ *          2. Inner iteration: scan the unsorted part, select the smallest one and swap it to the starting position.
  *          ======
- *          After each iteration, the smallest is fixed
+ *          After each inner iteration, the smallest is fixed.
  */
 public class Code01_SelectionSort {
 
