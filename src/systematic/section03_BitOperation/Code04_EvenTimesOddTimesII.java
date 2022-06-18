@@ -1,4 +1,4 @@
-package systematic.section03_BitManipulation;
+package systematic.section03_BitOperation;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -6,11 +6,11 @@ import java.util.HashSet;
 /**
  * @Author: duccio
  * @Date: 29, 03, 2022
- * @Description: In a given array, there are two values appear odd times, and any other value appears even times.
- *      Find and print the two odd-time values.
- * @Note:   1. XOR all items gives: odd_num_a ^ odd_num_b
- *          2. Extract any digit 1 of XOR, meaning odd_num_a and odd_num_b are different on this digit
- *          3. According to this digit, divide all items into two separate parts, and XOR again
+ * @Description: In a given array, there are two values appear odd times, and any other value appears even times. Find
+ *      and print the two odd-time values.
+ * @Note:   1. XOR all items gives: odd_num_a ^ odd_num_b.
+ *          2. Extract any digit 1 of XOR, meaning odd_num_a and odd_num_b are different on this digit.
+ *          3. According to this digit, divide all items into two separate parts, and XOR again.
  */
 public class Code04_EvenTimesOddTimesII {
     public static void main(String[] args) {

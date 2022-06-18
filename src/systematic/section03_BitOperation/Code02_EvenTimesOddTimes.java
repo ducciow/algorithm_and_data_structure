@@ -1,4 +1,4 @@
-package systematic.section03_BitManipulation;
+package systematic.section03_BitOperation;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -6,9 +6,9 @@ import java.util.HashSet;
 /**
  * @Author: duccio
  * @Date: 29, 03, 2022
- * @Description: In a given array, there is one value appears odd times, and any other value appears even times.
- *      Find and print the odd-time value.
- * @Note:   XOR all items in the given array
+ * @Description: In a given array, there is one value appears odd times, and any other value appears even times. Find
+ *      and print the odd-time value.
+ * @Note:   XOR all items in the given array.
  */
 public class Code02_EvenTimesOddTimes {
     public static void main(String[] args) {

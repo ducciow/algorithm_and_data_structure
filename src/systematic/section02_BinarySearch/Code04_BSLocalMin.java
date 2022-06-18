@@ -5,12 +5,13 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 28, 03, 2022
- * @Description: Binary searching an array for one local minimum
- * @Note:   1. Check either the two ends meet the condition
- *          2. By checking the condition of mid value, decide the next searching direction
+ * @Description: Binary searching an array for one local minimum.
+ * @Note:   1. By the given condition, the local minimum must exist.
+ *          2. Check either the two ends meets the condition.
+ *          3. By comparing the mid value to its neighbours, decide the next searching direction.
  *          ======
- *          1. The given array is unsorted, but adjacency values must be different
- *          2. By the given condition, the local minimum must exit
+ *          - The given array is unsorted, but adjacency values must be different.
+ *          - The loop condition decides what elements are left to get the final check.
  */
 public class Code04_BSLocalMin {
 
@@ -18,7 +19,7 @@ public class Code04_BSLocalMin {
         validate();
     }
 
-    public static int findLocalMin(int[] arr) {
+    public static int findLocalMin1(int[] arr) {
         if (arr == null || arr.length == 0) {
             return -1;
         }
@@ -31,7 +32,7 @@ public class Code04_BSLocalMin {
         }
         int L = 0;
         int R = N - 1;
-        while (L < R - 1) {
+        while (L < R - 1) {  // means there must be at least three elements to consider
             int mid = L + ((R - L) >> 1);
             if (arr[mid - 1] < arr[mid]) {
                 R = mid - 1;
@@ -41,11 +42,11 @@ public class Code04_BSLocalMin {
                 return mid;
             }
         }
-        return arr[L] < arr[R] ? L : R;
+        return arr[L] < arr[R] ? L : R;  // only arr[L] and arr[R] are left, so the smaller on is the answer
     }
 
     // a different view on boundaries
-    public static int findLocalMin1(int[] arr) {
+    public static int findLocalMin2(int[] arr) {
         if (arr == null || arr.length == 0) {
             return -1;
         }
@@ -68,7 +69,7 @@ public class Code04_BSLocalMin {
                 return mid;
             }
         }
-        return L;  // <---
+        return L;  // <--- only arr[L] is left, so it must be the local min
     }
 
     public static int[] genRandArr(int maxLen, int maxVal) {
@@ -113,7 +114,7 @@ public class Code04_BSLocalMin {
         int maxV = 200;
         for (int i = 0; i < numTest; i++) {
             int[] arr = genRandArr(maxL, maxV);
-            int idx = findLocalMin(arr);
+            int idx = findLocalMin1(arr);
             if (!check(arr, idx)) {
                 System.out.println("Failed on case: " + Arrays.toString(arr));
                 System.out.println("return idx " + idx);

@@ -3,7 +3,7 @@ package systematic.section01_SimpleSort;
 /**
  * @Author: duccio
  * @Date: 28, 03, 2022
- * @Description: Bubble sort
+ * @Description: Bubble Sort
  * @Note:   1. Outer iteration: track the ending position of unsorted part, decreasing from N-1 to 1.
  *          2. Inner iteration: compare every pair in the unsorted part, swap if their ordering is wrong.
  *          ======

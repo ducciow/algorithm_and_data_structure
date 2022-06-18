@@ -5,11 +5,9 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 28, 03, 2022
- * @Description: Binary search a sorted array for the leftmost index so that arr[idx] >= target
- * @Note:   1. Keep binary search when mid value meets the condition
- *          2. Shrink the search space toward the right direction
- *          ======
- *          Array must be sorted
+ * @Description: Binary search a sorted array for the leftmost index so that arr[idx] >= target.
+ * @Note:   - Keep binary search when mid value meets the condition rather than return.
+ *          - Shrink the search space toward the right direction.
  */
 public class Code02_BSNearLeft {
 

@@ -1,4 +1,4 @@
-package systematic.section03_BitManipulation;
+package systematic.section03_BitOperation;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -6,10 +6,10 @@ import java.util.HashSet;
 /**
  * @Author: duccio
  * @Date: 29, 03, 2022
- * @Description: In a given array, there is one value appears K times, and any other value appears M times,
- *      where M > 1, K < M. Find the K-time value, requiring time O(N), extra space O(1).
- * @Note:   1. Add the occurrence of each digit of every item in an arr[32]
- *          2. If arr[i] % M == K, then the K-time value must have a 1 in the i-th digit
+ * @Description: In a given array, there is one value appears K times, and any other value appears M times, where M > 1
+ *      and K < M. Find the K-time value, requiring time O(N), extra space O(1).
+ * @Note:   1. Accumulate the occurrences of each digit of every item in an arr[32].
+ *          2. If arr[i] % M == K, then the K-time value must have a 1 in this i-th digit.
  */
 public class Code05_KTimesMTimes {
     public static void main(String[] args) {
