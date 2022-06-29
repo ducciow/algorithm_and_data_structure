@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *                                            2. the middle item (odd size) or right middle item (even size);
  *                                            3. the item before the middle or the item before the left middle;
  *                                            4. the item before the middle or the item before the right middle;
- * @Note:   Two pointers: fast and slow
+ * @Note:   Two pointers: fast and slow.
  *          ======
  *          1. Base cases that should return null.
  *          2. Increase fast and slow pointers respectively.
@@ -73,16 +73,13 @@ public class Code08_LinkedListMid {
         if (head == null || head.next == null) {
             return null;
         }
-        if (head.next.next == null) {
-            return head;
-        }
-        Node fast = head.next.next;
+        Node fast = head.next;
         Node slow = head;
         while (fast.next != null && fast.next.next != null) {
             fast = fast.next.next;
             slow = slow.next;
         }
-        return fast.next == null ? slow : slow.next;
+        return slow;
     }
 
 

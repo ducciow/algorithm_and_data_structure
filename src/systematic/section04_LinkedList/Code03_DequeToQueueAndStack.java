@@ -7,8 +7,17 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
- * @Description: Implement stack and queue using dequeue
- * @Note:
+ * @Description: Implement stack and queue using dequeue.
+ * @Note:   Deque:
+ *          - Variables: head, tail.
+ *          - Functions: offerHead(), offerTail(), pollHead(), pollTail(), isEmpty().
+ *          - Remember to release pointers when poll.
+ *          ======
+ *          Stack:
+ *          - offerHead and pollHead.
+ *          ======
+ *          Queue:
+ *          - offerHead and pollTail.
  */
 public class Code03_DequeToQueueAndStack {
 
@@ -128,6 +137,7 @@ public class Code03_DequeToQueueAndStack {
             return queue.isEmpty();
         }
     }
+
 
     public static boolean isEqual(Integer o1, Integer o2) {
         if (o1 == null && o2 != null) {

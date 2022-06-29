@@ -3,9 +3,11 @@ package systematic.section04_LinkedList;
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
- * @Description: Implement ring queue using array
- * @Note:   1. Use two indices for offer and poll
- *          2. Use size to decouple index checking
+ * @Description: Implement ring queue using array.
+ * @Note:   - The constructor needs one argument: arr_size.
+ *          - Key Variables:
+ *              * two pointers for offer and poll, and remember to increase both pointers in a modulus way.
+ *              * size, to decouple index checking.
  */
 public class Code04_RingQueue {
 
@@ -28,19 +30,23 @@ public class Code04_RingQueue {
             if (size == sizeLimit) {
                 throw new RuntimeException("Cannot add items anymore!");
             }
-            arr[offerIdx] = val;
-            offerIdx = offerIdx % sizeLimit;
             size++;
+            arr[offerIdx] = val;
+            offerIdx = nextIndex(offerIdx);
         }
 
         public int poll() {
             if (size == 0) {
                 throw new RuntimeException("Nothing to poll!");
             }
-            int ans = arr[pollIdx];
-            pollIdx = pollIdx % sizeLimit;
             size--;
+            int ans = arr[pollIdx];
+            pollIdx = nextIndex(pollIdx);
             return ans;
+        }
+
+        private int nextIndex(int i) {
+            return i < sizeLimit - 1 ? i + 1 : 0;
         }
 
         public boolean isEmpty() {

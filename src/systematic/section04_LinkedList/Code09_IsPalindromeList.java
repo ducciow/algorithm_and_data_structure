@@ -6,11 +6,14 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 07, 04, 2022
- * @Description: Given a linked list, check if it is palindrome
- * @Note:   Ver1. Extra space O(N): Use a stack to store the whole linked list.
- *          Ver2. Extra space O(N/2): Use fast-slow pointers to just store half of the linked list to a stack.
- *          Ver3. Extra space O(1): Use fast-slow pointers to reverse half of the linked list.
- *                                  Then reverse back before returning.
+ * @Description: Given a linked list, check if it is palindrome.
+ * @Note:   Ver1. Extra space O(N):
+ *                - Use a stack to store the whole linked list.
+ *          Ver2. Extra space O(N/2):
+ *                - Use fast-slow pointers to just store half of the linked list to a stack.
+ *          Ver3. Extra space O(1):
+ *                - Use fast-slow pointers to reverse half of the linked list. Then reverse back after comparision.
+ *                - The later half is preferable to reverse, because its head is always pointed that will not be lost.
  */
 public class Code09_IsPalindromeList {
 

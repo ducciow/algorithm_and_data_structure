@@ -5,10 +5,10 @@ package systematic.section04_LinkedList;
  * @Date: 08, 04, 2022
  * @Description: Given two linked lists that might have loops. Return the first intersect node if they are intersected,
  *      otherwise return null. If the total length of two lists are N, time should be O(N), space should be O(1).
- * @Note:   1. Find the first loop node if there is a loop:
+ * @Note:   1. Find the first loop node respectively if there is a loop:
  *              Use fast-slow pointers twice. For the first time, keep running until fast meets slow. For the second
- *              time, continue slow, and restart fast with step size 1. When the fast meets slow again, that is the first
- *              loop node.
+ *              time, continue slow, and restart fast with smaller step size 1. When the fast meets slow again, that
+ *              is the first loop node.
  *          2. Discuss based on different situations:
  *              a) Both lists have no loop:
  *                  Traverse from head1/2 to tail1/2, get length1/2. If tail1 != tail2, no intersect. Otherwise, forward
@@ -23,8 +23,8 @@ package systematic.section04_LinkedList;
  *                      Forward from loop_node1, if it meets loop_node2, return either loop_node1/2. Otherwise, no
  *                      intersect.
  *          ======
- *          If ignore the extra space requirement, a HashSet can be used to check the first repeated node for finding
- *              loop node and intersect node.
+ *          - If ignore the extra space requirement, a HashSet can be used to check the first repeated node for finding
+ *            loop node and intersect node.
  */
 public class Code12_FindFirstIntersectNode {
 
@@ -45,8 +45,8 @@ public class Code12_FindFirstIntersectNode {
         if (head1 == null || head2 == null) {
             return null;
         }
-        Node loopNode1 = getLoopNode(head1);
-        Node loopNode2 = getLoopNode(head2);
+        Node loopNode1 = findFirstLoopNode(head1);
+        Node loopNode2 = findFirstLoopNode(head2);
         if (loopNode1 == null && loopNode2 == null) {
             return noLoop(head1, head2);
         } else if (loopNode1 == null || loopNode2 == null) {
@@ -56,7 +56,7 @@ public class Code12_FindFirstIntersectNode {
         }
     }
 
-    public static Node getLoopNode(Node head) {
+    public static Node findFirstLoopNode(Node head) {
         if (head.next == null || head.next.next == null) {
             return null;
         }

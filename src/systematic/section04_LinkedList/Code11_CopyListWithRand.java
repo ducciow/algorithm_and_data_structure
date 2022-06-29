@@ -5,11 +5,13 @@ import java.util.HashMap;
 /**
  * @Author: duccio
  * @Date: 07, 04, 2022
- * @Description: There is a special Node type that has a random pointer. Copy a given linked list of this node type.
- * @Note:   Ver1. Extra space O(N): Use a HashMap to store copied nodes, and assign next and rand pointers following
- *                                  the original linked list.
- *          Ver2. Extra space O(1): Insert copied nodes immediately after the original nodes, assign rand pointers,
- *                                  and finally split copied nodes from original nodes.
+ * @Description: There is a special Node that has a random pointer. Copy a given linked list of this type of nodes.
+ * @Note:   Ver1. Extra space O(N):
+ *                - Use a HashMap to store copied nodes, and assign next and rand pointers following the original
+ *                  linked list.
+ *          Ver2. Extra space O(1):
+ *                - Insert copied nodes immediately after the original nodes, assign rand pointers, and finally
+ *                  split copied nodes from original nodes.
  */
 public class Code11_CopyListWithRand {
 
@@ -92,9 +94,9 @@ public class Code11_CopyListWithRand {
             cur = cur.next.next;
         }
         // split copy and original
-        Node ret = head.next;
         Node cur1 = head;
-        Node cur2 = ret;
+        Node cur2 = head.next;
+        Node ret = cur2;
         while (cur1 != null) {
             cur1.next = cur1.next.next;
             cur2.next = cur2.next != null ? cur2.next.next : null;

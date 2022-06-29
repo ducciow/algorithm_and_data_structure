@@ -7,9 +7,11 @@ import static java.util.Collections.swap;
 /**
  * @Author: duccio
  * @Date: 07, 04, 2022
- * @Description: Partition a linked list according to a given value
- * @Note:   Ver1. Extra space O(N): Convert linked list to array, partition, and convert back to linked list.
- *          Ver2. Extra space O(1): Use 3*2 pointers, distribute nodes to corresponding pointers, string them together.
+ * @Description: Partition a linked list according to a given value, ie., smaller, ..., equal, ..., bigger.
+ * @Note:   Ver1. Extra space O(N):
+ *                - Convert linked list to array, partition, and convert back to linked list.
+ *          Ver2. Extra space O(1):
+ *                - Use 3*2 pointers, distribute nodes to corresponding pointers, string them together.
  *          ======
  *          Make sure the original node.next is clear, otherwise might result in infinite loops.
  */
@@ -35,9 +37,7 @@ public class Code10_SmallerEqualBigger {
         ArrayList<Node> arr = new ArrayList<>();
         while (head != null) {
             arr.add(head);
-            Node next = head.next;
-            head.next = null;
-            head = next;
+            head = head.next;
         }
         arrPartition(arr, pivot);
         Node ret = arr.get(0);
@@ -46,6 +46,7 @@ public class Code10_SmallerEqualBigger {
             cur.next = arr.get(i);
             cur = cur.next;
         }
+        cur.next = null;  // clear the last node.next
         return ret;
     }
 
@@ -102,31 +103,31 @@ public class Code10_SmallerEqualBigger {
             node = next;
         }
 
+        Node head;
         if (sHead != null) {
-            sTail.next = eHead;
-            eTail = eHead == null ? sTail : eTail;
-        }
-        if (eHead != null) {
+            head = sHead;
+            if (eHead != null) {
+                sTail.next = eHead;
+                eTail.next = bHead;
+            } else {
+                sTail.next = bHead;
+            }
+        } else if (eHead != null) {
+            head = eHead;
             eTail.next = bHead;
+        } else {
+            head = bHead;
         }
-        return sHead != null ? sHead : (eHead != null ? eHead : bHead);
+        return head;
 
-//        Node head;
 //        if (sHead != null) {
-//            head = sHead;
-//            if (eHead != null) {
-//                sTail.next = eHead;
-//                eTail.next = bHead;
-//            } else {
-//                sTail.next = bHead;
-//            }
-//        } else if (eHead != null) {
-//            head = eHead;
-//            eTail.next = bHead;
-//        } else {
-//            head = bHead;
+//            sTail.next = eHead;
+//            eTail = eHead == null ? sTail : eTail;
 //        }
-//        return head;
+//        if (eHead != null) {
+//            eTail.next = bHead;
+//        }
+//        return sHead != null ? sHead : (eHead != null ? eHead : bHead);
     }
 
 
@@ -163,6 +164,7 @@ public class Code10_SmallerEqualBigger {
             }
             head = head.next;
         }
+
         return lastSmall <= lastEqual && lastEqual <= lastBig
                 || lastEqual == 0
                 || lastBig == 0;
@@ -184,7 +186,7 @@ public class Code10_SmallerEqualBigger {
         for (int i = 0; i < numTest; i++) {
             int pivot = (int) (Math.random() * (maxV + 1));
             Node head = generateRandLinkedList(maxL, maxV);
-            head = linkedListPartition1(head, pivot);
+            head = linkedListPartition2(head, pivot);
             if (!check(head, pivot)) {
                 System.out.println("Failed on case below with pivot " + pivot);
                 printLinkedList(head);

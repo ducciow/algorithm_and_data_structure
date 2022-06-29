@@ -7,10 +7,11 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
- * @Description: Implement stack using queue
- * @Note:   1. Use two queues mainQ and helperQ
- *          2. Every time for pop/peek, dump from mainQ to helperQ until mainQ has only one item left, then return it
- *          3. Swap those two queues, so that every time push can directly operate on mainQ
+ * @Description: Implement stack using queue.
+ * @Note:   - Use two queues mainQ and helperQ.
+ *          - Every time for pop/peek:
+ *              * dump from mainQ to helperQ until mainQ has only one item left, then return it.
+     *          * Swap those two queues, so that every time push can directly operate on mainQ.
  */
 public class Code07_QueueToStack {
 

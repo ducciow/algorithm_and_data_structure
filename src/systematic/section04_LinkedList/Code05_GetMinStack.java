@@ -5,10 +5,10 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
- * @Description: Implement a stack with an extra function - peek the current minimum value in stack
- * @Note:   1. Use two stacks
- *          2. One stack is used as usual, while the other stack is used for tracking minimum values by only pushing
- *      new items when the new item is smaller than current minimum, otherwise push current minimum again
+ * @Description: Implement a stack with an extra function - peek the current minimum value.
+ * @Note:   - Use two stacks. One stack is used as usual, while the other stack is used for tracking minimum values
+ *            by only pushing new items when the new item is smaller than current minimum, otherwise push current
+ *            minimum again.
  */
 public class Code05_GetMinStack {
 

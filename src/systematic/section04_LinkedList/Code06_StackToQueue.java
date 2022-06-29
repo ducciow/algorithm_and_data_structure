@@ -5,12 +5,11 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
- * @Description: Implement queue using stack
- * @Note:   1. Use two stacks
- *          2. stack1 is only used for offer, and stack2 is only used for poll/peek
- *          3. At ant moment, stack1 can dump its items to stack2, requiring:
+ * @Description: Implement queue using stack.
+ * @Note:   - Use two stacks. Stack1 is only used for offer, and stack2 is only used for poll/peek.
+ *          - At ant moment, stack1 can dump its items to stack2, requiring:
  *              a) stack2 is empty, and
- *              b) stack1 must dump all of its items to stack2
+ *              b) stack1 must dump all of its items to stack2.
  */
 public class Code06_StackToQueue {
 

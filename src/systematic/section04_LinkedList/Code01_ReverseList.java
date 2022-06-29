@@ -3,8 +3,15 @@ package systematic.section04_LinkedList;
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
- * @Description: Reverse a uni-directional linked list and a bi-directional linked list
- * @Note:
+ * @Description: Reverse a uni-directional linked list and a bi-directional linked list.
+ * @Note:   For both uni- and bi-directional linked lists:
+ *          - Declare two variables: pre and next to be null.
+ *          - Iterate until the head is null:
+ *              * grab the next node.
+ *              * redirect head.next.
+ *              * reassign pre.
+ *              * reassign head.
+ *          - return pre.
  */
 public class Code01_ReverseList {
 
