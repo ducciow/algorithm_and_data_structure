@@ -17,10 +17,6 @@ import java.util.ArrayList;
  */
 public class Code08_LinkedListMid {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static class Node {
         int value;
         Node next;
@@ -133,6 +129,7 @@ public class Code08_LinkedListMid {
         return (N & 1) == 0 ? arr.get((N - 1) / 2) : arr.get(N / 2 - 1);
     }
 
+
     public static Node generateRandLinkedList(int maxL) {
         int N = (int) (Math.random() * (maxL + 1));
         if (N == 0) {
@@ -147,9 +144,10 @@ public class Code08_LinkedListMid {
         return head;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 100;
         int maxL = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node head = generateRandLinkedList(maxL);
             Node ans1 = midOrLeftMid(head);

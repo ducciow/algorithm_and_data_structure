@@ -15,10 +15,6 @@ import java.util.Arrays;
  */
 public class Code04_BSLocalMin {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static int findLocalMin1(int[] arr) {
         if (arr == null || arr.length == 0) {
             return -1;
@@ -72,6 +68,7 @@ public class Code04_BSLocalMin {
         return L;  // <--- only arr[L] is left, so it must be the local min
     }
 
+
     public static int[] genRandArr(int maxLen, int maxVal) {
         int N = (int) (Math.random() * (maxLen + 1));
         int[] arr = new int[N];
@@ -108,10 +105,11 @@ public class Code04_BSLocalMin {
         return arr[index] < arr[index - 1] && arr[index] < arr[index + 1];
     }
 
-    private static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 200;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = genRandArr(maxL, maxV);
             int idx = findLocalMin1(arr);

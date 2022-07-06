@@ -21,10 +21,6 @@ import java.util.Stack;
  */
 public class Code03_DequeToQueueAndStack {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static class BiNode<T> {
         T value;
         BiNode<T> pre;
@@ -152,10 +148,11 @@ public class Code03_DequeToQueueAndStack {
         return o1.equals(o2);
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int testTimes = 100000;
         int perTestNumData = 100;
         int maxValue = 10000;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTimes; i++) {
             MyStack<Integer> myStack = new MyStack<>();
             MyQueue<Integer> myQueue = new MyQueue<>();

@@ -13,9 +13,6 @@ import static systematic.section01_SimpleSort.Code03_InsertionSort.insertionSort
  * @Note:
  */
 public class Code04_SortValidator {
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int[] genRandArr(int maxLen, int maxVal) {
         int N = (int) (Math.random() * (maxLen + 1));
@@ -38,10 +35,11 @@ public class Code04_SortValidator {
         return true;
     }
 
-    private static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 200;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = genRandArr(maxL, maxV);
 //            selectionSort(arr);

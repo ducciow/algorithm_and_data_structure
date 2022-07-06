@@ -11,10 +11,6 @@ import java.util.Arrays;
  */
 public class Code02_BSNearLeft {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static int allLeftSmaller(int[] arr, int target) {
         if (arr == null) {
             return -1;
@@ -33,6 +29,7 @@ public class Code02_BSNearLeft {
         }
         return ret;
     }
+
 
     public static int[] genRandArr(int maxLen, int maxVal) {
         int N = (int) (Math.random() * (maxLen + 1));
@@ -55,11 +52,12 @@ public class Code02_BSNearLeft {
         return -1;
     }
 
-    private static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 200;
         int maxV = 200;
         int target = (int) (Math.random() * (maxV + 1)) - (int) (Math.random() * maxV);
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = genRandArr(maxL, maxV);
             Arrays.sort(arr);

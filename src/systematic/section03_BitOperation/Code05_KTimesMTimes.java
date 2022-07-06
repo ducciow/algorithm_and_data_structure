@@ -12,9 +12,6 @@ import java.util.HashSet;
  *          2. If arr[i] % M == K, then the K-time value must have a 1 in this i-th digit.
  */
 public class Code05_KTimesMTimes {
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int findKinM(int[] arr, int K, int M) {
         int[] digitOccurrence = new int[32];
@@ -31,6 +28,7 @@ public class Code05_KTimesMTimes {
         }
         return ans;
     }
+
 
     public static int[] generateArray(int K, int M, int kindsOfM, int maxVal) {
         int kindsM = (int) (Math.random() * kindsOfM) + 1;
@@ -76,11 +74,12 @@ public class Code05_KTimesMTimes {
         return occurrence == K;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int kindsOfM = 20;
         int maxVal = 200;
         int maxM = 10;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int M = (int) (Math.random() * (maxM - 1)) + 2;
             int K = (int) (Math.random() * (M - 1)) + 1;

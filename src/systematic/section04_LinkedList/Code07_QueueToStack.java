@@ -15,10 +15,6 @@ import java.util.Stack;
  */
 public class Code07_QueueToStack {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static class MyStack {
         Queue<Integer> mainQ;
         Queue<Integer> helperQ;
@@ -68,11 +64,13 @@ public class Code07_QueueToStack {
         }
     }
 
-    private static void validate() {
+
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxVal = 200;
         MyStack stack1 = new MyStack();
         Stack<Integer> stack2 = new Stack<>();
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             if (stack2.isEmpty()) {
                 if (!stack1.isEmpty()) {

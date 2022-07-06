@@ -11,9 +11,6 @@ import java.util.HashSet;
  * @Note:   XOR all items in the given array.
  */
 public class Code02_EvenTimesOddTimes {
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int findOdd(int[] arr) {
         int xor = 0;
@@ -22,6 +19,7 @@ public class Code02_EvenTimesOddTimes {
         }
         return xor;
     }
+
 
     public static int[] generateArray(int maxHalfLen, int maxVal) {
         int N = ((int) (Math.random() * maxHalfLen) + 1) * 2 + 1;
@@ -74,10 +72,11 @@ public class Code02_EvenTimesOddTimes {
         arr[j] = tmp;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxHalfLen = 100;
         int maxVal = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = generateArray(maxHalfLen, maxVal);
             int odd = findOdd(arr);

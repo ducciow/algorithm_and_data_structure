@@ -28,10 +28,6 @@ package systematic.section04_LinkedList;
  */
 public class Code12_FindFirstIntersectNode {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static class Node {
         int val;
         Node next;
@@ -145,7 +141,7 @@ public class Code12_FindFirstIntersectNode {
         return cur == loopNode2 ? loopNode1 : null;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
 
         // list1 no loop: 1->2->3->4->5->6->7->null
         Node head1 = new Node(1);

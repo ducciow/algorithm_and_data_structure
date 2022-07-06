@@ -13,9 +13,6 @@ import java.util.HashSet;
  *          3. According to this digit, divide all items into two separate parts, and XOR again.
  */
 public class Code04_EvenTimesOddTimesII {
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int[] findTwoOdd(int[] arr) {
         int[] ret = new int[2];
@@ -34,6 +31,7 @@ public class Code04_EvenTimesOddTimesII {
         ret[1] = xor ^ xor1;
         return ret;
     }
+
 
     public static int[] generateArray(int maxHalfLen, int maxVal) {
         int N = ((int) (Math.random() * maxHalfLen) + 1) * 2;
@@ -98,10 +96,11 @@ public class Code04_EvenTimesOddTimesII {
         arr[j] = tmp;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxHalfLen = 100;
         int maxVal = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = generateArray(maxHalfLen, maxVal);
             int[] odd = findTwoOdd(arr);

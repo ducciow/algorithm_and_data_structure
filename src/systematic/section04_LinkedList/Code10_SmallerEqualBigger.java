@@ -17,10 +17,6 @@ import static java.util.Collections.swap;
  */
 public class Code10_SmallerEqualBigger {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static class Node {
         public int value;
         public Node next;
@@ -179,10 +175,11 @@ public class Code10_SmallerEqualBigger {
         System.out.println();
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 10;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int pivot = (int) (Math.random() * (maxV + 1));
             Node head = generateRandLinkedList(maxL, maxV);

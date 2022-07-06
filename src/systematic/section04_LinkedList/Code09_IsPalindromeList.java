@@ -17,10 +17,6 @@ import java.util.Stack;
  */
 public class Code09_IsPalindromeList {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static class Node {
         int value;
         Node next;
@@ -170,10 +166,11 @@ public class Code09_IsPalindromeList {
         System.out.println();
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 100;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node head = randGenPalindromeLinkedList(maxL, maxV);
             boolean ans1 = isPalindrome1(head);
