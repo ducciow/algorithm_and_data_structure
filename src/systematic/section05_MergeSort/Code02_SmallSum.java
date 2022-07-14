@@ -5,17 +5,16 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 31, 03, 2022
- * @Description: Given an integer array, return its small sum, where a small sum means the sum of smaller values that
- *      are before every item, eg, {1, 4, 2, 8, 5, 7} -> 0 + 1 + 1 + 7 + 7 + 12 = 28
- * @Note:   1. Collect sub- small sums along merge sort.
- *          2. When merge two groups, for an item n in the left group, if there are k items in the right group bigger
- *              than n, then the sub- small sum increases k*n, meaning n is k times smaller than an item to its right.
- *          3. When meet equal items, always merge the right one first, otherwise it would not known k correctly.
+ * @Description: Given an integer array, return its small sum, where a small sum means the sum of smaller values before
+ *      every item, eg, {1, 4, 2, 8, 5, 7} -> 0 + 1 + 1 + 7 + 7 + 12 = 28.
+ * @Note:   Collect sub-answers along merge:
+ *              - The process() and merge() return int.
+ *              - When merge(arr, L, M, R):
+ *                  a) if arr[left] < arr[right], merge the left, and increase answer by arr[left] * (R - right + 1),
+ *                     meaning the current left item is smaller than (R - right + 1) items to its right.
+     *              b) if arr[left] >= arr[right], merge the right, letting the current left item continue to compare.
  */
 public class Code02_SmallSum {
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int smallSum(int[] arr) {
         if (arr == null || arr.length < 2) {
@@ -100,10 +99,11 @@ public class Code02_SmallSum {
         return true;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 200;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = generateArray(maxL, maxV);
             int[] arr1 = Arrays.copyOf(arr, arr.length);

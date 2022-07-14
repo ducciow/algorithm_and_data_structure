@@ -5,15 +5,14 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 31, 03, 2022
- * @Description: Given an integer array, count the number of pairs that are in reverse order, regardless of the distance between
- *      the pair, eg, {1, 4, 2, 8, 5, 7} -> 0 + 1 + 0 + 2 + 0 + 0 = 3
- * @Note:   Sol.1. Similar to SmallSum with reverse checking condition when merge. <---
- *          Sol.2. Similarly, but merge backwards by choosing bigger one first.
+ * @Description: Given an integer array, count the number of pairs that are in reverse order, regardless of the
+ *      distance between the pair, eg, {1, 4, 2, 8, 5, 7} -> 0 + 1 + 0 + 2 + 0 + 0 = 3.
+ * @Note:   Sol.1. Similar to Code02_SmallSum, except when merge(), reverse the checking condition and calculate the
+ *                 answer based on the remaining number of left group.
+ *          Sol.2. Similarly, but merge backwards by merging the bigger one first.
+ *          Sol.3. Add a separate operation during merge (see Code04_ReversePairsTwice).
  */
 public class Code03_ReversePairs {
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int reversePairs(int[] arr) {
         if (arr == null || arr.length < 2) {
@@ -29,10 +28,10 @@ public class Code03_ReversePairs {
         int mid = L + ((R - L) >> 1);
         int ansL = process(arr, L, mid);
         int ansR = process(arr, mid + 1, R);
-        return ansL + ansR + merge(arr, L, mid, R);
+        return ansL + ansR + merge2(arr, L, mid, R);
     }
 
-    private static int merge(int[] arr, int L, int M, int R) {
+    private static int merge1(int[] arr, int L, int M, int R) {
         int[] tmp = new int[R - L + 1];
         int i = 0;
         int idx1 = L;
@@ -40,7 +39,7 @@ public class Code03_ReversePairs {
         int ans = 0;
         while (idx1 <= M && idx2 <= R) {
             if (arr[idx1] > arr[idx2]) {
-                ans += M - idx1 + 1;
+                ans += M - idx1 + 1;  // meaning this many items are bigger than the current right item
                 tmp[i++] = arr[idx2++];
             } else {
                 tmp[i++] = arr[idx1++];
@@ -57,6 +56,33 @@ public class Code03_ReversePairs {
         }
         return ans;
     }
+
+    private static int merge2(int[] arr, int L, int M, int R) {
+        int[] tmp = new int[R - L + 1];
+        int idx = tmp.length - 1;
+        int idx1 = M;
+        int idx2 = R;
+        int ans = 0;
+        while (idx1 >= L && idx2 > M) {
+            if (arr[idx1] > arr[idx2]) {
+                ans += idx2 - M;  // meaning the current left item is bigger than this many items in the right group
+                tmp[idx--] = arr[idx1--];
+            } else {
+                tmp[idx--] = arr[idx2--];
+            }
+        }
+        while (idx1 >= L) {
+            tmp[idx--] = arr[idx1--];
+        }
+        while (idx2 > M) {
+            tmp[idx--] = arr[idx2--];
+        }
+        for (int i = 0; i < tmp.length; i++) {
+            arr[L + i] = tmp[i];
+        }
+        return ans;
+    }
+
 
     public static int[] generateArray(int maxLen, int maxVal) {
         int N = (int) (Math.random() * maxLen) + 1;
@@ -98,10 +124,11 @@ public class Code03_ReversePairs {
         return true;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 200;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = generateArray(maxL, maxV);
             int[] arr1 = Arrays.copyOf(arr, arr.length);

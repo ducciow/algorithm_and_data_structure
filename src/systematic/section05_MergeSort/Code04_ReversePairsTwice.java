@@ -3,12 +3,17 @@ package systematic.section05_MergeSort;
 /**
  * @Author: duccio
  * @Date: 31, 03, 2022
- * @Description: Given an integer array, count the reverse pairs (i, j), where i > 2 * j
+ * @Description: Given an integer array, count the reverse pairs (i, j), where 0 <= i < j < arr.length, and
+ *      arr[i] > 2 * arr[j].
  *      https://leetcode.com/problems/reverse-pairs/
- * @Note:   1. Can add (not nest) a O(N) operation in sub-process, which still results in O(N*logN) in the whole,
- *              which means computing the answer and merge itself are disjoint.
- *          2. Which means, as long as the pointer indices do not go back within one iteration.
- *          2. Be careful about potential overflow.
+ * @Note:   Add a loop to check the condition and count the answer during merge:
+     *          - Add an O(N) operation in merge() just before the classic merging operation, which still results in
+ *                O(N*logN) in the whole.
+ *              - Which means, as long as the pointers do not go back within one iteration.
+ *          Be careful about potential overflow:
+ *              - Do not increase values in the sentinel.
+ *              - Use bit operation >> 1 instead of / 2.
+ *              - Check > for even values, and >= for odd values.
  */
 public class Code04_ReversePairsTwice {
 
@@ -34,10 +39,11 @@ public class Code04_ReversePairsTwice {
         int ans = 0;
         for (int i = L; i <= M; i++) {
             while (boundaryR <= R &&
+                    // discuss based on arr[i] is even or odd
                     ((arr[i] & 1) == 0 ? (arr[i] >> 1) > arr[boundaryR] : (arr[i] >> 1) >= arr[boundaryR])) {
                 boundaryR++;
             }
-            ans += boundaryR - M - 1;
+            ans += boundaryR - M - 1;  // be careful about this computing
         }
         int idx1 = L;
         int idx2 = M + 1;

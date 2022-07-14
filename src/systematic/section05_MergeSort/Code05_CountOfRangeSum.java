@@ -6,13 +6,16 @@ package systematic.section05_MergeSort;
  * @Description: Given an integer array and two integers lower and upper, return the number of range sums that
  *      lie in [lower, upper] inclusive.
  *      https://leetcode.com/problems/count-of-range-sum/
- * @Note:   1. Utilize pre-sum array substituting the original array during recursion.
- *          2. For any left and right group pair:
- *              a) for any pre-sum ps in the right group, meaning every sub-array ending with ps's index, compute a new
- *                  boundary [s - upper, s - lower], then iterate through left group to find the starting idx of
- *                  legitimate sub-arrays. Although there are two iterations, the iterating pointers never go back,
- *                  resulting in O(N) in time.
- *              b) do the merge.
+ * @Note:   1. Utilize pre-sum array substituting the original array for process.
+ *          2. Add a separate operation during merge:
+ *              - For any pre-sum s in the right group, meaning every sub-array ending with s's index, compute a new
+ *                boundary [s - upper, s - lower], then iterate through left group to find the window of values that
+ *                fall within the new boundary.
+ *              - Push windowL forward if it is less than new lower.
+ *              - Push windowR forward if it is less than or equal to new upper.
+ *              - Increase answer by windowR - windowL.
+ *              - Although there are nested iterations, the two iterating pointers of window never go back (because
+ *                the pre-sums are sorted), resulting in O(N) in time.
  *          ======
  *          To avoid possible overflow, use long instead of int for pre-sum.
  */
