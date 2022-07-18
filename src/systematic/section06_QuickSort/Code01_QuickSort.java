@@ -6,32 +6,41 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 01, 04, 2022
- * @Description: Quick sort 1: ver1, partition for <=, > pivot, which is chosen to be the rightmost item
- *                             ver2, partition for <, ==, > pivot, which is chosen to be the rightmost item
- *                             ver3, randomly choose an item from the current group as the pivot, swap it to
- *                                the current end before partition
- *               Quick sort 2: iteration version
- * @Note:   1. Unlike merge sort, the process of bigger group does not require the returning from smaller group.
- *          2. Unlike merge sort, the base case is L >= R.
- *          3. Partition ver2 needs an extra swap at the end if the more-area starts from R (partition2). While if the
- *             more-area starts from R+1, it is no need for an extra swap but return's a little different (partition21).
- *          4. For iteration version, a stack or queue is used, amd make sure it will end by checking base case.
+ * @Description: Quick sort 1: ver1, partition for <=, > pivot, with the pivot chosen to be the rightmost item.
+ *                             ver2, partition for <, ==, > pivot, with the pivot chosen to be the rightmost item.
+ *                             ver3, randomly choose an item from the current group as the pivot, swap it to the
+ *                                   current end, then call ver2 or ver1.
+ *               Quick sort 2: iteration version.
+ * @Note:   - Unlike merge sort:
+ *              a) The process of broader group does not require the returning from narrower groups.
+     *          b) The base case is L >= R instead of L == R.
+ *          - Partition ver2 needs an extra swap at the end if the more-area starts from R (see partition2()). And if
+ *            the more-area starts from R+1, it is no need for an extra swap but has a little different return (see
+ *            partition2_another_version()).
+ *          - Key idea of partition ver2:
+ *              a) idx_less starts form L-1.
+ *              b) idx_more starts from R or R+1.
+ *              c) while the processing idx < idx_more:
+ *                      if arr[idx] < pivot:
+ *                          idx_less++, swap, idx++
+ *                      else if arr[idx] == pivot:
+ *                          idx++
+ *                      else:
+ *                          idx_more--, swap, idx not change
+ *          - For iteration version, a stack or queue is used, amd make sure it will end by checking base case.
  *          ======
- *          1. Time: O(N*logN), worst O(N**2).
- *          2. Extra space: O(logN), worst O(N).
+ *          - Time: O(N*logN), worst O(N**2).
+ *          - Extra space: O(logN), worst O(N).
  */
 public class Code01_QuickSort {
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static void quickSort1(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
         }
 //        process1(arr, 0, arr.length - 1);
-//        process2(arr, 0, arr.length - 1);
-        process3(arr, 0, arr.length - 1);
+        process2(arr, 0, arr.length - 1);
+//        process3(arr, 0, arr.length - 1);
     }
 
     private static void process1(int[] arr, int L, int R) {
@@ -79,7 +88,7 @@ public class Code01_QuickSort {
         return new int[]{less + 1, bigger};
     }
 
-    public static int[] partition21(int[] arr, int L, int R) {
+    public static int[] partition2_another_version(int[] arr, int L, int R) {
         int pivot = arr[R];
         int less = L - 1;
         int more = R + 1;
@@ -93,7 +102,7 @@ public class Code01_QuickSort {
                 swap(arr, --more, i);
             }
         }
-        return new int[] {less + 1, more - 1};
+        return new int[]{less + 1, more - 1};
     }
 
 
@@ -169,14 +178,15 @@ public class Code01_QuickSort {
         return true;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int testTime = 50000;
         int maxSize = 100;
         int maxValue = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = Arrays.copyOf(arr1, arr1.length);
-            quickSort2(arr1);
+            quickSort1(arr1);
             Arrays.sort(arr2);
             if (!isEqual(arr1, arr2)) {
                 System.out.println("Failed on case: ");
