@@ -8,17 +8,13 @@ import java.util.PriorityQueue;
  * @Date: 04, 04, 2022
  * @Description: Sort an integer array, where for each item, the distance between its current index and its sorted
  *      index is at most K, and K < N.
- * @Note:   1. Add the first K+1 items to a heap. Because the correct index is at most K away, the smallest item
+ * @Note:   1. Add the first K+1 items to a min heap. Because the correct index is at most K away, the smallest item
  *              must be added.
  *          2. Iteratively, poll from the heap and put it on the right position. Meanwhile, add an item into the heap.
  *          ======
- *          Time O(N*logK)
+ *          - Time O(N*logK)
  */
 public class Code03_SortArrayDistanceK {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static void sortArrayDistanceLessK(int[] arr, int K) {
         if (arr == null || arr.length < 2 || K == 0) {
@@ -30,7 +26,7 @@ public class Code03_SortArrayDistanceK {
         }
         for (int i = 0; i < arr.length; i++) {
             arr[i] = heap.poll();
-            if (arr.length - K - 1 > i) {
+            if (i + K + 1 < arr.length) {
                 heap.add(arr[i + K + 1]);
             }
         }
@@ -74,10 +70,11 @@ public class Code03_SortArrayDistanceK {
         return true;
     }
 
-    private static void validate() {
+    public static void main(String[] args) {
         int numTest = 100000;
         int maxSize = 100;
         int maxValue = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int size = (int) (Math.random() * maxSize) + 1;
             int K = (int) (Math.random() * size);

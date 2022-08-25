@@ -8,18 +8,19 @@ import java.util.PriorityQueue;
  * @Date: 05, 04, 2022
  * @Description: A line is defined as (start point, end point). Given a list of lines, return the maximum number of
  *      lines that intercept with each other.
- * @Note:   Ver1. Check points discretely, which is conditionally acceptable according to size of dataset.
- *          Ver2. 1. Sort lines in ascending order based on their start point.
- *                2. For each line l, put l's end point into a heap, and poll the heap until there is no endpoint in it
- *                  that is smaller than or equal to l's start point, meaning all end points remained in the heap are
- *                  intercepted with l, which is in total of the current size of the heap.
- *                3. Return the maximum size of the heap.
+ * @Note:   - Ver1. Check points discretely:
+ *              a) Eg., check number of intersections at each 0.5 point in the entire range.
+ *              b) Would be conditionally acceptable according to size of dataset.
+ *          - Ver2. Use Heap sort:
+ *              1. Sort lines in ascending order based on their start points (using any sort algorithm).
+ *              2. For each line l:
+ *                  a) put l's end point into a min heap.
+ *                  b) poll the heap until there is no endpoint in it that is smaller than or equal to l's start point,
+ *                      meaning all end points remained in the heap belong to lines intercepting with l, which is in
+ *                      total of the current heap size.
+ *              3. Return the maximum size of the heap.
  */
-public class Code04_CoverMax {
-
-    public static void main(String[] args) {
-        validate();
-    }
+public class Code04_InterceptMax {
 
     public static int coverMax1(int[][] lines) {
         int min = Integer.MAX_VALUE;
@@ -41,18 +42,17 @@ public class Code04_CoverMax {
         return ans;
     }
 
-    public static int coverMax2(int[][] arr) {
-        int[][] lines = Arrays.copyOf(arr, arr.length);
-        Arrays.sort(lines, (o1, o2) -> o1[0] - o2[0]);
-        int ans = 0;
+    public static int coverMax2(int[][] lines) {
+        int[][] arr = Arrays.copyOf(lines, lines.length);
+        Arrays.sort(arr, (o1, o2) -> (o1[0] - o2[0]));
         PriorityQueue<Integer> heap = new PriorityQueue<>();
-        for (int[] line : lines) {
+        int ans = 0;
+        for (int[] line : arr) {
             heap.add(line[1]);
             while (!heap.isEmpty() && heap.peek() <= line[0]) {
                 heap.poll();
             }
-            int curAns = heap.size();
-            ans = Math.max(ans, curAns);
+            ans = Math.max(ans, heap.size());
         }
         return ans;
     }
@@ -66,10 +66,11 @@ public class Code04_CoverMax {
         return lines;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 100;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[][] lines = generateLines(maxL, maxV);
             int ans1 = coverMax1(lines);

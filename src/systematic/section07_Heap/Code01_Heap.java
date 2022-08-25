@@ -5,25 +5,21 @@ import java.util.PriorityQueue;
 /**
  * @Author: duccio
  * @Date: 04, 04, 2022
- * @Description: MaxHeap, where in every subtree, the root node is the biggest
- * @Note:   1. Also priority queue
- *          2. Actually is a complete binary tree implemented using an array
+ * @Description: MaxHeap, where in every subtree, the root node is the biggest.
+ * @Note:   - Also called priority queue.
+ *          - Actually is a complete binary tree implemented using an array.
  *          ======
- *          1. Height: logN
- *          2. If index starts from 0, then
- *              current node idx: i
- *              parent node idx: (i - 1) / 2
- *              child node idx: 2i + 1, 2i + 2
- *          3. If index starts from 1, then
- *              current node idx: i
- *              parent node idx: i / 2
- *              child node idx: 2i, 2i + 1
+ *          - Height: logN
+ *          - If index starts from 0, then:
+ *              a) current node idx: i
+ *              b) parent node idx: (i - 1) / 2
+ *              c) child node idx: 2i + 1, 2i + 2
+ *          - If index starts from 1, then:
+ *              a) current node idx: i
+ *              b) parent node idx: i / 2
+ *              c) child node idx: 2i, 2i + 1
  */
 public class Code01_Heap {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class MyHeap {
         int sizeLimit;
@@ -92,10 +88,11 @@ public class Code01_Heap {
         }
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int limit = 100;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int curLimit = (int) (Math.random() * limit) + 1;
             int numOperation = (int) (Math.random() * curLimit) + 1;

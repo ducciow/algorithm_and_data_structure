@@ -5,19 +5,25 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 04, 04, 2022
- * @Description: Heap sort
- * @Note:   1. Ver1. heapInsert, then heapify, O(N*logN) + O(N*logN)
- *          2. Ver2. heapify, then heapify, O(N) + O(N*logN)
+ * @Description: Heap sort.
+ * @Note:   - Ver1. heapInsert, then heapify, O(N*logN) + O(N*logN).
+ *          - Ver2. heapify, then heapify again, O(N) + O(N*logN).
  *          ======
- *          1. The first heapify in Ver2 requires all items are given at hand. Its O(N) results from the fact that
+ *          - For heapInsert:
+ *              a) iterate with increasing index i.
+ *          - For heapify:
+ *              a) iterate with decreasing index j.
+ *                  1) swap arr[0] and arr[j].
+ *                  2) call heapify with an extra argument j, indicating the current range under consideration.
+ *              b) does not need swap for the first heapify of Ver2.
+ *          ======
+ *          - The first round of heapInsert or heapify guarantees the condition of a max heap is satisfied, and
+ *              arr[0] ends with the biggest element.
+ *          - The first heapify of Ver2 requires all items are given at hand. Its O(N) results from the fact that
  *              half of the nodes are leaf nodes, demanding just O(1) operations downwards in heapify.
- *          2. Extra space: O(1)
+ *          - Extra space: O(1).
  */
 public class Code02_HeapSort {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static void heapSort1(int[] arr) {
         if (arr == null || arr.length < 2) {
@@ -98,10 +104,11 @@ public class Code02_HeapSort {
         return true;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 50000;
         int maxSize = 100;
         int maxValue = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = generateRandomArray(maxSize, maxValue);
             int[] arr1 = Arrays.copyOf(arr, arr.length);
