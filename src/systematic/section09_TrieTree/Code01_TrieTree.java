@@ -5,25 +5,21 @@ import java.util.HashMap;
 /**
  * @Author: duccio
  * @Date: 06, 04, 2022
- * @Description: Trie Tree (prefix tree)
- * @Note:   Here uses an array of size 26 for indexing the next character through a string.
- *          Another option is using a HashMap.
+ * @Description: Trie Tree (prefix tree).
+ * @Note:   - Each Node has three attributes: int pass, int end, Node[] nexts.
+ *          - Here uses an array of size 26 for indexing nexts. Another option is using a HashMap.
  */
 public class Code01_TrieTree {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         int pass;
         int end;
-        Node[] next;
+        Node[] nexts;
 
         public Node() {
             pass = 0;
             end = 0;
-            next = new Node[26];
+            nexts = new Node[26];
         }
     }
 
@@ -44,11 +40,11 @@ public class Code01_TrieTree {
             cur.pass++;
             for (char c : chars) {
                 int goTo = c - 'a';
-                if (cur.next[goTo] == null) {
-                    cur.next[goTo] = new Node();
+                if (cur.nexts[goTo] == null) {
+                    cur.nexts[goTo] = new Node();
                 }
-                cur.next[goTo].pass++;
-                cur = cur.next[goTo];
+                cur.nexts[goTo].pass++;
+                cur = cur.nexts[goTo];
             }
             cur.end++;
         }
@@ -61,10 +57,10 @@ public class Code01_TrieTree {
             Node cur = root;
             for (char c : chars) {
                 int goTo = c - 'a';
-                if (cur.next[goTo] == null) {
+                if (cur.nexts[goTo] == null) {
                     return 0;
                 }
-                cur = cur.next[goTo];
+                cur = cur.nexts[goTo];
             }
             return cur.end;
         }
@@ -77,10 +73,10 @@ public class Code01_TrieTree {
             Node cur = root;
             for (char c : chars) {
                 int goTo = c - 'a';
-                if (cur.next[goTo] == null) {
+                if (cur.nexts[goTo] == null) {
                     return 0;
                 }
-                cur = cur.next[goTo];
+                cur = cur.nexts[goTo];
             }
             return cur.pass;
         }
@@ -94,12 +90,12 @@ public class Code01_TrieTree {
             cur.pass--;
             for (char c : chars) {
                 int goTo = c - 'a';
-                cur.next[goTo].pass--;
-                if (cur.next[goTo].pass == 0) {
-                    cur.next[goTo] = null;
+                cur.nexts[goTo].pass--;
+                if (cur.nexts[goTo].pass == 0) {
+                    cur.nexts[goTo] = null;
                     return;
                 }
-                cur = cur.next[goTo];
+                cur = cur.nexts[goTo];
             }
             cur.end--;
         }
@@ -158,10 +154,11 @@ public class Code01_TrieTree {
         return strings;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxLen = 100;
         int maxStrLen = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             String[] arr = generateStrArray(maxLen, maxStrLen);
             TrieTree tt1 = new TrieTree();

@@ -1,24 +1,19 @@
-package systematic.section10_OtherSort;
+package systematic.section10_BucketSort;
 
 import java.util.Arrays;
 
 /**
  * @Author: duccio
  * @Date: 06, 04, 2022
- * @Description: Count Sort -- one type of bucket sort
- * @Note:   1. Create a count array with size of (max - min + 1), where each position indicates the number of occurrences
- *              of an element in the original array.
- *          2. Index of the count array refers to element in the original array, and value in the count array refers to
- *              how many times the corresponding element should appear in a row in the sorted array.
- *          3. Iteratively assign the original array with aforementioned indices and values of the count array.
+ * @Description: Count Sort.
+ * @Note:   - Create a count array of size (max - min + 1):
+ *              a) index refers to element in the original array, eg., 0 for min.
+ *              b) value indicates the number of occurrences of an element in the original array.
+ *          - Iteratively re-fill in the original array according to indices and values of the count array.
  *          ======
- *          Require: elements of the given array must be integers and lie in a range.
+ *          - Require: elements of the given array must be integers and lie within a range.
  */
 public class Code01_CountSort {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static void countSort(int[] arr) {
         if (arr == null || arr.length < 2) {
@@ -68,10 +63,11 @@ public class Code01_CountSort {
         return true;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int testTime = 50000;
         int maxSize = 100;
         int maxValue = 150;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int[] arr = generateRandomArray(maxSize, maxValue);
             int[] arr1 = Arrays.copyOf(arr, arr.length);
