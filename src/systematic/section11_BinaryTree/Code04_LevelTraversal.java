@@ -8,7 +8,12 @@ import java.util.Queue;
  * @Date: 11, 04, 2022
  * @Description: Given the root of a binary tree, return the level order traversal of its nodes' values, i.e., from
  *      left to right, level by level from root to leaf.
- * @Note:   Breadth-first search using a queue.
+ * @Note:   - Breadth-first search using a queue:
+ *              1. Add root to the queue.
+ *              2. while queue is not empty:
+ *                  a) Poll and print.
+ *                  b) If it has left node, add left node.
+ *                  c) If it has right node, add right node.
  */
 public class Code04_LevelTraversal {
 

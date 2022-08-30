@@ -5,32 +5,35 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 08, 04, 2022
- * @Description: Non-recursive traversal of a binary tree
- * @Note:   For Pre-order traversal: 1. Push root node to stack.
- *                                   2. Pop and print.
- *                                   3. If it has right node, push right node to stack.
- *                                   4. If it has left node, push left node to stack.
- *          ======
- *          For In-order traversal: 1. Push all left nodes (including current root) to stack.
- *                                  2. Pop and print.
- *                                  3. If it has right node, perform 1. on right subtree.
- *          ======
- *          For Post-order traversal: 1. Use two stacks. Push root node to stack1.
- *                                    2. Pop stack1 and push to stack2.
- *                                    3. If it has left node, push left node to stack1.
- *                                    4. If it has right node, push right node to stack1.
- *          ======
- *          Post-order traversal ver2: 1. Use one stack. Push root node to stack.
- *                                     2. Use two pointers -- 'top' for stack.peep, and 'tmp' for last printed item.
- *                                     3. If top has left, left != tmp, and right != tmp, then push left node to stack.
- *                                     4. Else if top has right, and right != tmp, then push right node to stack.
- *                                     5. Else, pop and print top, refer tmp to top.
+ * @Description: Non-recursive traversal of a binary tree.
+ * @Note:   - For Pre-order traversal:
+ *              1. Push root node to stack.
+ *              2. While stack is not empty:
+ *                  a) Pop and print.
+ *                  b) If it has right node, push right node to stack.
+ *                  c) If it has left node, push left node to stack.
+ *          - For In-order traversal:
+ *              1. Initiate cur node to root node.
+ *              2. While stack is not empty or cur node is not null:
+ *                  a) If cur node is not null, push cur node and go to left.
+ *                  b) Else pop and print, go to right.
+ *          - For Post-order traversal with 2 stacks:
+ *              1. Initiate two stacks. Push root node to stack1.
+ *              2. While stack1 is not empty:
+ *                  a) Pop and push to stack2.
+ *                  b) If it has left node, push left node to stack1.
+ *                  c) If it has right node, push right node to stack1.
+ *              3. Pop and print from stack2 until it is empty.
+ *          - Post-order traversal with 1 stack:
+ *              1. Push root node to stack.
+ *              2. Use two pointers -- 'top' for the top node on stack, and 'tmp' for last printed node.
+ *              3. While stack is not empty:
+ *                  a) Refer top to stack.peek.
+ *                  b) If top has left, left != tmp, and right != tmp, then push left node to stack.
+ *                  c) Else if top has right, and right != tmp, then push right node to stack.
+     *              d) Else, pop and print top, refer tmp to top.
  */
 public class Code03_NonrecursiveTraversal {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         public int value;
@@ -106,8 +109,8 @@ public class Code03_NonrecursiveTraversal {
         }
         Stack<Node> stack = new Stack<>();
         stack.push(root);
-        Node tmp = root;
-        Node top = null;
+        Node top = root;
+        Node tmp = null;
         while (!stack.isEmpty()) {
             top = stack.peek();
             if (top.left != null && top.left != tmp && top.right != tmp) {
@@ -115,14 +118,14 @@ public class Code03_NonrecursiveTraversal {
             } else if (top.right != null && top.right != tmp) {
                 stack.push(top.right);
             } else {
-                tmp = top;
-                System.out.println(stack.pop().value);
+                tmp = stack.pop();
+                System.out.println(tmp.value);
             }
         }
     }
 
 
-    public static void validate() {
+    public static void main(String[] args) {
         Node head = new Node(1);
         head.left = new Node(2);
         head.right = new Node(3);

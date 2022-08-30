@@ -9,18 +9,18 @@ import java.util.Stack;
  * @Date: 11, 04, 2022
  * @Description: Given a binary tree, serialize it in forms of list of strings, and then reconstruct it from this list
  *      of strings, requiring the tree structure and list of strings are one-to-one.
- * @Note:   1. For recursive order (pre and post) serialization, add element to a queue when process the current node.
- *          2. In-order traversal cannot serialize a BT, because it is not one-to-one.
- *          3. Reconstruct from pre-order is similar to serialize, while reconstruct from post-order needs a stack.
- *          ======
- *          1. Level-order serialization and reconstruction need slight modification on traversal when meets null.
- *          2. For both serialization and reconstruction, returning queue and processing queue are in parallel used.
+ * @Note:   - For recursive order (pre and post):
+ *              a) Need a queue for storing strings, and a helper function for recursive processing to the queue.
+ *              b) For serialization, add value to a queue when process the current node. When meet null node, add null.
+ *              c) For reconstruction, from pre-order is similar to serialize, while from post-order needs to initiate
+ *                 a stack and poll all elements from queue to stack beforehand.
+ *          - In-order traversal cannot serialize a BT, because it is not one-to-one.
+ *          - For Level-order:
+ *              a) No need for a helper function.
+ *              b) Both serialization and reconstruction use an extra queue for BFS.
+ *              c) Attention to null.
  */
 public class Code05_SerializeAndReconstructTree {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         public int value;
@@ -32,6 +32,7 @@ public class Code05_SerializeAndReconstructTree {
         }
     }
 
+    // pre serialization
     public static Queue<String> preSerial(Node root) {
         Queue<String> queue = new LinkedList<>();
         preProcess(root, queue);
@@ -48,6 +49,7 @@ public class Code05_SerializeAndReconstructTree {
         }
     }
 
+    // pre reconstruction
     public static Node buildByPreQueue(Queue<String> queue) {
         if (queue == null || queue.isEmpty()) {
             return null;
@@ -66,6 +68,7 @@ public class Code05_SerializeAndReconstructTree {
         return root;
     }
 
+    // post serialization
     public static Queue<String> postSerial(Node root) {
         Queue<String> queue = new LinkedList<>();
         postProcess(root, queue);
@@ -82,6 +85,7 @@ public class Code05_SerializeAndReconstructTree {
         }
     }
 
+    // post reconstruction
     public static Node buildByPostQueue(Queue<String> queue) {
         if (queue == null || queue.isEmpty()) {
             return null;
@@ -104,27 +108,29 @@ public class Code05_SerializeAndReconstructTree {
         return root;
     }
 
+    // level serialization
     public static Queue<String> levelSerial(Node root) {
-        Queue<String> ret = new LinkedList<>();
+        Queue<String> queue = new LinkedList<>();
         if (root == null) {
-            ret.add(null);
+            queue.add(null);
         } else {
             Queue<Node> tmp = new LinkedList<>();
             tmp.add(root);
             while (!tmp.isEmpty()) {
                 Node cur = tmp.poll();
                 if (cur == null) {
-                    ret.add(null);
+                    queue.add(null);
                 } else {
-                    ret.add(String.valueOf(cur.value));
+                    queue.add(String.valueOf(cur.value));
                     tmp.add(cur.left);
                     tmp.add(cur.right);
                 }
             }
         }
-        return ret;
+        return queue;
     }
 
+    // level reconstruction
     public static Node buildByLevelQueue(Queue<String> queue) {
         if (queue == null || queue.isEmpty()) {
             return null;
@@ -183,10 +189,11 @@ public class Code05_SerializeAndReconstructTree {
         return isSameStructure(root1.left, root2.left) && isSameStructure(root1.right, root2.right);
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 5;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node root = genRandBT(maxL, maxV);
             Queue<String> pre = preSerial(root);

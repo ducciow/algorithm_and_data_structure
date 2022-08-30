@@ -3,7 +3,7 @@ package systematic.section11_BinaryTree;
 /**
  * @Author: duccio
  * @Date: 08, 04, 2022
- * @Description: Pre-, In-, and Post-order traversal of a binary tree
+ * @Description: Pre-, In-, and Post-order traversal of a binary tree.
  * @Note:
  */
 public class Code01_Traversal {
