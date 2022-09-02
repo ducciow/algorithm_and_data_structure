@@ -8,86 +8,88 @@ import java.util.List;
  * @Date: 11, 04, 2022
  * @Description: Given an N-ary tree, encode it to a binary tree, and then decode back to the original.
  *      https://leetcode.com/problems/encode-n-ary-tree-to-binary-tree (locked)
- * @Note:   1. For any n-ary node, put its first child node to the left of its corresponding binary node, and put all
- *              following child nodes to the left's right, ie., all of its children forms the right boundary of the
- *              left subtree of its corresponding binary node.
- *          2. Recursively generate the right boundary of lest subtree from the children list when encoding.
- *          3. Recursively add child nodes to the children list from the left subtree when decoding.
+ * @Note:   - For N-ary to Binary:
+ *              a) For every n-ary node, make its first child node as its left node, and put all the other child nodes
+ *                  to the left node's right, ie., all of its children form the right boundary of the left subtree of
+ *                  this n-ary node.
+ *              b) Recursively generate the right boundary of left subtree of every child node from the children list.
+ *          - For Binary to N-ary:
+ *              a) For every binary node, add its right boundary of left subtree to its children list.
+ *              b) Recursively doing so for every child node encountered.
  */
 public class Code06_EncodeNaryTreeToBinaryTree {
 
-    public static class Node {
+    // N-ary Node
+    public static class NNode {
         public int val;
-        public List<Node> children;
+        public List<NNode> children;
 
-        public Node() {
+        public NNode() {
         }
 
-        public Node(int _val) {
+        public NNode(int _val) {
             val = _val;
         }
 
-        public Node(int _val, List<Node> _children) {
+        public NNode(int _val, List<NNode> _children) {
             val = _val;
             children = _children;
         }
-    };
+    }
 
-    public static class TreeNode {
+    // Binary Node
+    public static class BNode {
         int val;
-        TreeNode left;
-        TreeNode right;
+        BNode left;
+        BNode right;
 
-        TreeNode(int v) {
+        BNode(int v) {
             val = v;
         }
     }
 
 
-    public static class Codec {
-
-        // encode an n-ary tree to a binary tree
-        public TreeNode encode(Node root) {
-            if (root == null) {
-                return null;
-            }
-            TreeNode bRoot = new TreeNode(root.val);
-            bRoot.left = encodeProcess(root.children);
-            return bRoot;
-        }
-
-        private TreeNode encodeProcess(List<Node> nChildren) {
-            TreeNode root = null;
-            TreeNode cur = null;
-            for (Node nChild : nChildren) {
-                TreeNode bNode = new TreeNode(nChild.val);
-                if (root == null) {
-                    root = bNode;
-                } else {
-                    cur.right = bNode;
-                }
-                cur = bNode;
-                cur.left = encodeProcess(nChild.children);
-            }
-            return root;
-        }
-    }
-
-    // decode back to the n-ary tree
-    public Node decode(TreeNode bRoot) {
-        if (bRoot == null) {
+    // encode an n-ary tree to a binary tree
+    public static BNode encode(NNode nRoot) {
+        if (nRoot == null) {
             return null;
         }
-        Node root = new Node(bRoot.val);
-        root.children = decodeProcess(bRoot.left);
+        BNode bRoot = new BNode(nRoot.val);
+        bRoot.left = encodeProcess(nRoot.children);
+        return bRoot;
+    }
+
+    private static BNode encodeProcess(List<NNode> nChildren) {
+        BNode root = null;
+        BNode cur = null;
+        for (NNode nChild : nChildren) {
+            BNode bNode = new BNode(nChild.val);
+            if (root == null) {
+                root = bNode;
+            } else {
+                cur.right = bNode;
+            }
+            cur = bNode;
+            cur.left = encodeProcess(nChild.children);
+        }
         return root;
     }
 
-    private List<Node> decodeProcess(TreeNode bRoot) {
-        List<Node> children = new ArrayList<>();
-        TreeNode cur = bRoot;
+    // decode back to the n-ary tree
+    public static NNode decode(BNode bRoot) {
+        if (bRoot == null) {
+            return null;
+        }
+        NNode nRoot = new NNode(bRoot.val);
+        nRoot.children = decodeProcess(bRoot.left);
+        return nRoot;
+    }
+
+    private static List<NNode> decodeProcess(BNode bRoot) {
+        List<NNode> children = new ArrayList<>();
+        BNode cur = bRoot;
         while (cur != null) {
-            Node child = new Node(cur.val);
+            NNode child = new NNode(cur.val);
             children.add(child);
             child.children = decodeProcess(cur);
             cur = cur.right;

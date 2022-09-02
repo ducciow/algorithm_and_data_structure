@@ -8,16 +8,25 @@ import java.util.Queue;
  * @Author: duccio
  * @Date: 11, 04, 2022
  * @Description: Given a binary tree, return its maximum width, which is the maximum size of its levels.
- * @Note:   Ver1. Use a HashMap to record the level number of each node. An extra checking for maximum is needed for the
- *                  last level when the queue is empty.
- *          Ver2. Use two pointers to track the end nodes of current level and next level. Update maximum width when
- *                  current node meets current end. Reassign the next end once the current node has left/right child.
+ * @Note:   - Ver1:
+ *              a) Use a HashMap to record the level of each node, where the root node's level is 1.
+ *              b) Initiate int variables, ie, working level, level size, max size, for tracking each level's state.
+ *              c) When level traversing:
+ *                  1) poll the current node and get current level.
+ *                  2) if it has left/right node, add left/right node to queue and HashMap.
+ *                  3) if current level equals working level, update level size;
+ *                     else, update max level size, update working level, restart level size.
+ *              d) An extra comparing for max size is needed for the last level size after level traversal.
+ *          - Ver2 (less space complexity):
+ *              a) Use two pointers to track the end nodes of current level and next level.
+ *              b) Initiate int variables, ie, level size, max size, for tracking each level's state.
+ *              c) When level traversal:
+ *                  1) poll the current node and increase level size.
+ *                  2) if it has left/right node, add left/right node to the queue, and reassign next end.
+ *                  3) if the current node equals to current end, update max size, restart level size, reassign current
+ *                     end to next end.
  */
 public class Code07_TreeMaxWidth {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         public int value;
@@ -33,14 +42,17 @@ public class Code07_TreeMaxWidth {
         if (root == null) {
             return 0;
         }
+        // queue for level traversal
         Queue<Node> queue = new LinkedList<>();
         queue.add(root);
-        // <Node, level>
+        // map for storing node level
         HashMap<Node, Integer> map = new HashMap<>();
         map.put(root, 1);
+        // track level and level size
         int workLevel = 1;
         int levelSize = 0;
         int maxSize = 0;
+        // level traversal
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
             int curLevel = map.get(cur);
@@ -110,10 +122,11 @@ public class Code07_TreeMaxWidth {
         return node;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 5;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node root = genRandBT(maxL, maxV);
             int ans1 = maxWidth1(root);
