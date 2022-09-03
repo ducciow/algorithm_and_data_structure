@@ -5,14 +5,11 @@ package systematic.section11_BinaryTree;
  * @Date: 11, 04, 2022
  * @Description: In a binary tree, nodes has an extra parent pointer. Given a such node, return its successor node, which
  *      is defined as the next node in in-order traversal.
- * @Note:   1. If the given node has right subtree, then the answer must be the leftmost node of the right subtree.
- *          2. Otherwise, the answer is the first parent node that has the current node as its direct left child.
+ * @Note:   - If the given node has right subtree, then the answer must be the leftmost node of the right subtree.
+ *          - Otherwise, trace upwards along the parent pointer, until meet one parent node with its direct left child
+ *            on the trace path, then this parent node is the answer.
  */
 public class Code08_SuccessorNode {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         int value;
@@ -35,7 +32,7 @@ public class Code08_SuccessorNode {
         Node parent = node.parent;
         while (parent != null && parent.left != node) {
             node = parent;
-            parent = parent.parent;
+            parent = node.parent;
         }
         return parent;
     }
@@ -48,7 +45,7 @@ public class Code08_SuccessorNode {
     }
 
 
-    public static void validate() {
+    public static void main(String[] args) {
         Node root = new Node(6);
         root.parent = null;
         root.left = new Node(3);
