@@ -7,23 +7,19 @@ import java.util.Queue;
  * @Author: duccio
  * @Date: 12, 04, 2022
  * @Description: Given a binary tree, check if it is complete, ie., either it is full or going to be full.
- * @Note:   Sol1. Non-recursive: 1. Level traversal.
- *                               2. Any node having no left child cannot have right child.
- *                               3. When meet a node that does not have both children, all successor nodes must be
- *                                  leaf nodes.
- *          ======
- *          Sol2. BTDP: 1. Info: isComplete, isFull, height.
- *                      2. Four cases that a subtree is complete:
- *                          a) left is full, right is full, and left height == right height.
- *                          b) left is complete, right is full, and left height == right height + 1.
- *                          c) left is full, right is full, and left height == right height + 1.
- *                          d) left is full, right is complete, and left height == right height.
+ * @Note:   - Non-recursive version:
+ *              1) Level traversal.
+ *              2) Any node having no left child cannot have right child.
+ *              3) When meet a node that does not have both children, all successor nodes must be leaf nodes.
+ *          - DP version:
+ *              1) Define Info: isComplete, isFull, height.
+ *              2) Four cases that a subtree is complete:
+ *                  a) left is full, right is full, and left height == right height.
+ *                  b) left is complete, right is full, and left height == right height + 1.
+ *                  c) left is full, right is full, and left height == right height + 1.
+ *                  d) left is full, right is complete, and left height == right height.
  */
 public class Code01_IsCBT {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         int val;
@@ -83,12 +79,14 @@ public class Code01_IsCBT {
     }
 
     public static Info process(Node node) {
+        // base case
         if (node == null) {
             return new Info(true, true, 0);
         }
+        // collect info
         Info leftInfo = process(node.left);
         Info rightInfo = process(node.right);
-
+        // process info
         int height = Math.max(leftInfo.height, rightInfo.height) + 1;
         boolean isFull = false;
         boolean isComplete = false;
@@ -121,10 +119,11 @@ public class Code01_IsCBT {
         return node;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 5;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node root = genRandBT(maxL, maxV);
             if (isCBT1(root) != isCBT2(root)) {

@@ -5,7 +5,7 @@ package systematic.section12_BinaryTreeDP;
  * @Date: 12, 04, 2022
  * @Description: Check if a given binary tree is balanced, ie., for each subtree, |height(left) - height(right)| <= 1.
  *      https://leetcode.com/problems/balanced-binary-tree
- * @Note:   1. Define Info: isBalanced, height
+ * @Note:   1. Define Info: isBalanced, height.
  *          2. Check if left subtree is balanced, right subtree is balanced, and |height(left) - height(right)| <= 1.
  */
 public class Code02_IsBalanced {
@@ -38,14 +38,15 @@ public class Code02_IsBalanced {
     }
 
     public static Info process(TreeNode node) {
+        // base case
         if (node == null) {
             return new Info(true, 0);
         }
+        // collect info
         Info leftInfo = process(node.left);
         Info rightInfo = process(node.right);
-
+        // process info
         int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-
         boolean isBalanced = true;
         if (!leftInfo.isBalanced || !rightInfo.isBalanced || Math.abs(leftInfo.height - rightInfo.height) > 1) {
             isBalanced = false;

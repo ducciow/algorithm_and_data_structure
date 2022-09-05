@@ -12,10 +12,6 @@ package systematic.section12_BinaryTreeDP;
  */
 public class Code04_IsFull {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static class Node {
         int val;
         Node left;
@@ -47,12 +43,14 @@ public class Code04_IsFull {
     }
 
     public static Info1 process1(Node node) {
+        // base case
         if (node == null) {
             return new Info1(0, 0);
         }
+        // collect info
         Info1 leftInfo = process1(node.left);
         Info1 rightInfo = process1(node.right);
-
+        // process info
         int height = Math.max(leftInfo.height, rightInfo.height) + 1;
         int nodes = leftInfo.nodes + rightInfo.nodes + 1;
 
@@ -77,12 +75,14 @@ public class Code04_IsFull {
     }
 
     public static Info2 process2(Node node) {
+        // base case
         if (node == null) {
             return new Info2(true, 0);
         }
+        // collect info
         Info2 leftInfo = process2(node.left);
         Info2 rightInfo = process2(node.right);
-
+        // process info
         int height = Math.max(leftInfo.height, rightInfo.height) + 1;
         boolean isFull = leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height;
 
@@ -104,10 +104,11 @@ public class Code04_IsFull {
         return node;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 4;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node root = genRandBT(maxL, maxV);
             if (isFull1(root) != isFull2(root)) {

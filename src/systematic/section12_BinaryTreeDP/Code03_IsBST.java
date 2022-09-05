@@ -8,15 +8,11 @@ import java.util.ArrayList;
  * @Description: Check if a given binary tree is a binary search tree, ie., for each subtree, left < root < right.
  *       https://leetcode.com/problems/validate-binary-search-tree/
  * @Note:   Sol1. Its in-order traversal is strictly increasing.
- *          Sol2. BTDP: 1. Info: isBST, max, min.
- *                      2. Check if left subtree is BST, right subtree is BST, and left.max < node < right.min
- *                      3. Null node returns null, and take care in upstream.
+ *          Sol2. DP: 1. Info: isBST, max, min.
+ *                    2. Check if left subtree is BST, right subtree is BST, and left.max < node.val < right.min.
+ *                    3. Null node returns null, and take care in upstream.
  */
 public class Code03_IsBST {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class TreeNode {
         public int val;
@@ -71,12 +67,14 @@ public class Code03_IsBST {
     }
 
     public static Info process2(TreeNode node) {
+        // base case
         if (node == null) {
             return null;
         }
+        // collect info
         Info leftInfo = process2(node.left);
         Info rightInfo = process2(node.right);
-
+        // process info
         int max = node.val;
         int min = node.val;
         if (leftInfo != null) {
@@ -87,7 +85,6 @@ public class Code03_IsBST {
             max = Math.max(max, rightInfo.max);
             min = Math.min(min, rightInfo.min);
         }
-
         boolean isBST = true;
         if (leftInfo != null && (!leftInfo.isBST || leftInfo.max >= node.val)) {
             isBST = false;
@@ -114,10 +111,11 @@ public class Code03_IsBST {
         return node;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 4;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             TreeNode root = genRandBT(maxL, maxV);
             if (isValidBST1(root) != isValidBST2(root)) {
