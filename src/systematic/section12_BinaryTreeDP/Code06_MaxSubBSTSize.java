@@ -6,17 +6,18 @@ import java.util.ArrayList;
  * @Author: duccio
  * @Date: 12, 04, 2022
  * @Description: Given a binary tree, return the size of its max sub BST.
- * @Note:   1. Info: maxSize, allSize, max, min.
- *          2. When update maxSize, need to see if current subtree is BST.
- *          3. To see if a left/right subtree is BST, check left/right maxSize == allSize.
- *          4. If current subtree is BST, maxSize = left maxSize + right maxSize + 1.
- *          5. Otherwise, maxSize = max(left maxSize, right maxSize).
+ * @Note:   - Info: max, min, maxSize, allSize.
+ *          - To see if a left/right subtree is BST, check if its maxSize == allSize or is null.
+ *          - For info processing:
+ *              1. return null for null node.
+ *              2. process max and min.
+ *              3. process allSize.
+ *              4. process maxSize:
+ *                  a) check if left subtree is bst and if its max is smaller.
+ *                  b) check if right subtree is bst and if its min is bigger
+ *                  c) set current maxSize accordingly.
  */
 public class Code06_MaxSubBSTSize {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         int val;
@@ -71,12 +72,14 @@ public class Code06_MaxSubBSTSize {
         int rightSize = rightInfo == null ? 0 : rightInfo.allSize;
         int allSize = leftSize + rightSize + 1;
 
-        int validLeftMaxSize = leftInfo == null ? 0 : leftInfo.maxSize;
         boolean isLeftBST = leftInfo == null || leftInfo.maxSize == leftInfo.allSize;
         boolean isLeftSmaller = leftInfo == null || leftInfo.max < node.val;
-        int validRightMaxSize = rightInfo == null ? 0 : rightInfo.maxSize;
+
         boolean isRightBST = rightInfo == null || rightInfo.maxSize == rightInfo.allSize;
         boolean isRightBigger = rightInfo == null || rightInfo.min > node.val;
+
+        int validLeftMaxSize = leftInfo == null ? 0 : leftInfo.maxSize;
+        int validRightMaxSize = rightInfo == null ? 0 : rightInfo.maxSize;
         int maxSize = isLeftBST && isRightBST && isLeftSmaller && isRightBigger ?
                 allSize : Math.max(validLeftMaxSize, validRightMaxSize);
 
@@ -133,10 +136,11 @@ public class Code06_MaxSubBSTSize {
         return node;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 4;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node root = genRandBT(maxL, maxV);
             if (maxSubBSTSize(root) != naiveMaxSubBSTSize(root)) {

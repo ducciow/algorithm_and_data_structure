@@ -14,10 +14,6 @@ import java.util.HashSet;
  */
 public class Code05_MaxDistance {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static class Node {
         int val;
         Node left;
@@ -154,10 +150,11 @@ public class Code05_MaxDistance {
         return node;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 4;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node root = genRandBT(maxL, maxV);
             if (maxDistance(root) != naiveMaxDistance(root)) {

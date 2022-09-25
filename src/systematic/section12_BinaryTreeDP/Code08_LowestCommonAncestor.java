@@ -7,17 +7,21 @@ import java.util.HashSet;
 /**
  * @Author: duccio
  * @Date: 13, 04, 2022
- * @Description: Given two nodes in a binary tree, return their lowest common ancestor.
- * @Note:   Sol1. Non-recursive: Construct a parent indexing map, and then find the first repeated parent of them.
- *          Sol2. 1. Info: ans, findA, findB.
- *                2. If either left or right has the ans, return the ans.
- *                3. Otherwise, if the current node finds a and b, then it is the ans.
+ * @Description: Given two nodes a and b in a binary tree, return their lowest common ancestor.
+ * @Note:   Sol1. Not use BinaryTreeDP:
+ *                1. Construct a parent indexing HashMap.
+ *                2. Put node a and all its ancestors into a HashSet.
+ *                3. Iterate from node b upwards, and return the first element appearing in the HashSet.
+ *          Sol2. Use BinaryTreeDP:
+ *                - Info: Node ans, boolean findA, findB.
+ *                - findA/findB means having encountered a/b.
+ *                - ans refers to the lca, will be signed once findA && findB.
+ *                - For info processing:
+ *                  a) process findA/findB by checking leftInfo/rightInfo's findA/findB, and if the current node
+ *                     itself is a/b.
+ *                  b) process ans by checking leftInfo's ans, rightInfo's ans, or findA && findB.
  */
 public class Code08_LowestCommonAncestor {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         int val;
@@ -64,13 +68,6 @@ public class Code08_LowestCommonAncestor {
         }
     }
 
-    public static Node lca2(Node root, Node a, Node b) {
-        if (root == null) {
-            return null;
-        }
-        return process(root, a, b).ans;
-    }
-
     public static class Info {
         Node ans;
         boolean findA;
@@ -81,6 +78,13 @@ public class Code08_LowestCommonAncestor {
             findA = fa;
             findB = fb;
         }
+    }
+
+    public static Node lca2(Node root, Node a, Node b) {
+        if (root == null) {
+            return null;
+        }
+        return process(root, a, b).ans;
     }
 
     public static Info process(Node node, Node a, Node b) {
@@ -139,10 +143,11 @@ public class Code08_LowestCommonAncestor {
         toArr(root.right, arr);
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 4;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node root = genRandBT(maxL, maxV);
             Node a = pickRandNode(root);

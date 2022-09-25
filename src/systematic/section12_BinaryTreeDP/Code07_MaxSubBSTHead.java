@@ -6,17 +6,19 @@ import java.util.ArrayList;
  * @Author: duccio
  * @Date: 13, 04, 2022
  * @Description: Given a binary tree, return the head of its max sub BST.
- * @Note:   1. Info: maxHead, maxSize, max, min.
- *          2. When update maxHead and maxSize, need to see if current subtree is BST.
- *          3. To see if a left/right subtree is BST, check left/right maxHead == left/right head.
- *          4. If current subtree is BST, maxSize = left maxSize + right maxSize + 1.
- *          5. Otherwise, maxSize = max(left maxSize, right maxSize).
+ * @Note:   - Info: max, min, maxSize, maxHead.
+ *          - To see if a left/right subtree is BST, check its maxHead == its head.
+ *          - For info processing:
+ *              1. return null for null node.
+ *              2. process max and min.
+ *              3. process left maxSize and left maxHead.
+ *              4. process right maxSize and right maxHead.
+ *              5. process current maxSize and current maxHead:
+ *                  a) check if left subtree is bst and if its max is smaller.
+ *                  b) check if right subtree is bst and if its min is bigger.
+ *                  c) set maxSize and maxNode accordingly.
  */
 public class Code07_MaxSubBSTHead {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         int val;
@@ -41,16 +43,16 @@ public class Code07_MaxSubBSTHead {
     }
 
     public static class Info {
-        Node maxHead;
-        int maxSize;
         int max;
         int min;
+        int maxSize;
+        Node maxHead;
 
-        public Info(Node h, int s, int a, int i) {
-            maxHead = h;
-            maxSize = s;
+        public Info(int a, int i, int s, Node h) {
             max = a;
             min = i;
+            maxSize = s;
+            maxHead = h;
         }
     }
 
@@ -74,6 +76,7 @@ public class Code07_MaxSubBSTHead {
 
         Node leftMaxHead = leftInfo == null ? null : leftInfo.maxHead;
         int leftMaxSize = leftInfo == null ? 0 : leftInfo.maxSize;
+
         Node rightMaxHead = rightInfo == null ? null : rightInfo.maxHead;
         int rightMaxSize = rightInfo == null ? 0 : rightInfo.maxSize;
 
@@ -89,7 +92,7 @@ public class Code07_MaxSubBSTHead {
             maxSize = leftMaxSize + rightMaxSize + 1;
         }
 
-        return new Info(maxHead, maxSize, max, min);
+        return new Info(max, min, maxSize, maxHead);
     }
 
 
@@ -143,10 +146,11 @@ public class Code07_MaxSubBSTHead {
         return node;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 4;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Node root = genRandBT(maxL, maxV);
             if (maxSubBSTHead(root) != naiveMaxSubBSTHead(root)) {
