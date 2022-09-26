@@ -8,15 +8,12 @@ import java.util.TreeSet;
  * @Author: duccio
  * @Date: 13, 04, 2022
  * @Description: Given an array of strings, concatenate them together in any order. Return the lowest lexicography.
- * @Note:   Ver1. Greedy with sorting strategy: str1 + str2 < str2 + str1.
- *          Ver2. Permutation.
+ * @Note:   Sol.1. Greedy with sorting strategy: str1 + str2 < str2 + str1.
+ *          Sol.2. Permutation.
  */
 public class Code01_LowestLexicography {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
+    // Sol. 1
     public static String lowestStringGreedy(String[] strs) {
         if(strs == null || strs.length == 0) {
             return "";
@@ -37,7 +34,7 @@ public class Code01_LowestLexicography {
         }
     }
 
-
+    // Sol. 2
     public static String lowestStringPermutation(String[] strs) {
         if(strs == null || strs.length == 0) {
             return "";
@@ -46,19 +43,19 @@ public class Code01_LowestLexicography {
     }
 
     public static TreeSet<String> processPermutation(String[] strs) {
-        TreeSet<String> ret = new TreeSet<>();
+        TreeSet<String> set = new TreeSet<>();
         if(strs.length == 0) {
-            ret.add("");
+            set.add("");
         } else {
             for (int i = 0; i < strs.length; i++) {
                 String[] remains = copyExcept(strs, i);
                 TreeSet<String> remainPermutation = processPermutation(remains);
                 for (String oneOrdering : remainPermutation) {
-                    ret.add(strs[i] + oneOrdering);
+                    set.add(strs[i] + oneOrdering);
                 }
             }
         }
-        return ret;
+        return set;
     }
 
     public static String[] copyExcept(String[] strs, int idx) {
@@ -72,7 +69,7 @@ public class Code01_LowestLexicography {
         return ret;
     }
 
-
+    // test
     public static String genRandStr(int maxL) {
         char[] chars = new char[(int)(Math.random() * maxL + 1)];
         for (int i = 0; i < chars.length; i++) {
@@ -90,10 +87,11 @@ public class Code01_LowestLexicography {
         return strs;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int arrLen = 6;
         int strLen = 5;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             String[] arr1 = genRandStrArr(arrLen, strLen);
             String[] arr2 = Arrays.copyOf(arr1, arr1.length);

@@ -9,15 +9,12 @@ import java.util.List;
  * @Description: A company has the organisation structure as an n-ary tree. Now it wants to invite its employees to a
  *      party, requiring any employee cannot come if their direct manager or direct subordinates come. Evey person has
  *      a happy score, and then return the maximum total happy score of the party.
- * @Note:   1. Info: present, absent.
- *          2. If an employee presents, plus the happy score where all his subordinates are absent.
- *          3. Otherwise, plus the bigger happy score of his subordinates being present or absent.
+ * @Note:   - Info: int present, absent.
+ *          - For info processing of an employee p:
+ *              a) p's present score = p's happy score + sum of its subordinates' absent score.
+ *              b) p's absent score = sum of its subordinates' max{present score, absent score}.
  */
 public class Code01_MaxHappy {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Emp {
         int happy;
@@ -112,11 +109,12 @@ public class Code01_MaxHappy {
         }
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxLevel = 4;
         int maxSubs = 7;
         int maxHappy = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Emp boss = generateBoss(maxLevel, maxSubs, maxHappy);
             if (maxHappy(boss) != verboseMaxHappy(boss)) {

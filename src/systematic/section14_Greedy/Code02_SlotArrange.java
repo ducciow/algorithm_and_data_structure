@@ -6,16 +6,12 @@ import java.util.Comparator;
 /**
  * @Author: duccio
  * @Date: 14, 04, 2022
- * @Description: Given an array of meetings, where each meeting has start time and end time in forms of integers, return
- *      the maximum number of meetings that can take place without overlap.
- * @Note:   Ver1. Greedy strategy: prioritize meetings with earlier end time.
- *          Ver2. Brute force.
+ * @Description: Given an array of meetings, where each meeting has start time and end time in forms of integers,
+ *      return the maximum number of meetings that can take place without overlap.
+ * @Note:   Sol.1. Greedy strategy: prioritize meetings with earlier end time.
+ *          Sol.2. Brute force.
  */
 public class Code02_SlotArrange {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Meeting {
         int start;
@@ -27,6 +23,7 @@ public class Code02_SlotArrange {
         }
     }
 
+    // Sol. 1
     public static int slotArrange1(Meeting[] meetings) {
         if (meetings == null || meetings.length == 0) {
             return 0;
@@ -51,7 +48,7 @@ public class Code02_SlotArrange {
         }
     }
 
-
+    // Sol. 2
     public static int slotArrange2(Meeting[] meetings) {
         if (meetings == null || meetings.length == 0) {
             return 0;
@@ -59,18 +56,19 @@ public class Code02_SlotArrange {
         return process2(meetings, 0, 0);
     }
 
-    public static int process2(Meeting[] toArrange, int arranged, int timeline) {
-        if (toArrange.length == 0) {
-            return arranged;
+    public static int process2(Meeting[] meetings, int ans, int timeline) {
+        if (meetings.length == 0) {
+            return ans;
         }
-        int maxArranged = arranged;
-        for (int i = 0; i < toArrange.length; i++) {
-            if (toArrange[i].start >= timeline) {
-                Meeting[] remains = copyExcept(toArrange, i);
-                maxArranged = Math.max(maxArranged, process2(remains, arranged + 1, toArrange[i].end));
+        int better = ans;
+        for (int i = 0; i < meetings.length; i++) {
+            if (meetings[i].start >= timeline) {
+                Meeting[] remains = copyExcept(meetings, i);
+                // pick the better of to arrange the i-th meeting or not to arrange
+                better = Math.max(better, process2(remains, ans + 1, meetings[i].end));
             }
         }
-        return maxArranged;
+        return better;
     }
 
     public static Meeting[] copyExcept(Meeting[] arr, int idx) {
@@ -84,6 +82,8 @@ public class Code02_SlotArrange {
         return ret;
     }
 
+
+    // test
     public static Meeting[] generateMeetings(int maxL, int maxV) {
         Meeting[] meetings = new Meeting[(int) (Math.random() * (maxL + 1))];
         for (int i = 0; i < meetings.length; i++) {
@@ -98,10 +98,11 @@ public class Code02_SlotArrange {
         return meetings;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 12;
         int maxV = 24;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             Meeting[] meetings = generateMeetings(maxL, maxV);
             int ans1 = slotArrange1(meetings);
