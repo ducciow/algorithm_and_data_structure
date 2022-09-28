@@ -6,18 +6,15 @@ import java.util.PriorityQueue;
 /**
  * @Author: duccio
  * @Date: 14, 04, 2022
- * @Description: A gold bar that needs to be split into segments with corresponding lengths indicated in an array. Each
- *      time splitting costs the equal value to the length of segment that is operated on. Return the minimum cost of
+ * @Description: A gold bar needs to be split into segments with corresponding lengths indicated in an array. Each
+ *      splitting costs the equal value to the length of segment that is operated on. Return the minimum cost of
  *      splitting this gold bar.
- * @Note:   Ver1. Greedy strategy: Huffman Coding.
- *          Ver2. Brute force.
+ * @Note:   Sol.1. Greedy strategy: Huffman Coding.
+ *          Sol.2. Brute force.
  */
 public class Code03_SplitGold {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
+    // Sol. 1
     public static int split1(int[] segments) {
         if (segments == null || segments.length == 0) {
             return 0;
@@ -36,6 +33,7 @@ public class Code03_SplitGold {
         return ans;
     }
 
+    // Sol. 2
     public static int split2(int[] segments) {
         if (segments == null || segments.length == 0) {
             return 0;
@@ -50,25 +48,26 @@ public class Code03_SplitGold {
         int minCost = Integer.MAX_VALUE;
         for (int i = 0; i < segments.length; i++) {
             for (int j = i + 1; j < segments.length; j++) {
-                int[] remainSegments = copyMergeTwo(segments, i, j);
+                int[] remainSegments = copyMerge(segments, i, j);
                 minCost = Math.min(minCost, process2(remainSegments, cost + segments[i] + segments[j]));
             }
         }
         return minCost;
     }
 
-    public static int[] copyMergeTwo(int[] arr, int i, int j) {
-        int[] ans = new int[arr.length - 1];
-        int ansi = 0;
-        for (int arri = 0; arri < arr.length; arri++) {
-            if (arri != i && arri != j) {
-                ans[ansi++] = arr[arri];
+    public static int[] copyMerge(int[] arr, int i, int j) {
+        int[] ret = new int[arr.length - 1];
+        int idx = 0;
+        for (int k = 0; k < arr.length; k++) {
+            if (k != i && k != j) {
+                ret[idx++] = arr[k];
             }
         }
-        ans[ansi] = arr[i] + arr[j];
-        return ans;
+        ret[idx] = arr[i] + arr[j];
+        return ret;
     }
 
+    // test
     public static int[] generateArr(int maxL, int maxV) {
         int[] arr = new int[(int) (Math.random() * (maxL + 1))];
         for (int i = 0; i < arr.length; i++) {
@@ -77,10 +76,11 @@ public class Code03_SplitGold {
         return arr;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 6;
         int maxV = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = generateArr(maxL, maxV);
             int ans1 = split1(arr);
