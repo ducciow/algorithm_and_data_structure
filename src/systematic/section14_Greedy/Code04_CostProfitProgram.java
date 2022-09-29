@@ -7,11 +7,14 @@ import java.util.PriorityQueue;
 /**
  * @Author: duccio
  * @Date: 14, 04, 2022
- * @Description: A program has cost and profit. Given an starting principal and an array of programs, return the maximum
- *      final capital you will get if you are allowed to choose at most K any programs to do.
- * @Note: Greedy strategy: Put all programs into a minHeap based on costs, then iteratively poll programs that can be
- *                         done with current capital and put them into a maxHeap based on profits. Always choose the
- *                         first program in maxHeap to do.
+ * @Description: A program has cost and profit. Given the starting principal and an array of programs, return the
+ *      maximum final capital you will get if you are allowed to choose at most K any programs to do.
+ * @Note: Greedy strategy:
+ *          a) Prepare a minHeap and a maxHeap.
+ *          b) Put all programs into the minHeap based on costs.
+ *          c) Iteratively poll programs that can be done with current capital and put them into the maxHeap
+ *             based on profits.
+ *          d) Always choose the first program in maxHeap to do.
  */
 public class Code04_CostProfitProgram {
 
