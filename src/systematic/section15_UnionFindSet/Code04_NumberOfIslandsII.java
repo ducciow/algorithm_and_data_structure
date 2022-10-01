@@ -8,16 +8,20 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 17, 04, 2022
- * @Description: The original grid is all '0's, and '1's come gradually at each time step by cell index. Return the
- *      sequence of results in terms of a list.
+ * @Description: The original grid is all '0's, and '1's are given gradually at each time step in terms of cell index.
+ *      Return the sequence of results in a list.
  *      https://leetcode.com/problems/number-of-islands-ii/
- * @Note:   Add one function -- connect() that is called every step '1' is fed. It then calls union in a infection way.
+ * @Note:   - Init the UnionFindSet only with grid size, i.e., no real elements are given at the very beginning.
+ *          - Add one function -- connect() that is called each time '1' is fed. It then calls union() in an
+ *            infection way.
+ *          - When union, the size of the small head is remained as a use of mark.
  *          ======
- *          Ver1. Use 2-d array UnionFindSet.
- *          Ver2. When grid is too big, use HashMap and store indices in forms of strings.
+ *          Ver1. Use 1-d array UnionFindSet.
+ *          Ver2. If the grid is too big, use HashMap and store indices in forms of strings.
  */
 public class Code04_NumberOfIslandsII {
 
+    // ver. 1
     public static List<Integer> numIslands(int rows, int cols, int[][] positions) {
         UFSet ufSet = new UFSet(rows, cols);
         List<Integer> ret = new ArrayList<>();
@@ -28,7 +32,6 @@ public class Code04_NumberOfIslandsII {
     }
 
     public static class UFSet {
-
         int[] parent;
         int[] size;
         int[] path;
@@ -46,16 +49,31 @@ public class Code04_NumberOfIslandsII {
             path = new int[N];
         }
 
-        public int findHead(int i) {
-            int pi = 0;
-            while (parent[i] != i) {
-                path[pi++] = i;
-                i = parent[i];
+        public int findHead(int e) {
+            int idx = 0;
+            while (parent[e] != e) {
+                path[idx++] = e;
+                e = parent[e];
             }
-            for (pi--; pi >= 0; pi--) {
-                parent[path[pi]] = i;
+            for (idx--; idx >= 0; idx--) {
+                parent[path[idx]] = e;
             }
-            return i;
+            return e;
+        }
+
+        // check status, union, and return the current number of sets
+        public int connect(int r, int c) {
+            int e = r * col + c;
+            if (size[e] == 0) {
+                size[e] = 1;
+                parent[e] = e;
+                numSets++;
+                union(r, c - 1, r, c);
+                union(r, c + 1, r, c);
+                union(r - 1, c, r, c);
+                union(r + 1, c, r, c);
+            }
+            return numSets;
         }
 
         public void union(int r1, int c1, int r2, int c2) {
@@ -67,39 +85,28 @@ public class Code04_NumberOfIslandsII {
             }
             int a = r1 * col + c1;
             int b = r2 * col + c2;
+            // if either of the two given points is not in an island
             if (size[a] == 0 || size[b] == 0) {
                 return;
             }
-            int pa = findHead(a);
-            int pb = findHead(b);
-            if (pa != pb) {
-                if (size[pa] >= size[pb]) {
-                    parent[pb] = pa;
-                    size[pa] += size[pb];
+            // else they are both in their islands (is about to be or already is in one union)
+            int ha = findHead(a);
+            int hb = findHead(b);
+            if (ha != hb) {
+                if (size[ha] >= size[hb]) {
+                    parent[hb] = ha;
+                    size[ha] += size[hb];
                 } else {
-                    parent[pb] = pa;
-                    size[pb] += size[pa];
+                    parent[hb] = ha;
+                    size[hb] += size[ha];
                 }
                 numSets--;
             }
         }
-
-        public int connect(int r, int c) {
-            int idx = r * col + c;
-            if (size[idx] == 0) {
-                size[idx] = 1;
-                parent[idx] = idx;
-                numSets++;
-                union(r, c - 1, r, c);
-                union(r, c + 1, r, c);
-                union(r - 1, c, r, c);
-                union(r + 1, c, r, c);
-            }
-            return numSets;
-        }
     }
 
 
+    // ver. 2
     public static List<Integer> numIslandsTooBig(int rows, int cols, int[][] positions) {
         UFSetForBig ufSet = new UFSetForBig();
         List<Integer> ret = new ArrayList<>();
@@ -130,8 +137,31 @@ public class Code04_NumberOfIslandsII {
             return str;
         }
 
+        public int connect(int r, int c) {
+            String str = String.valueOf(r) + "-" + String.valueOf(c);
+            if (!parentMap.containsKey(str)) {
+                parentMap.put(str, str);
+                sizeMap.put(str, 1);
+                String up = String.valueOf(r - 1) + "-" + String.valueOf(c);
+                String down = String.valueOf(r + 1) + "-" + String.valueOf(c);
+                String left = String.valueOf(r) + "-" + String.valueOf(c - 1);
+                String right = String.valueOf(r) + "-" + String.valueOf(c + 1);
+                union(up, str);
+                union(down, str);
+                union(left, str);
+                union(right, str);
+            }
+            return sizeMap.size();
+        }
+
         public void union(String str1, String str2) {
-            if (parentMap.containsKey(str1) && parentMap.containsKey(str2)) {  // no need to check index boundaries
+            // no need to check index boundaries
+            // if either of the two given points is not in an island
+            if (!(parentMap.containsKey(str1) && parentMap.containsKey(str2))) {
+                return;
+            }
+            // else they are both in their islands (is about to be or already is in one union)
+            else {
                 String head1 = findHead(str1);
                 String head2 = findHead(str2);
                 if (!head1.equals(head2)) {
@@ -142,23 +172,6 @@ public class Code04_NumberOfIslandsII {
                     sizeMap.remove(smallHead);
                 }
             }
-        }
-
-        public int connect(int r, int c) {
-            String str = String.valueOf(r) + "-" + String.valueOf(c);
-            if (!parentMap.containsKey(str)) {
-                parentMap.put(str, str);
-                sizeMap.put(str, 1);
-                String up = String.valueOf(r - 1) + "_" + String.valueOf(c);
-                String down = String.valueOf(r + 1) + "_" + String.valueOf(c);
-                String left = String.valueOf(r) + "_" + String.valueOf(c - 1);
-                String right = String.valueOf(r) + "_" + String.valueOf(c + 1);
-                union(up, str);
-                union(down, str);
-                union(left, str);
-                union(right, str);
-            }
-            return sizeMap.size();
         }
 
     }

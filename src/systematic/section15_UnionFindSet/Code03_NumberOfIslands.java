@@ -8,17 +8,26 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 17, 04, 2022
- * @Description: Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number
- *      of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or
- *      vertically. You may assume all four edges of the grid are all surrounded by water.
+ * @Description: Given an m * n 2D binary grid which represents a map of '1's (land) and '0's (water), return the
+ *      number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally
+ *      or vertically. You may assume all four edges of the grid are all surrounded by water.
  *      https://leetcode.com/problems/number-of-islands/
- * @Note:   Ver1. Use classic UnionFindSet. Wrap cell values into a trivial class.
- *          Ver2. Use modified UnionFindSet. Directly use 1-d array instead of map, with index converted from 2-d index.
- *          Ver3. Check up/down/left/right cells and mark them if they are union.
+ * @Note:   Ver1. Use classic UnionFindSet:
+ *                - Wrap cell indices into a trivial Node class.
+ *                - Union first row, then first column, and then all other cells.
+ *          Ver2. Use modified UnionFindSet:
+ *                - Use 1-d array instead of map, with index converted from 2-d index.
  *          ======
- *          All versions have the same time complexity, while with different constant operation.
+ *          Ver3. Not use UnionFindSet:
+ *                - Recursive infection by checking up/down/left/right cells.
+ *                - Mark a cell once it is reached in a union.
+ *          ======
+ *          All versions have the same time complexity, while with different constant operations.
  */
 public class Code03_NumberOfIslands {
+
+    // ver. 1
+    public static class Node {}
 
     public int numIslands1(char[][] grid) {
         int row = grid.length;
@@ -62,9 +71,6 @@ public class Code03_NumberOfIslands {
         return ufSet.numSets();
     }
 
-    public static class Node {
-    }
-
     public static class UFSet1 {
 
         HashMap<Node, Node> parentMap;
@@ -92,11 +98,11 @@ public class Code03_NumberOfIslands {
         }
 
         public void union(Node a, Node b) {
-            Node pa = findHead(a);
-            Node pb = findHead(b);
-            if (pa != pb) {
-                Node bigHead = sizeMap.get(pa) >= sizeMap.get(pb) ? pa : pb;
-                Node smallHead = bigHead == pa ? pb : pa;
+            Node ha = findHead(a);
+            Node hb = findHead(b);
+            if (ha != hb) {
+                Node bigHead = sizeMap.get(ha) >= sizeMap.get(hb) ? ha : hb;
+                Node smallHead = bigHead == ha ? hb : ha;
                 parentMap.put(smallHead, bigHead);
                 sizeMap.put(bigHead, sizeMap.get(bigHead) + sizeMap.get(smallHead));
                 sizeMap.remove(smallHead);
@@ -109,20 +115,24 @@ public class Code03_NumberOfIslands {
     }
 
 
+    // ver. 2
     public static int numIslands2(char[][] grid) {
         int row = grid.length;
         int col = grid[0].length;
         UFSet2 ufSet = new UFSet2(grid);
+        // union the 1st row
         for (int j = 1; j < col; j++) {
             if (grid[0][j - 1] == '1' && grid[0][j] == '1') {
                 ufSet.union(0, j - 1, 0, j);
             }
         }
+        // union the 1st column
         for (int i = 1; i < row; i++) {
             if (grid[i - 1][0] == '1' && grid[i][0] == '1') {
                 ufSet.union(i - 1, 0, i, 0);
             }
         }
+        // union other cells
         for (int i = 1; i < row; i++) {
             for (int j = 1; j < col; j++) {
                 if (grid[i][j] == '1') {
@@ -167,32 +177,32 @@ public class Code03_NumberOfIslands {
             }
         }
 
-        public int findHead(int i) {
-            int pi = 0;
-            while (parent[i] != i) {
-                path[pi++] = i;
-                i = parent[i];
+        public int findHead(int e) {
+            int idx = 0;
+            while (parent[e] != e) {
+                path[idx++] = e;
+                e = parent[e];
             }
-            for (pi--; pi >= 0; pi--) {
-                parent[path[pi]] = i;
+            for (idx--; idx >= 0; idx--) {
+                parent[path[idx]] = e;
             }
-            return i;
+            return e;
         }
 
         public void union(int r1, int c1, int r2, int c2) {
             int a = r1 * col + c1;
             int b = r2 * col + c2;
-            int pa = findHead(a);
-            int pb = findHead(b);
-            if (pa != pb) {
-                if (size[pa] >= size[pb]) {
-                    parent[pb] = pa;
-                    size[pa] += size[pb];
-                    size[pb] = 0;
+            int ha = findHead(a);
+            int hb = findHead(b);
+            if (ha != hb) {
+                if (size[ha] >= size[hb]) {
+                    parent[hb] = ha;
+                    size[ha] += size[hb];
+                    size[hb] = 0;
                 } else {
-                    parent[pa] = pb;
-                    size[pb] += size[pa];
-                    size[pa] = 0;
+                    parent[ha] = hb;
+                    size[hb] += size[ha];
+                    size[ha] = 0;
                 }
                 numSets--;
             }
@@ -204,6 +214,7 @@ public class Code03_NumberOfIslands {
     }
 
 
+    // ver. 3
     public static int numIslands3(char[][] grid) {
         int row = grid.length;
         int col = grid[0].length;
@@ -226,7 +237,7 @@ public class Code03_NumberOfIslands {
         if (grid[i][j] != '1') {
             return;
         }
-        grid[i][j] = 'd';
+        grid[i][j] = 'm';  // mark
         infect(i - 1, j, grid);
         infect(i, j - 1, grid);
         infect(i + 1, j, grid);
