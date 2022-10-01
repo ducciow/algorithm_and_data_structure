@@ -9,8 +9,8 @@ import java.util.PriorityQueue;
  * @Description: A gold bar needs to be split into segments with corresponding lengths indicated in an array. Each
  *      splitting costs the equal value to the length of segment that is operated on. Return the minimum cost of
  *      splitting this gold bar.
- * @Note:   Sol.1. Greedy strategy: Huffman Coding.
- *          Sol.2. Brute force.
+ * @Note:   Sol1. Greedy strategy: Huffman Coding.
+ *          Sol2. Brute force.
  */
 public class Code03_SplitGold {
 

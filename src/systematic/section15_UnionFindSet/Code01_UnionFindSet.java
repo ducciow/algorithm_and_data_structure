@@ -7,15 +7,19 @@ import java.util.Stack;
 /**
  * @Author: duccio
  * @Date: 14, 04, 2022
- * @Description: Implementation of UnionFindSet, where two functions -- isSameSet() and union(), are mandatory, and the
- *      expected time complexity of them are O(1).
- * @Note:   To achieve expected O(1), see findHead().
+ * @Description: Implementation of UnionFindSet, where two functions -- isSameSet() and union() are mandatory,
+ *      and the expected time complexity is O(1).
+ * @Note:   - Three HashMaps are required:
+ *              1. nodeMap, which maps any given value into a wrapper Node class.
+ *              2. parentMap, which maps every node into its parent, and the parent of a head node is itself.
+ *              3. sizeMap, which maps every head node into the size of the set it represents.
+ *          - The key to achieve expected O(1) lies in findHead(), which flattens the inner structure of a set.
  */
 public class Code01_UnionFindSet {
 
     public static class UnionFindSet<V> {
 
-        // inner class
+        // wrapper class
         private static class Node<V> {
             V val;
 
@@ -35,13 +39,13 @@ public class Code01_UnionFindSet {
             for (V v : values) {
                 Node<V> node = new Node<>(v);
                 nodeMap.put(v, node);
-                parentMap.put(node, node);
+                parentMap.put(node, node);  // init the parent to be itself
                 sizeMap.put(node, 1);
             }
         }
 
         public Node<V> findHead(Node<V> node) {
-            // store all nodes along the path to head
+            // store all nodes along the path
             Stack<Node<V>> stack = new Stack<>();
             while (parentMap.get(node) != node) {
                 stack.push(node);

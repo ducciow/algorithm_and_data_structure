@@ -10,10 +10,11 @@ import java.util.Stack;
  *      friend circles, within which evey person directly or indirectly knows each other.
  *      https://leetcode.com/problems/number-of-provinces/
  * @Note:   Ver1. Use classic UnionFindSet.
- *          Ver2. Use modified UnionFindSet. Directly use 1-d array instead of map.
+ *          Ver2. Use modified UnionFindSet. Use 1-d array instead of HashMap.
  */
 public class Code02_FriendCircles {
 
+    // ver. 1
     public int findCircleNum1(int[][] M) {
         if (M == null || M.length == 0) {
             return 0;
@@ -79,6 +80,7 @@ public class Code02_FriendCircles {
     }
 
 
+    // ver. 2
     public int findCircleNum2(int[][] M) {
         if (M == null || M.length == 0) {
             return 0;
@@ -114,30 +116,30 @@ public class Code02_FriendCircles {
             }
         }
 
-        public int findHead(int i) {
-            int pi = 0;
-            while (parent[i] != i) {
-                path[pi++] = i;
-                i = parent[i];
+        public int findHead(int e) {
+            int idx = 0;
+            while (parent[e] != e) {
+                path[idx++] = e;
+                e = parent[e];
             }
-            for (pi--; pi >= 0; pi--) {
-                parent[path[pi]] = i;
+            for (idx--; idx >= 0; idx--) {
+                parent[path[idx]] = e;
             }
-            return i;
+            return e;
         }
 
         public void union(int a, int b) {
-            int pa = findHead(a);
-            int pb = findHead(b);
-            if (pa != pb) {
-                if (size[pa] >= size[pb]) {
-                    parent[pb] = pa;
-                    size[pa] += size[pb];
-                    size[pb] = 0;
+            int ha = findHead(a);
+            int hb = findHead(b);
+            if (ha != hb) {
+                if (size[ha] >= size[hb]) {
+                    parent[hb] = ha;
+                    size[ha] += size[hb];
+                    size[hb] = 0;
                 } else {
-                    parent[pa] = pb;
-                    size[pb] += size[pa];
-                    size[pa] = 0;
+                    parent[ha] = hb;
+                    size[hb] += size[ha];
+                    size[ha] = 0;
                 }
                 numSets--;
             }

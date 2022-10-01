@@ -8,8 +8,8 @@ import java.util.Comparator;
  * @Date: 14, 04, 2022
  * @Description: Given an array of meetings, where each meeting has start time and end time in forms of integers,
  *      return the maximum number of meetings that can take place without overlap.
- * @Note:   Sol.1. Greedy strategy: prioritize meetings with earlier end time.
- *          Sol.2. Brute force.
+ * @Note:   Sol1. Greedy strategy: prioritize meetings with earlier end time.
+ *          Sol2. Brute force.
  */
 public class Code02_SlotArrange {
 

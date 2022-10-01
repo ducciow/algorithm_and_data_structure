@@ -8,8 +8,8 @@ import java.util.TreeSet;
  * @Author: duccio
  * @Date: 13, 04, 2022
  * @Description: Given an array of strings, concatenate them together in any order. Return the lowest lexicography.
- * @Note:   Sol.1. Greedy with sorting strategy: str1 + str2 < str2 + str1.
- *          Sol.2. Permutation.
+ * @Note:   Sol1. Greedy with sorting strategy: str1 + str2 < str2 + str1.
+ *          Sol2. Permutation.
  */
 public class Code01_LowestLexicography {
 

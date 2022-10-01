@@ -8,13 +8,13 @@ import java.util.HashSet;
  * @Description: Given a string of 'x' and '.', where 'x' refers to wall that cannot put light and '.' refers to road
  *      that can put light on. A light at index i can light up three positions: i-1, i, i+1. Requiring all roads to be
  *      lighten up, return the minimum number of lights needed.
- * @Note:   Sol. 1. Greedy strategy:
- *                      - Discuss based on whether i, i+1 and i+2 are '.'.
- *                      - For implementation, be aware of boundary, and no need to check i+2, because if i and i+1 are
- *                        '.', the light will be put on i+1 and it lights up i+2 anyway.
- *          Sol. 2. Brute force:
- *                      - Restore the arrangement after changing the arrangement.
- *          Sol. 3. Dynamic programming (see later section).
+ * @Note:   Sol1. Greedy strategy:
+ *                  - Discuss based on whether i, i+1 and i+2 are '.'.
+ *                  - For implementation, be aware of boundary, and no need to check i+2, because if i and i+1 are
+ *                    '.', the light will be put on i+1 and it lights up i+2 anyway.
+ *          Sol2. Brute force:
+ *                  - Restore the arrangement after changing the arrangement.
+ *          Sol3. Dynamic programming (see later section).
  */
 public class Code05_MinLight {
 
