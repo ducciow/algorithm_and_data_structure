@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class Code01_GraphDefinition {
 
+    // structure definition
     public static class Graph {
         HashMap<Integer, Node> nodeMap;
         HashSet<Edge> edges;
@@ -24,11 +25,11 @@ public class Code01_GraphDefinition {
     }
 
     public static class Node {
-        int value;
-        int inDegree;
-        int outDegree;
-        List<Node> nexts;
-        List<Edge> edges;
+        int value;          // for every node
+        int inDegree;       // for to node
+        int outDegree;      // for from node
+        List<Node> nexts;   // for from node
+        List<Edge> edges;   // for from node
 
         public Node(int val) {
             value = val;

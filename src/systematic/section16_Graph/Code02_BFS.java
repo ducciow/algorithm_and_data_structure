@@ -8,10 +8,10 @@ import java.util.Queue;
 /**
  * @Author: duccio
  * @Date: 18, 04, 2022
- * @Description: Breadth first search of a graph
- * @Note:   1. Use a queue for BFS, and a set for marking processed item.
- *          2. Items are added to queue and set at the same time.
- *          3. Process an item when poll.
+ * @Description: Breadth First Search of a graph.
+ * @Note:   a) Use a queue for BFS, and a set for marking processed item.
+ *          b) Items are added to queue and set at the same time.
+ *          c) Process an item when POLL.
  */
 public class Code02_BFS {
 
@@ -25,7 +25,7 @@ public class Code02_BFS {
         set.add(start);
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
-            System.out.println(cur.value);
+            System.out.println(cur.value);  // process when poll
             for (Node next : cur.nexts) {
                 if (!set.contains(next)) {
                     queue.add(next);
