@@ -9,9 +9,12 @@ import java.util.*;
  * @Author: duccio
  * @Date: 18, 04, 2022
  * @Description: For each directed edge A -> B in a graph, A must be processed before B.
- * @Note:   1. Only process nodes with 0 inDegree.
- *          2. Use a HashMap dynamically storing inDegree, and use a queue storing nodes with 0 inDegree.
- *          3. Each time after processing a node, update inDegree of its nexts.
+ * @Note:   - Only process nodes with 0 inDegree.
+ *          - To do that:
+ *              a) Use a HashMap dynamically storing inDegree.
+ *              b) Use a queue dynamically storing nodes with 0 inDegree.
+ *              c) Each time after processing a node, update inDegree of its next nodes.
+ *              d) When update next nodes, query from HashMap rather than directly from node attribute.
  */
 public class Code04_TopologySearch {
 
@@ -29,11 +32,11 @@ public class Code04_TopologySearch {
         }
         List<Node> ret = new ArrayList<>();
         while (!zeroInQ.isEmpty()) {
-            Node cur = zeroInQ.poll();
-            ret.add(cur);
-            for (Node next : cur.nexts) {
+            Node node = zeroInQ.poll();
+            ret.add(node);
+            for (Node next : node.nexts) {
                 inMap.put(next, inMap.get(next) - 1);
-                if (next.inDegree == 0) {
+                if (inMap.get(next) == 0) {
                     zeroInQ.add(next);
                 }
             }

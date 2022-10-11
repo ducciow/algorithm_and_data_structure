@@ -6,18 +6,21 @@ import java.util.HashMap;
 /**
  * @Author: duccio
  * @Date: 18, 04, 2022
- * @Description: Topology search for a given graph representation, and inDegree is not needed.
+ * @Description: Topology search for a given graph representation where in-degree is not given.
  *      https://www.lintcode.com/problem/topological-sorting
- * @Note:   Ver1. If the longest path from A is deeper than from B, then A has smaller topological order.
- *          Ver2. If the number of following nodes after A is bigger than B, then A has smaller topological order. <---
- *          ======
- *          1. Use an Info-ish class for wrapping depth/nodes.
- *          2. Use long instead of int if number is potentially large. In this case, the self-defined comparator needs
- *             modification because Comparator returns int.
+ * @Note:   Sol1. If the longest path from node A is deeper than from B, then A has smaller topological order
+ *                (not implemented here, similar to sol 2).
+ *          Sol2. If the number of following nodes after node A is bigger than B, then A has smaller topological order.
+ *                - Use an Info-ish class for wrapping number of following nodes.
+ *                - Use a HashMap for storing info.
+ *                - For collecting info of a node, recursively processing all following nodes.
+ *                - Use long instead of int if number is potentially large. In this case, the self-defined comparator
+ *                  needs modification because Comparator returns int.
  */
 public class Code05_TopologySearchII {
 
-    // given a graph representation
+    // a graph node representation
+    // a graph is given by a list of such nodes
     public static class DirectedGraphNode {
         public int label;
         public ArrayList<DirectedGraphNode> neighbors;
@@ -32,41 +35,44 @@ public class Code05_TopologySearchII {
         if (graph == null) {
             return null;
         }
-        HashMap<DirectedGraphNode, Record> recMap = new HashMap<>();
+        // collect info in a HashMap
+        HashMap<DirectedGraphNode, Info> infoMap = new HashMap<>();
         for (DirectedGraphNode node : graph) {
-            process(node, recMap);
+            process(node, infoMap);
         }
-        ArrayList<Record> recArr = new ArrayList<>(recMap.values());
-        recArr.sort((r1, r2) -> (r1.nodes >= r2.nodes ? -1 : 1));
+        // add all info to a list, and sort by number of following nodes
+        ArrayList<Info> infoList = new ArrayList<>(infoMap.values());
+        infoList.sort((r1, r2) -> (r1.nodes >= r2.nodes ? -1 : 1));
+
         ArrayList<DirectedGraphNode> ret = new ArrayList<>();
-        for (Record record : recArr) {
-            ret.add(record.node);
+        for (Info info : infoList) {
+            ret.add(info.node);
         }
         return ret;
     }
 
-    public static class Record {
+    public static class Info {
         DirectedGraphNode node;
         long nodes;
 
-        public Record(DirectedGraphNode n, long d) {
+        public Info(DirectedGraphNode n, long d) {
             node = n;
             nodes = d;
         }
     }
 
-    public static Record process(DirectedGraphNode cur, HashMap<DirectedGraphNode, Record> recMap) {
-        if (recMap.containsKey(cur)) {
-            return recMap.get(cur);
+    public static Info process(DirectedGraphNode node, HashMap<DirectedGraphNode, Info> infoMap) {
+        if (infoMap.containsKey(node)) {
+            return infoMap.get(node);
         }
         long nodes = 0;
-        for (DirectedGraphNode next : cur.neighbors) {
-            nodes += process(next, recMap).nodes;
-            // for ver1. maxDepth = Math.max(maxDepth, process(next, recMap).depth)
+        for (DirectedGraphNode next : node.neighbors) {
+            nodes += process(next, infoMap).nodes;
+            // for sol 1, maxDepth = Math.max(maxDepth, process(next, infoMap).depth)
         }
-        Record ret = new Record(cur, nodes + 1);
-        recMap.put(cur, ret);
-        return ret;
+        Info info = new Info(node, nodes + 1);
+        infoMap.put(node, info);
+        return info;
     }
 
 }
