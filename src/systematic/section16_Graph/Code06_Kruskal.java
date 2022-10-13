@@ -9,11 +9,12 @@ import java.util.*;
  * @Author: duccio
  * @Date: 19, 04, 2022
  * @Description: Kruskal algorithm that generates a minimum weighted tree from a weighted graph.
- * @Note:   Sort all edges with ascending weight. At each step, pick an edge and check if it forms a loop. If it is not,
- *              add it to the returning edge set.
- *          ======
- *          1. Use a PriorityQueue for storing all edges.
- *          2. Use a UnionFindSet storing all nodes, used for checking if an edge forms a loop.
+ * @Note:   a) Key idea:
+ *            - Sort all edges with ascending weight. At each step, pick an edge and check if it forms a loop.
+ *              If it is not, add it to the returning edge set.
+ *          b) For implementation:
+ *            - Use a PriorityQueue for storing all edges.
+ *            - Use a UnionFindSet storing all nodes, used for checking if an edge forms a loop.
  */
 public class Code06_Kruskal {
 
@@ -21,16 +22,20 @@ public class Code06_Kruskal {
         if (graph == null) {
             return null;
         }
+        // use a PriorityQueue for storing all edges with ascending weight
         PriorityQueue<Edge> pq = new PriorityQueue<>((e1, e2) -> (e1.weight - e2.weight));
         pq.addAll(graph.edges);
+        // use a UnionFindSet storing all nodes
         UFSet ufSet = new UFSet(graph.nodeMap.values());
+        // the returning set
         HashSet<Edge> ret = new HashSet<>();
+        // dynamically query each edge
         while (!pq.isEmpty()) {
-            Edge cur = pq.poll();
-            Node from = cur.from;
-            Node to = cur.to;
+            Edge edge = pq.poll();
+            Node from = edge.from;
+            Node to = edge.to;
             if (!ufSet.isSameSet(from, to)) {
-                ret.add(cur);
+                ret.add(edge);
                 ufSet.union(from, to);
             }
         }
@@ -38,7 +43,6 @@ public class Code06_Kruskal {
     }
 
     public static class UFSet {
-
         HashMap<Node, Node> parentMap;
         HashMap<Node, Integer> sizeMap;
 
@@ -68,14 +72,14 @@ public class Code06_Kruskal {
         }
 
         public void union(Node a, Node b) {
-            Node pa = findHead(a);
-            Node pb = findHead(b);
-            if (pa != pb) {
-                Node bigHead = sizeMap.get(pa) > sizeMap.get(pb) ? pa : pb;
-                Node smallHead = bigHead == pa ? pb : pa;
-                parentMap.put(pb, pa);
-                sizeMap.put(pa, sizeMap.get(pa) + sizeMap.get(pb));
-                sizeMap.remove(pb);
+            Node ha = findHead(a);
+            Node hb = findHead(b);
+            if (ha != hb) {
+                Node bigHead = sizeMap.get(ha) > sizeMap.get(hb) ? ha : hb;
+                Node smallHead = bigHead == ha ? hb : ha;
+                parentMap.put(smallHead, bigHead);
+                sizeMap.put(bigHead, sizeMap.get(bigHead) + sizeMap.get(bigHead));
+                sizeMap.remove(smallHead);
             }
         }
     }
