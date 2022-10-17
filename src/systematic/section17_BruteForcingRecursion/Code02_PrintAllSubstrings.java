@@ -6,10 +6,11 @@ import java.util.List;
 /**
  * @Author: duccio
  * @Date: 21, 04, 2022
- * @Description: Given a string, print all of its substrings. A subsequence of a string is a new string generated from
- *      the original string with some characters (can be none) deleted without changing the relative order of the
- *      remaining characters, eg, "ace" is a subsequence of "abcde".
- * @Note:   To get all substrings without repeat, use HashSet instead of List for storing answer.
+ * @Description: Given a string, print all of its substrings. A substring (subsequence of a string) is a new string
+ *      generated from the original string with some characters (can be none) deleted without changing the relative
+ *      order of the remaining characters, eg, "ace" is a subsequence of "abcde".
+ * @Note:   - Use a List for storing the answer, or a HashSet if the answer needs to be unique.
+ *          - Idea: keep the current char or not.
  */
 public class Code02_PrintAllSubstrings {
 

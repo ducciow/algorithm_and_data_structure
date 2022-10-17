@@ -7,9 +7,12 @@ import java.util.List;
  * @Author: duccio
  * @Date: 21, 04, 2022
  * @Description: Given a string, print all of its permutations.
- * @Note:   Ver1. naive recursion by deleting and adding back each character.
- *          Ver2. improved by swapping each character.
- *          Ver3. no repeat by Ver2 plus pruning.
+ * @Note:   Ver1. Naive recursion by deleting and adding back each character, which must use a List for manipulating
+ *                all characters, and each processing processes all remaining elements.
+ *          Ver2. Improved by using a char[] with index instead of a list. The trick is to swap the current processing
+ *                char with following chars, then swap back afterwards.
+ *          Ver3. No repeat by Ver2 and pruning, which marks visited chars during each processing and does no swapping
+ *                for visited chars.
  */
 public class Code03_PrintAllPermutations {
 
@@ -30,6 +33,7 @@ public class Code03_PrintAllPermutations {
         }
     }
 
+    // ver. 1
     public static List<String> permutation1(String str) {
         List<String> ans = new ArrayList<>();
         if (str == null) {
@@ -56,6 +60,7 @@ public class Code03_PrintAllPermutations {
         }
     }
 
+    // ver. 2
     public static List<String> permutation2(String str) {
         List<String> ans = new ArrayList<>();
         if (str == null) {
@@ -84,6 +89,7 @@ public class Code03_PrintAllPermutations {
         chars[j] = tmp;
     }
 
+    // ver. 3
     public static List<String> permutationNoRepeat(String str) {
         List<String> ans = new ArrayList<>();
         if (str == null) {
@@ -98,7 +104,7 @@ public class Code03_PrintAllPermutations {
         if (idx == chars.length - 1) {
             ans.add(String.valueOf(chars));
         } else {
-            boolean[] visited = new boolean[256];
+            boolean[] visited = new boolean[256];  // mark visited chars
             for (int i = idx; i < chars.length; i++) {
                 if (visited[chars[i]]) {
                     continue;

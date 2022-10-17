@@ -3,7 +3,7 @@ package systematic.section17_BruteForcingRecursion;
 /**
  * @Author: duccio
  * @Date: 21, 04, 2022
- * @Description: Hanoi Tower
+ * @Description: Hanoi Tower.
  * @Note:   Ver1. naive recursion.
  *          Ver2. improved.
  */
@@ -15,6 +15,7 @@ public class Code01_HanoiTower {
         hanoi2(3);
     }
 
+    // ver. 1
     public static void hanoi1(int N) {
         left2right(N);
     }
@@ -79,6 +80,7 @@ public class Code01_HanoiTower {
         }
     }
 
+    // ver. 2
     public static void hanoi2(int N) {
         move(N, "left", "right", "middle");
     }

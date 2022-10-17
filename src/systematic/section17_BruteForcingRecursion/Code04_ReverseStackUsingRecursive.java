@@ -6,8 +6,15 @@ import java.util.Stack;
  * @Author: duccio
  * @Date: 21, 04, 2022
  * @Description: Reversing a stack using recursion solely, ie. no extra data structures.
- * @Note:   1. Get the bottom item, reverse items above, and put the bottom back.
- *          2. To get the bottom item, pop the top item, recursively call for bottom, nd put the top back.
+ * @Note:   - Key idea, recursively:
+ *              1. get and keep the bottom item.
+ *              2. reverse by calling itself.
+ *              3. push the bottom back.
+ *          - To get the bottom item, define bottom(), which recursively:
+ *              1. get and keep the top item.
+ *              2. get the bottom item by calling itself.
+ *              3. push the top back.
+ *              4. return the bottom.
  */
 public class Code04_ReverseStackUsingRecursive {
 
