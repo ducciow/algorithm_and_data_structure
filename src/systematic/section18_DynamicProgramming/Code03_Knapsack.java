@@ -5,7 +5,11 @@ package systematic.section18_DynamicProgramming;
  * @Date: 25, 04, 2022
  * @Description: Knapsack problem, of which all items have non-negative weights and values.
  * @Note:   Ver1. Brute force.
+ *                - base case 1: capacity < 0.
+ *                - base case 2: no item is left.
  *          Ver2. DP.
+ *                - base case 1 is equivalent to boundary checking when fill in cells.
+ *                - although table row's range is in [0, N-1], the actual table has N+1 rows that involves base case 2.
  *          ======
  *          Attempt from left to right, ie. discard or bring the current item.
  */

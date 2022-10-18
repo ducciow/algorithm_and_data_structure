@@ -79,7 +79,7 @@ public class Code01_RobotWalk {
         int[][] dp = new int[N + 1][K + 1];
         // base case
         dp[aim][0] = 1;
-        // fill other cells
+        // fill other cells, from left to right, ie, column-wise
         for (int k = 1; k <= K; k++) {
             dp[1][k] = dp[2][k - 1];
             for (int cur = 2; cur < N; cur++) {

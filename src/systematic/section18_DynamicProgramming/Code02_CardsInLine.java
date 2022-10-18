@@ -4,14 +4,14 @@ package systematic.section18_DynamicProgramming;
  * @Author: duccio
  * @Date: 22, 04, 2022
  * @Description: Two players are taking cards alternatively from a line of cards. Each time only cards at head or tail
- *      can be taken. Each card has a positive face value, and the player with higher accumulative value will win. Known
- *      that both players are smart. Return the winner's accumulative value.
- * @Note:   Ver1. Brute forcing recursion by two processes for first/second move respectively.
- *                Player1 maximizes its options.
- *                Player2 maximizes its options after Player1 trying to minimize Player2's maximization.
+ *      can be taken. Each card has a positive face value, and the player with higher accumulative value will win. If
+ *      both players are smart. Return the winner's accumulative value.
+ * @Note:   Ver1. Brute forcing recursion by two processes for the first/second move respectively.
+ *                - Player1 maximizes its options.
+ *                - Player2 maximizes its options after Player1 trying to minimize Player2's maximization.
  *          Ver2. Use two naive cache tables.
  *          Ver3. DP, where varying arguments are two indices that cards can be taken.
- *                No need to initialize all cells to be -1.
+ *                - No need to initialize all cells to be -1.
  *          ======
  *          Attempt on a shrinking range.
  */
@@ -38,18 +38,19 @@ public class Code02_CardsInLine {
         if (L == R) {
             return cards[L];
         }
-        int option1 = cards[L] + secondMove1(cards, L + 1, R);
-        int option2 = cards[R] + secondMove1(cards, L, R - 1);
+        int option1 = cards[L] + secondMove1(cards, L + 1, R);  // plus cards[L]
+        int option2 = cards[R] + secondMove1(cards, L, R - 1);  // plus cards[R]
         return Math.max(option1, option2);
     }
 
-    // the second move is allowed to wait for a card from position L or R is taken, and then becomes the first move
+    // the second move is allowed to wait for a card from position L or R is taken
+    // and then becomes the first move
     private static int secondMove1(int[] cards, int L, int R) {
         if (L == R) {
             return 0;
         }
-        int option1 = firstMove1(cards, L + 1, R);
-        int option2 = firstMove1(cards, L, R - 1);
+        int option1 = firstMove1(cards, L + 1, R);  // no plus
+        int option2 = firstMove1(cards, L, R - 1);  // no plus
         return Math.min(option1, option2);
     }
 
@@ -114,11 +115,12 @@ public class Code02_CardsInLine {
         // base case when L == R
         for (int d = 0; d < N; d++) {
             table1[d][d] = cards[d];
+            // table2[d][d] are already 0s
         }
-        // fill the table diagonally from center to top-right
-        for (int startCol = 1; startCol < N; startCol++) {
+        // fill both tables diagonally from center to top-right
+        for (int col = 1; col < N; col++) {
             int L = 0;
-            int R = startCol;
+            int R = col;
             while (R < N) {
                 table1[L][R] = Math.max(cards[L] + table2[L + 1][R], cards[R] + table2[L][R - 1]);
                 table2[L][R] = Math.min(table1[L][R - 1], table1[L + 1][R]);

@@ -11,7 +11,7 @@ package systematic.section18_DynamicProgramming;
  * @Note:   Key idea: 1. the first char costs one turn anyway.
  *                    2. there exists one position, where any turn does not cross it.
  */
-public class LaterCode01_StrangePrinterCode01_StrangePrinter {
+public class LaterCode01_StrangePrinter {
 
     public static int printer1(String s) {
         if (s == null || s.length() == 0) {
