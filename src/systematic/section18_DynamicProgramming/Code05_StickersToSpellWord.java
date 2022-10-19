@@ -11,9 +11,10 @@ import java.util.HashMap;
  *      https://leetcode.com/problems/stickers-to-spell-word
  * @Note:   Ver1. Brute force. (exceed time limit of leetcode test)
  *          Ver2. Brute force with pruning, where stickers are converted to integer count array. (exceed time limit)
- *          Ver3. Use HashMap for lookup.
+ *          Ver3. Use a HashMap for lookup.
  *          ======
- *          Cannot be optimized to DP.
+ *          - Ordering of chars does not matter.
+ *          - Cannot be optimized to DP.
  */
 public class Code05_StickersToSpellWord {
 
@@ -26,16 +27,18 @@ public class Code05_StickersToSpellWord {
         if (target.length() == 0) {
             return 0;
         }
-        int min = Integer.MAX_VALUE;
+        int ans = Integer.MAX_VALUE;
         for (String sticker : stickers) {
-            String next = minus(target, sticker);
-            if (next.length() != target.length()) {
-                min = Math.min(min, process1(stickers, next));
+            // get remaining target after consuming this sticker
+            String remain = minus(target, sticker);
+            if (remain.length() != target.length()) {
+                ans = Math.min(ans, process1(stickers, remain));
             }
         }
-        return min == Integer.MAX_VALUE ? min : min + 1;
+        return ans == Integer.MAX_VALUE ? ans : ans + 1;
     }
 
+    // remaining target after consuming a sticker
     public static String minus(String str1, String str2) {
         int[] charCount = new int[26];
         for (char c : str1.toCharArray()) {
@@ -70,27 +73,31 @@ public class Code05_StickersToSpellWord {
         if (target.length() == 0) {
             return 0;
         }
+        // convert target to integer count
         int[] targetCount = new int[26];
         for (char c : target.toCharArray()) {
             targetCount[c - 'a']++;
         }
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < stickers.length; i++) {
-            int[] sticker = stickers[i];
-            // pruning
-            if (sticker[target.toCharArray()[0] - 'a'] > 0) {
+        int ans = Integer.MAX_VALUE;
+        // iterate through all stickers
+        for (int[] stickerCount : stickers) {
+            // pruning by checking if the first target char appears in this sticker
+            if (stickerCount[target.toCharArray()[0] - 'a'] > 0) {
+                // get the remain target
                 StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < 26; j++) {
-                    if (targetCount[j] > 0) {
-                        for (int k = 0; k < targetCount[j] - sticker[j]; k++) {
-                            sb.append((char) ('a' + j));
+                for (int i = 0; i < 26; i++) {
+                    if (targetCount[i] > 0) {
+                        // directly by the corresponding number gap
+                        for (int j = 0; j < targetCount[i] - stickerCount[i]; j++) {
+                            sb.append((char) ('a' + i));
                         }
                     }
                 }
-                min = Math.min(min, process2(stickers, sb.toString()));
+                String remain = sb.toString();
+                ans = Math.min(ans, process2(stickers, remain));
             }
         }
-        return min == Integer.MAX_VALUE ? min : min + 1;
+        return ans == Integer.MAX_VALUE ? ans : ans + 1;
     }
 
     public static int minStickers3(String[] stickers, String target) {
@@ -118,19 +125,18 @@ public class Code05_StickersToSpellWord {
             targetCount[c - 'a']++;
         }
         int min = Integer.MAX_VALUE;
-        for (int i = 0; i < stickers.length; i++) {
-            int[] sticker = stickers[i];
-            // pruning
-            if (sticker[target.toCharArray()[0] - 'a'] > 0) {
+        for (int[] stickerCount : stickers) {
+            if (stickerCount[target.toCharArray()[0] - 'a'] > 0) {
                 StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < 26; j++) {
-                    if (targetCount[j] > 0) {
-                        for (int k = 0; k < targetCount[j] - sticker[j]; k++) {
-                            sb.append((char) ('a' + j));
+                for (int i = 0; i < 26; i++) {
+                    if (targetCount[i] > 0) {
+                        for (int j = 0; j < targetCount[i] - stickerCount[i]; j++) {
+                            sb.append((char) ('a' + i));
                         }
                     }
                 }
-                min = Math.min(min, process3(stickers, sb.toString(), lookup));
+                String remain = sb.toString();
+                min = Math.min(min, process3(stickers, remain, lookup));
             }
         }
         int ans = min == Integer.MAX_VALUE ? min : min + 1;

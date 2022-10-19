@@ -4,19 +4,15 @@ package systematic.section18_DynamicProgramming;
  * @Author: duccio
  * @Date: 25, 04, 2022
  * @Description: Given a string of non-negative integers, convert it to a string of letters according to the rule that
- *      1 -> a, 2-> b, ..., 26 -> z. Return the number of converting ways. Eg., "111" -> "aaa", "qa", "aq" giving 3.
+ *      1 -> a, 2-> b, ..., 26 -> z. Return the number of converting ways. Eg., "111" -> "aaa", "qa", "aq" returns 3.
  * @Note:   Ver1. Brute force.
+ *                - Base case where index == str.length returns 1 meaning there is one valid conversion.
+ *                - Invalid cases:
+ *                  a) chars[idx] is 0.
+ *                  b) chars[idx] * 10 + chars[idx+1] > 26.
  *          Ver2. DP.
- *          ======
- *          1. Base case where index == str.length returns 1 meaning there is one valid conversion.
- *          2. Check if current character is 0, which cannot be converted.
- *          3. Check the combination of characters at index and index+1 is less than 27.
  */
 public class Code04_ConvertToLetterString {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int ways1(String str) {
         if (str == null || str.length() == 0) {
@@ -45,7 +41,9 @@ public class Code04_ConvertToLetterString {
         }
         char[] chars = str.toCharArray();
         int[] dp = new int[chars.length + 1];
+        // base case
         dp[chars.length] = 1;
+        // filling in
         for (int idx = chars.length - 1; idx >= 0; idx--) {
             if (chars[idx] == '0') {
                 continue;
@@ -67,9 +65,10 @@ public class Code04_ConvertToLetterString {
         return String.valueOf(chars);
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxLen = 30;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             String str = genRandStr(maxLen);
             int ans1 = ways1(str);

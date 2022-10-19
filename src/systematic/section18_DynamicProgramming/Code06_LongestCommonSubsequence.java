@@ -3,16 +3,17 @@ package systematic.section18_DynamicProgramming;
 /**
  * @Author: duccio
  * @Date: 25, 04, 2022
- * @Description: Given two strings2, return the length of their longest common subsequence. A subsequence of a string
- *      is a new string generated from the original string with some characters (can be none) deleted without changing
- *      the relative order of the remaining characters, eg, "ace" is a subsequence of "abcde".
+ * @Description: Given two strings str1 and str2, return the length of their longest common subsequence. A subsequence
+ *      of a string is a new string generated from the original string with some characters (can be none) deleted
+ *      without changing the relative order of the remaining characters, eg, "ace" is a subsequence of "abcde".
  *      https://leetcode.com/problems/longest-common-subsequence/
  * @Note:   Ver1. Brute force. (exceed time limit)
  *          Ver2. DP.
  *          ======
- *          1. Varying arguments are indices backwards.
- *          2. At each step, there are three possibilities, and they are not disjoint. Maximization among them did not
- *             affect the answer.
+ *          - Varying arguments are idx1 and idx2 backwards, ie., both from length-1 to 0. So that the base case is
+ *            when both idx1 and idx2 are 0.
+ *          - At each processing step, there are three possibilities, and they are not disjoint. Maximization
+ *            among them did not affect the answer.
  *          ======
  *          Sample correspondence based on respective positions.
  */
