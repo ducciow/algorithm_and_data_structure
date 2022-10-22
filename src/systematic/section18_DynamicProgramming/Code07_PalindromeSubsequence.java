@@ -7,9 +7,14 @@ package systematic.section18_DynamicProgramming;
  *      https://leetcode.com/problems/longest-palindromic-subsequence/
  * @Note:   Ver1. Brute force.
  *          Ver2. DP.
+ *                - the ordering of filling in is bounded from the diagonal.
  *          ======
- *          Here attempts within a range of the string. Another idea is to find the longest common subsequence between
- *      its reverse string and itself.
+ *          - Varying arguments are index L and R.
+ *          - Base cases: L == R, and L+1 == R.
+ *          - At each processing step, there are three possibilities.
+ *          ======
+ *          - Here attempts within a range of the string.
+ *          - Another idea is to find the longest common subsequence between its reverse string and itself.
  */
 public class Code07_PalindromeSubsequence {
 
@@ -40,13 +45,17 @@ public class Code07_PalindromeSubsequence {
         char[] chars = s.toCharArray();
         int N = chars.length;
         int[][] dp = new int[N][N];
+        // base case 1
         for (int i = 0; i < N; i++) {
             dp[i][i] = 1;
         }
+        // base case 2
         for (int j = 1; j < N; j++) {
             dp[j - 1][j] = chars[j - 1] == chars[j] ? 2 : 1;
         }
+        // from bottom to up
         for (int L = N - 3; L >= 0; L--) {
+            /// from diagonal to right
             for (int R = L + 2; R < N; R++) {
                 int p1 = dp[L + 1][R];
                 int p2 = dp[L][R - 1];
