@@ -6,17 +6,15 @@ import java.util.Map;
 /**
  * @Author: duccio
  * @Date: 28, 04, 2022
- * @Description: Given an array of coins with repeated coin values, where coins with same value are treated as the same,
- *      and a target value. Return the number of ways using coins chosen from the array that sum up to the target value.
+ * @Description: Given an array of coins, where coins with same value are treated as the same, and a target value,
+ *      return the number of ways using coins chosen from the array that sum up to the target value.
  * @Note:   Ver1. brute force.
  *          Ver2. DP with loop for a cell.
- *          Ver3, Dp without loop for a cell.
+ *          Ver3, DP without loop for a cell.
+ *          ======
+ *          - Before processing, classify all the coins into aligned values[] and nums[].
  */
 public class Code13_CoinWaysLimitedRepeat {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Info {
         int[] values;
@@ -34,10 +32,10 @@ public class Code13_CoinWaysLimitedRepeat {
             int N = map.size();
             values = new int[N];
             nums = new int[N];
-            int idx = 0;
+            int i = 0;
             for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-                values[idx] = entry.getKey();
-                nums[idx++] = entry.getValue();
+                values[i] = entry.getKey();
+                nums[i++] = entry.getValue();
             }
         }
     }
@@ -94,10 +92,14 @@ public class Code13_CoinWaysLimitedRepeat {
         dp[N][0] = 1;
         for (int i = N - 1; i >= 0; i--) {
             for (int j = 0; j <= target; j++) {
+                // 1) depends on the cell just under it
                 dp[i][j] = dp[i + 1][j];
+                // 2) plus the cell in a former position of the same row
                 if (j - values[i] >= 0) {
                     dp[i][j] += dp[i][j - values[i]];
                 }
+                // 3) minus an extra cell that contributes to 2) but not to the current cell
+                //    due to there are at most nums[i] coins of this value
                 if (j - (nums[i] + 1) * values[i] >= 0) {
                     dp[i][j] -= dp[i + 1][j - (nums[i] + 1) * values[i]];
                 }
@@ -116,10 +118,11 @@ public class Code13_CoinWaysLimitedRepeat {
         return arr;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int maxLen = 10;
         int maxValue = 20;
         int testTime = 10000;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int[] coins = randomArray(maxLen, maxValue);
             int target = (int) (Math.random() * maxValue);

@@ -3,8 +3,8 @@ package systematic.section18_DynamicProgramming;
 /**
  * @Author: duccio
  * @Date: 28, 04, 2022
- * @Description: Given an array of coins with repeated coin values, and a target value. Return the number of ways using
- *      coins chosen from the array that sum up to the target value.
+ * @Description: Given an array of coins (might has repeated coin values), and a target value, return the number of
+ *      ways using coins chosen from the array that sum up to the target value.
  * @Note:   Ver1. brute force.
  *          Ver2. DP.
  *          ======
@@ -12,11 +12,10 @@ package systematic.section18_DynamicProgramming;
  */
 public class Code11_CoinWays {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static int ways1(int[] coins, int target) {
+        if (coins == null || coins.length == 0 || target < 0) {
+            return 0;
+        }
         return process1(coins, 0, target);
     }
 
@@ -57,10 +56,11 @@ public class Code11_CoinWays {
         return arr;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int maxLen = 20;
         int maxValue = 30;
         int testTime = 10000;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int[] arr = randomArray(maxLen, maxValue);
             int target = (int) (Math.random() * maxValue);
