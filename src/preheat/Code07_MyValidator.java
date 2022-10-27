@@ -1,7 +1,5 @@
 package preheat;
 
-import preheat.Code04_InsertionSort;
-
 import java.util.Arrays;
 
 /**
