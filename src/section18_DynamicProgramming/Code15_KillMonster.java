@@ -10,19 +10,18 @@ package section18_DynamicProgramming;
  *          Ver3. DP without loop for a cell.
  *          Ver4. Compute the number of cases where the monster ending up with being alive.
  *          ======
- *          1. Sample correspondence based on respective positions.
- *          2. When count the number of cases where the monster will be killed, pruning directly returning 0 is wrong.
- *             Instead, pruning should return the number of all following cases, ie., power(N+1, remaining_num_hit).
- *          3. When optimizing the loop in dp, firstly make sure the dependent position exists in dp table, then make
- *             sure the compensate cell exists in dp table. In this problem, even the compensate cell is outside dp
- *             table, it also needs to perform compensation based on power(N+1, remaining_num_hit-1), because the
- *             pruning return is just it.
+ *          - Sample correspondence based on respective positions.
+ *          - The ordering of base cases matters.
+ *          - When count the number of cases where the monster will be killed, pruning directly returning 0 is wrong.
+ *            Instead, pruning should return the number of all following cases, ie., power(N+1, remaining_num_hit).
+ *          - When optimizing the loop in dp, firstly make sure the dependent position exists in dp table, then make
+ *            sure the compensation cell exists in dp table. In this problem, even the compensation cell is out of dp
+ *            table, it also needs to perform compensation based on power(N+1, remaining_num_hit-1), because the
+ *            pruning returnning is just as it !!!
+ *          - For ver.4 that computes the alive cases, the compensation logic is different, where out-of-dp-table cells
+ *            do not need to contribute further compensation !!!
  */
 public class Code15_KillMonster {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static double kill1(int M, int N, int K) {
         if (M < 1 || N < 1 || K < 1) {
@@ -105,9 +104,9 @@ public class Code15_KillMonster {
         for (int m = 1; m <= M; m++) {
             dp[0][m] = 1;
         }
-        for (int k = 0; k <= K; k++) {
-            dp[k][0] = 0;
-        }
+//        for (int k = 0; k <= K; k++) {
+//            dp[k][0] = 0;
+//        }
         for (int times = 1; times <= K; times++) {
             for (int hp = 1; hp <= M; hp++) {
                 dp[times][hp] = dp[times - 1][hp] + dp[times][hp - 1];
@@ -120,7 +119,7 @@ public class Code15_KillMonster {
     }
 
 
-    public static void validate() {
+    public static void main(String[] args) {
         int MMax = 10;
         int NMax = 10;
         int KMax = 10;

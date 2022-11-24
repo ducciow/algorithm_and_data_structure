@@ -4,12 +4,13 @@ package section18_DynamicProgramming;
  * @Author: duccio
  * @Date: 28, 04, 2022
  * @Description: There is a square of size M * N, and Bob starts on a given position. Bob can walk K steps in four
- *      directions, but if he walk outside the square, he will be dead. Return the probability of Bob being alive.
+ *      directions, but if he walks outside the square, he will be dead. Return the probability of Bob being alive.
  * @Note:   Ver1. brute force.
  *          Ver2. DP with an extra function checking boundaries.
  *          ======
- *          1. To get the probability, count number of valid ways, and divide by total number of cases.
- *          2. Use long instead of int for counting valid cases.
+ *          - To get the probability, count number of alive ways, and divide by total number of ways.
+ *          - The ordering of base cases matters.
+ *          - Use long instead of int for counting valid cases.
  */
 public class Code14_BobAlive {
 
