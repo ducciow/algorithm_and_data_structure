@@ -4,19 +4,15 @@ package section18_DynamicProgramming;
  * @Author: duccio
  * @Date: 29, 04, 2022
  * @Description: Given an array of coins with distinct values, where each type of coins can be used any times, and given
- *      a target value. Return the minimum number of coins used summing up to the target value.
+ *      a target value, return the minimum number of coins used summing up to the target value.
  * @Note:   Ver1. brute force.
  *          Ver2. DP with loop for a cell.
  *          Ver3. DP without loop for a cell.
  *          ======
- *          1. Similar to count ways, except minimizing returned values instead of summing up.
+ *          1. Similar to count ways, except that each process returns a minimized integer instead of summing up.
  *          2. When minimize according to the dependent cell, notice that it should add an extra 1.
  */
 public class Code16_MinCoinsNoLimit {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int min1(int[] coins, int target) {
         return process1(coins, 0, target);
@@ -45,9 +41,11 @@ public class Code16_MinCoinsNoLimit {
         }
         int N = coins.length;
         int[][] dp = new int[N + 1][target + 1];
+        // base case
         for (int j = 1; j <= target; j++) {
             dp[N][j] = Integer.MAX_VALUE;
         }
+        // filling in
         for (int i = N - 1; i >= 0; i--) {
             for (int j = 0; j <= target; j++) {
                 int ans = Integer.MAX_VALUE;
@@ -103,10 +101,11 @@ public class Code16_MinCoinsNoLimit {
         return arr;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int maxLen = 20;
         int maxValue = 30;
         int testTime = 10000;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int N = (int) (Math.random() * maxLen);
             int[] coins = randomArray(N, maxValue);

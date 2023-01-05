@@ -124,6 +124,7 @@ public class Code15_KillMonster {
         int NMax = 10;
         int KMax = 10;
         int testTime = 200;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int M = (int) (Math.random() * MMax);
             int N = (int) (Math.random() * NMax);
