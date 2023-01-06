@@ -9,8 +9,8 @@ package section18_DynamicProgramming;
  *          Ver2. DP with loop for a cell.
  *          Ver3. DP without loop for a cell.
  *          ======
- *          1. Similar to count ways, except that each process returns a minimized integer instead of summing up.
- *          2. When minimize according to the dependent cell, notice that it should add an extra 1.
+ *          - Similar to count ways, except that each process returns a minimized integer instead of summing up.
+ *          - When minimize according to the dependent cell, notice that it should add an extra 1.
  */
 public class Code16_MinCoinsNoLimit {
 

@@ -9,9 +9,9 @@ package section18_DynamicProgramming;
  *          Ver2. DP with loop for a cell.
  *          Ver3. DP without loop for a cell.
  *          ======
- *          1. In this problem, the base case sufficient for brute force is not enough for dependent calculation.
- *          2. When looking for dependent cells, it might get extra observations, typically regarding boundaries that
- *             are required for dependent calculation.
+ *          - In this problem, the base case of brute force is not enough for dependent calculation.
+ *          - When looking for dependent cells, it might get extra observations, typically regarding boundaries that
+ *            are required for dependent calculation.
  */
 public class Code17_SplitNumber {
 
@@ -45,9 +45,11 @@ public class Code17_SplitNumber {
             return 1;
         }
         int[][] dp = new int[num + 1][num + 1];
+        // base case
         for (int i = 1; i <= num; i++) {
             dp[i][0] = 1;
         }
+        // filling in
         for (int i = num; i > 0; i--) {
             for (int j = 1; j <= num; j++) {
                 int ans = 0;
@@ -65,10 +67,13 @@ public class Code17_SplitNumber {
             return 1;
         }
         int[][] dp = new int[num + 1][num + 1];
+        // base case
         for (int i = 1; i <= num; i++) {
             dp[i][0] = 1;
         }
-        dp[num][num] = 1;  // an extra fact regarding the last row, found during looking for dependent cell
+        // an extra fact regarding the last row, found during looking for dependent cells
+        dp[num][num] = 1;
+        // filling in
         for (int i = num - 1; i > 0; i--) {
             for (int j = 1; j <= num; j++) {
                 dp[i][j] = dp[i + 1][j];
