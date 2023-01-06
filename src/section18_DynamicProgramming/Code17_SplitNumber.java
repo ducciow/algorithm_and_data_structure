@@ -9,9 +9,9 @@ package section18_DynamicProgramming;
  *          Ver2. DP with loop for a cell.
  *          Ver3. DP without loop for a cell.
  *          ======
- *          - In this problem, the base case of brute force is not enough for dependent calculation.
- *          - When looking for dependent cells, it might get extra observations, typically regarding boundaries that
- *            are required for dependent calculation.
+ *          - The base case of brute force might not be convenient or even legitimate enough for dp.
+ *          - When looking for dependent cells, it might get extra observations, typically regarding adjacent cells or
+ *            boundaries.
  */
 public class Code17_SplitNumber {
 
@@ -48,10 +48,12 @@ public class Code17_SplitNumber {
         // base case
         for (int i = 1; i <= num; i++) {
             dp[i][0] = 1;
+            dp[i][i] = 1;  // if not having this line, filling-in must be from the diagonal column rightwards
+            // all other cells under the diagonal are 0
         }
-        // filling in
-        for (int i = num; i > 0; i--) {
-            for (int j = 1; j <= num; j++) {
+        // filling in from the num-1 row upwards, and from the diagonal+1 column rightwards
+        for (int i = num - 1; i > 0; i--) {
+            for (int j = i + 1; j <= num; j++) {
                 int ans = 0;
                 for (int cur = i; cur <= j; cur++) {
                     ans += dp[cur][j - cur];
@@ -70,12 +72,11 @@ public class Code17_SplitNumber {
         // base case
         for (int i = 1; i <= num; i++) {
             dp[i][0] = 1;
+            dp[i][i] = 1;
         }
-        // an extra fact regarding the last row, found during looking for dependent cells
-        dp[num][num] = 1;
         // filling in
         for (int i = num - 1; i > 0; i--) {
-            for (int j = 1; j <= num; j++) {
+            for (int j = i + 1; j <= num; j++) {
                 dp[i][j] = dp[i + 1][j];
                 if (j - i >= 0) {
                     dp[i][j] += dp[i][j - i];
