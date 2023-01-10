@@ -3,15 +3,23 @@ package section18_DynamicProgramming;
 /**
  * @Author: duccio
  * @Date: 11, 06, 2022
- * @Description: There is a strange printer with the following two special properties: The printer can only print a
- *      sequence of the same character each time. At each turn, the printer can print new characters starting from and
+ * @Description: There is a strange printer with two special properties: 1) The printer can only print a sequence
+ *      of the same character each time. 2) At each turn, the printer can print new characters starting from and
  *      ending at any place and will cover the original existing characters. Given a string s, return the minimum
- *      number of turns the printer needed to print it.
+ *      number of turns the printer needs to print it.
  *      https://leetcode.com/problems/strange-printer/
- * @Note:   Key idea: 1. the first char costs one turn anyway.
- *                    2. there exists one position, where any turn does not cross it.
+ * @Note:   Ver1. brute force (divide and conquer).
+ *          Ver2. memorization search.
+ *          Ver3. dp.
+ *          ======
+ *          - Attempt on a range:
+ *              a) for each turn of printing on [L,...,R], char at L will not be changed in future turns.
+ *              b) there must exist one optimal splitting position, where any turn in the future does not cross it.
+ *              c) so can be divided into two smaller segments and get the minimum turns of each.
+ *          ======
+ *          - Loop for a cell cannot be optimized.
  */
-public class LaterCode01_StrangePrinter {
+public class Code21_StrangePrinter {
 
     public static int printer1(String s) {
         if (s == null || s.length() == 0) {
@@ -21,14 +29,16 @@ public class LaterCode01_StrangePrinter {
         return process1(chars, 0, chars.length - 1);
     }
 
+    // print on [L,...,R]
     public static int process1(char[] chars, int L, int R) {
         if (L == R) {
-            return 1;
+            return 1;  // the single char costs one turn anyway
         }
-        int ans = R - L + 1;
-        for (int split = L + 1; split <= R; split++) {
-            int next = process1(chars, L, split - 1) + process1(chars, split, R)
-                    - (chars[L] == chars[split] ? 1 : 0);  // important
+        int ans = R - L + 1;  // assumed worst case
+        for (int split = L + 1; split <= R; split++) {  // enumerate the splitting position
+            int next = process1(chars, L, split - 1)  // get minimum turns on the left
+                    + process1(chars, split, R)  // get minimum turns on the right
+                    - (chars[L] == chars[split] ? 1 : 0);// two turns can be merged if their leftmost chars are the same
             ans = Math.min(ans, next);
         }
         return ans;
