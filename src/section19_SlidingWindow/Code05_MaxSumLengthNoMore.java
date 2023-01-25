@@ -9,44 +9,49 @@ import java.util.LinkedList;
  *      than m.
  * @Note:
  */
-public class LaterCode01_MaxSumLengthNoMore {
+public class Code05_MaxSumLengthNoMore {
 
     public static int maxSum(int[] arr, int m) {
         if (arr == null || arr.length == 0 || m < 1) {
             return 0;
         }
         int N = arr.length;
+        // pre-sum
         int[] preSum = new int[N];
         preSum[0] = arr[0];
         for (int i = 1; i < N; i++) {
             preSum[i] = preSum[i - 1] + arr[i];
         }
-        LinkedList<Integer> q = new LinkedList<>();
+        int width = Math.min(N, m);
+        LinkedList<Integer> dq = new LinkedList<>();
+        // expand the window
         int R = 0;
-        int end = Math.min(N, m);
-        for (; R < end; R++) {
-            while (!q.isEmpty() && preSum[q.peekLast()] <= preSum[R]) {
-                q.pollLast();
+        for (; R < width; R++) {
+            while (!dq.isEmpty() && preSum[dq.peekLast()] <= preSum[R]) {
+                dq.pollLast();
             }
-            q.add(R);
+            dq.add(R);
         }
-        int ans = preSum[q.peekFirst()];
+        int ans = preSum[dq.peekFirst()];
+        // slide the window
         int L = 0;
         for (; R < N; L++, R++) {
-            if (q.peekFirst() == L) {
-                q.pollFirst();
+            // remove outdated element first, because R is already 1 position over the window boundary
+            if (dq.peekFirst() == L) {
+                dq.pollFirst();
             }
-            while (!q.isEmpty() && preSum[q.peekLast()] <= preSum[R]) {
-                q.pollLast();
+            while (!dq.isEmpty() && preSum[dq.peekLast()] <= preSum[R]) {
+                dq.pollLast();
             }
-            q.add(R);
-            ans = Math.max(ans, preSum[q.peekFirst()] - preSum[L]);
+            dq.add(R);
+            ans = Math.max(ans, preSum[dq.peekFirst()] - preSum[L]);
         }
+        // shrink the window
         for (; L < N - 1; L++) {
-            if (q.peekFirst() == L) {
-                q.pollFirst();
+            if (dq.peekFirst() == L) {
+                dq.pollFirst();
             }
-            ans = Math.max(ans, preSum[q.peekFirst()] - preSum[L]);
+            ans = Math.max(ans, preSum[dq.peekFirst()] - preSum[L]);
         }
         return ans;
     }
@@ -83,7 +88,7 @@ public class LaterCode01_MaxSumLengthNoMore {
         int testTime = 1000000;
         int maxN = 50;
         int maxValue = 100;
-        System.out.println("Test begin");
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int N = (int) (Math.random() * maxN);
             int M = (int) (Math.random() * maxN);

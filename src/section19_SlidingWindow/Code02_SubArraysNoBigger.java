@@ -5,19 +5,16 @@ import java.util.LinkedList;
 /**
  * @Author: duccio
  * @Date: 03, 05, 2022
- * @Description: Given an integer array and a target value, return the number of sub-arrays in which the difference
- *      between minimum and maximum elements is less or equal to the target value.
- * @Note:   1. Use two Deque's for storing the indices of current valid maximum and minimum elements.
- *          2. Fix L, and increase R until arr[L...R] is invalid, then the number of valid sub-arrays is R - L, meaning
- *             the sub-array with starting index L.
- *          3. Drop outdated elements in Deque.
- *          4. increase L by 1, and continue with increasing R, repeat.
+ * @Description: Given an integer array and a target value, return the number of sub-arrays, in which the difference
+ *      between minimum and maximum elements is less than or equal to the target value.
+ * @Note:   - Use two Deque's for storing indices of the current valid maximum and minimum elements, respectively.
+ *          - For sliding window:
+ *              1. Fix L, and increase R, until current max-min > target, then the number of valid sub-arrays is R - L,
+ *                 referring to valid sub-arrays starting from index L.
+ *              2. Drop out-of-boundary elements in Deque.
+ *              3. Increase L by 1, and continue with increasing R, repeat.
  */
 public class Code02_SubArraysNoBigger {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static int subArrays(int[] arr, int target) {
         if (arr == null || arr.length < 1 || target < 0) {
@@ -31,14 +28,17 @@ public class Code02_SubArraysNoBigger {
         int R = 0;
         while (L < N) {
             while (R < N) {
+                // update current max
                 while (!max.isEmpty() && arr[max.peekLast()] <= arr[R]) {
                     max.pollLast();
                 }
                 max.addLast(R);
+                // update current min
                 while (!min.isEmpty() && arr[min.peekLast()] >= arr[R]) {
                     min.pollLast();
                 }
                 min.addLast(R);
+                // check if the current subarray is valid
                 if (arr[max.peekFirst()] - arr[min.peekFirst()] > target) {
                     break;
                 } else {
@@ -46,6 +46,7 @@ public class Code02_SubArraysNoBigger {
                 }
             }
             count += R - L;
+            // check out-of-boundary elements
             if (L == max.peekFirst()) {
                 max.pollFirst();
             }
@@ -88,10 +89,11 @@ public class Code02_SubArraysNoBigger {
         return arr;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 20;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = genRandArr(maxL, maxV);
             int target = (int) (Math.random() * (maxV + 1));

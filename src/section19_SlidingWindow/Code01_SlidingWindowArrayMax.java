@@ -8,39 +8,43 @@ import java.util.LinkedList;
  * @Date: 03, 05, 2022
  * @Description: Given an integer array, and a sliding window of fixed size, return the maximum element within the
  *      window as the window sliding forwards.
- * @Note:   1. Use a Deque for storing the current valid maximum indices.
- *          2. When it comes to a new element, discard all indices in Deque whose corresponding items are not bigger
- *             than it, and add its index to the tail.
- *          3. When the window is sliding, drop indices in Deque from the head that are invalid.
+ * @Note:   1. Use a Deque for storing indices, making sure their corresponding elements are in descending order
+ *             from head to tail, and the head index refers to the current valid maximum element.
+ *          2. When it slides to a new element, discard all indices in Deque from tail whose corresponding items are
+ *             not bigger than the new element, and add the new index to tail.
+ *          3. As the window slides, drop index in Deque from the head if it is invalid (out of window boundary).
  *          ======
  *          Time complexity O(N).
  */
 public class Code01_SlidingWindowArrayMax {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
     public static int[] getWindowMax(int[] arr, int width) {
         if (arr == null || width < 1 || arr.length < width) {
             return null;
         }
-        LinkedList<Integer> max = new LinkedList<>();
-        int[] ret = new int[arr.length - width + 1];
+        int[] ans = new int[arr.length - width + 1];
+        // declare a deque for tracking valid max
+        LinkedList<Integer> dq = new LinkedList<>();
+        // as the sliding window moves forward
         for (int R = 0; R < arr.length; R++) {
-            while (!max.isEmpty() && arr[max.peekLast()] <= arr[R]) {
-                max.pollLast();
+            // discard indices from the tail that refer to smaller-than-or-equal-to elements
+            while (!dq.isEmpty() && arr[dq.peekLast()] <= arr[R]) {
+                dq.pollLast();
             }
-            max.addLast(R);
+            // add new index
+            dq.addLast(R);
+            // get the leftmost index of the window
             int L = R - width + 1;
-            if (L - 1 == max.peekFirst()) {
-                max.pollFirst();
+            // drop invalid element from deque head
+            if (L - 1 == dq.peekFirst()) {
+                dq.pollFirst();
             }
+            // put the current valid max into answer array
             if (L >= 0) {
-                ret[L] = arr[max.peekFirst()];
+                ans[L] = arr[dq.peekFirst()];
             }
         }
-        return ret;
+        return ans;
     }
 
 
@@ -87,10 +91,11 @@ public class Code01_SlidingWindowArrayMax {
         return true;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 10000;
         int maxL = 20;
         int maxV = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             int[] arr = generateRandomArray(maxL, maxV);
             int width = (int) (Math.random() * (arr.length + 1));
