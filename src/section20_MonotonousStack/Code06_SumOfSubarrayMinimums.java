@@ -4,12 +4,14 @@ package section20_MonotonousStack;
  * @Author: duccio
  * @Date: 05, 05, 2022
  * @Description: Given an array of integers, find the sum of min(b), where b ranges over every (contiguous) subarray.
- * @Note:   1. For each element in array, think about the number of sub-arrays with the current element as the minimum.
- *          2. If the current item is the minimum, the valid subarray must has left/right boundary to be left/right or
- *             equal to the current item.
- *          3. To avoid duplicate counting, only either left or right subarray boundary is correctly used for repeated
- *             values, eg., the stack pops for >= to avoid the right boundary of current value trespassing a repeated
- *             value on its right, and their left boundaries are same.
+ *      https://leetcode.com/problems/sum-of-subarray-minimums
+ * @Note:   1. For each element in array, think about the number of subarrays with the current element as the minimum.
+ *          2. When the current item is treated as the minimum, its valid subarrays must have such properties: its left
+ *             boundary is on (left_smaller, current], and its right boundary is on [current, right_smaller), which
+ *             means there is a combinatorial number of suarrays to be counted.
+ *          3. To avoid duplicate counting caused by repeated values, only either left or right boundary is correctly
+ *             used, e.g., the stack pops for >= to avoid the right boundary of current value trespassing a repeated
+ *             value to its right, and their left boundaries are the same.
  */
 public class Code06_SumOfSubarrayMinimums {
 

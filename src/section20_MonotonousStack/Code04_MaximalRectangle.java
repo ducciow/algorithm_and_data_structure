@@ -7,8 +7,10 @@ package section20_MonotonousStack;
  *      return its area.
  *      https://leetcode.com/problems/maximal-rectangle/
  * @Note:   1. Treat each row of the matrix as the bottom line of a histogram, and the bar height here is just the
- *             consecutive number of 1's in the bottom of column.
+ *             consecutive number of 1's from that line upwards in its column.
  *          2. Then call largestRectangleArea() for each row of the matrix.
+ *          ======
+ *          - Reuse an array representing bar heights of a histogram, from the top row of the matrix to the end.
  */
 public class Code04_MaximalRectangle {
 
@@ -16,12 +18,13 @@ public class Code04_MaximalRectangle {
         if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
             return 0;
         }
+        int M = matrix.length;
         int N = matrix[0].length;
         int[] heights = new int[N];
         int ans = 0;
-        for (int i = 0; i < matrix.length; i++) {
+        for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
-                heights[j] = matrix[i][j] == '0' ? 0 : 1 + heights[j];
+                heights[j] = matrix[i][j] == '0' ? 0 : heights[j] + 1;  // reuse the heights array
             }
             ans = Math.max(ans, largestRectangleArea(heights));
         }
