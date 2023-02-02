@@ -5,9 +5,8 @@ package section21_QuickMatrixPower;
  * @Date: 05, 05, 2022
  * @Description: A string of '0's and '1's is valid if for every '0', its left is '1'. Given an integer N, return the
  *          number of valid strings of length N.
- * @Note:   1. The 1st char must be '1'. Given that, for each char, thinking the former char is '1', and there leaves
- *             two choices, '1...' or '01...' . So f(n) = f(n-1) + f(n-2).
- *          2. Above is the idea of inference rules. While for base cases, do not assume there is a former '1'.
+ * @Note:   - The 1st char must be '1'. Given that, for each char, thinking the former char is '1', and there leaves
+ *            two choices, '1...' or '01...' . So f(n) = f(n-1) + f(n-2), which is a Fibonacci starting from 1 and 2.
  */
 public class Code03_ZeroLeftMustBeOneString {
 
@@ -27,8 +26,9 @@ public class Code03_ZeroLeftMustBeOneString {
             return n;
         }
         int[][] M = {{1, 1}, {1, 0}};
-        int[][] res = matPow(M, n - 2);
-        return 2 * res[0][0] + res[0][1];
+        // here asks for f(n+1), since it starts from 1, 2 instead of 1, 1
+        int[][] res = matPow(M, n - 1);
+        return res[0][0] + res[1][0];
     }
 
     public static int[][] matPow(int[][] M, int n) {
