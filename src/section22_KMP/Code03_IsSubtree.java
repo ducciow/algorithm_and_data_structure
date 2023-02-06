@@ -6,15 +6,11 @@ import java.util.ArrayList;
  * @Author: duccio
  * @Date: 09, 05, 2022
  * @Description: Given two binary trees, t1 and t2, return if t2 is a subtree of t1, which is true only if t2 is equal
- *      to a subtree in t1 from the subtree head all long to subtree leaves.
- * @Note:   1. Pre-serialize trees, and use kmp to check substring.
- *          2. Add null when serialize.
+ *      to an entire subtree in t1.
+ * @Note:   - Pre-serialize trees, and use kmp to check substring.
+ *          - Add null when serializing null node.
  */
 public class Code03_IsSubtree {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     public static class Node {
         int val;
@@ -66,15 +62,15 @@ public class Code03_IsSubtree {
         if (strings2.length > strings1.length) {
             return -1;
         }
-        int[] nextArr = getNextArray(strings2);
+        int[] infoArr = getInfoArray(strings2);
         int idx1 = 0;
         int idx2 = 0;
         while (idx1 < strings1.length && idx2 < strings2.length) {
             if (isEqual(strings1[idx1], strings2[idx2])) {
                 idx1++;
                 idx2++;
-            } else if (nextArr[idx2] > -1) {
-                idx2 = nextArr[idx2];
+            } else if (infoArr[idx2] > -1) {
+                idx2 = infoArr[idx2];
             } else {
                 idx1++;
             }
@@ -82,7 +78,7 @@ public class Code03_IsSubtree {
         return idx2 == strings2.length ? idx1 - idx2 : -1;
     }
 
-    public static int[] getNextArray(String[] strings) {
+    public static int[] getInfoArray(String[] strings) {
         if (strings.length < 2) {
             return new int[]{-1};
         }
@@ -155,11 +151,12 @@ public class Code03_IsSubtree {
         return node;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int bigTreeLevel = 7;
         int smallTreeLevel = 4;
         int nodeMaxValue = 5;
         int testTimes = 100000;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTimes; i++) {
             Node big = genRandBiTree(bigTreeLevel, nodeMaxValue);
             Node small = genRandBiTree(smallTreeLevel, nodeMaxValue);
