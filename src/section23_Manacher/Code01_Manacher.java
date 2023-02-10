@@ -4,25 +4,24 @@ package section23_Manacher;
  * @Author: duccio
  * @Date: 09, 05, 2022
  * @Description: Given a string, find the longest substring that is palindrome, return the length.
- * @Note:   1. Preprocess char array by interspersing special chars, eg., "abc" -> "#a#b#c#"
- *          2. Initiate a radius array for storing the radius of palindromes with each element being the center of its
- *             palindrome. Initiate integers R, meaning the max right boundary(exclusive) of palindrome, and C, meaning
- *             the center element of longest palindrome.
+ * @Note:   1. Preprocess char array by interspersing special chars, eg., "abc" -> "#a#b#c#". This special char can be
+ *             any type because it does not affect the original answer.
+ *          2. Initiate a radius array for storing the radius of palindromes with each element being the center.
+ *             Initiate integer R = -1, meaning the rightmost (exclusive) boundary of all palindromes, and C = -1,
+ *             meaning the center element corresponding to R.
  *          3. Discuss based on current index i and R:
- *             1) i >= R
- *                perform checking as usual.
- *             2) i < R
- *                get the symmetric index i' of i with respect to C, and the get the radius of i'
- *                a) if radius of i' falls behind L, the radius of i is the same value.
- *                b) else if radius of i' is before L, the radius of i is R - i.
- *                c) else if radius of i' is on l, perform checking starting from R.
+ *             1) i >= R (meaning the current item is out of R):
+ *                cannot be accelerated, so perform naive checking.
+ *             2) i < R (meaning the current item is covered by R):
+ *                get the symmetric index i' of i with respect to C, symmetric boundary L of R, and then get the
+ *                radius of i' from the radius array.
+ *                a) if the radius of i' falls within (L, R), then the radius of i is the same value to i'.
+ *                b) else if the radius of i' is out of (L, R), then the radius of i is R - i.
+ *                c) else, the radius of i' is on L, perform checking starting from R.
  */
 public class Code01_Manacher {
 
-    public static void main(String[] args) {
-        validate();
-    }
-
+    // O(N)
     public static int manacher(String str) {
         if (str == null || str.length() == 0) {
             return 0;
@@ -33,7 +32,10 @@ public class Code01_Manacher {
         int C = -1;
         int maxRadius = Integer.MIN_VALUE;
         for (int i = 0; i < chars.length; i++) {
+            // the minimum radius of i that does not need checking
+            // i' = 2 * C - i
             radius[i] = i < R ? Math.min(radius[2 * C - i], R - i) : 1;
+            // case a) and b) will directly go to break
             while (i + radius[i] < chars.length && i - radius[i] >= 0) {
                 if (chars[i + radius[i]] == chars[i - radius[i]]) {
                     radius[i]++;
@@ -41,13 +43,13 @@ public class Code01_Manacher {
                     break;
                 }
             }
+            // update R and C
             if (i + radius[i] > R) {
                 R = i + radius[i];
                 C = i;
             }
             maxRadius = Math.max(maxRadius, radius[i]);
         }
-
         return maxRadius - 1;
     }
 
@@ -64,6 +66,7 @@ public class Code01_Manacher {
     }
 
 
+    // O(N**2)
     public static int naive(String str) {
         if (str == null || str.length() == 0) {
             return 0;
@@ -90,10 +93,11 @@ public class Code01_Manacher {
         return String.valueOf(chars);
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int numTest = 100000;
         int maxL = 20;
         int maxV = 5;
+        System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {
             String str = genRandStr(maxL, maxV);
             int ans1 = manacher(str);
