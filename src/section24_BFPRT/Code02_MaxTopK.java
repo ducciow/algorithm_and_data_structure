@@ -5,16 +5,12 @@ import java.util.Arrays;
 /**
  * @Author: duccio
  * @Date: 10, 05, 2022
- * @Description: Given an integer array, return its k maximum items.
+ * @Description: Given an integer array, return its k biggest elements.
  * @Note:   Ver1. Sort and then collect.
- *          Ver2. Use heap constructed bottom-up.
- *          Ver3. Use modified partition to firstly find the (N-k)-th minimum, then collect k items.
+ *          Ver2. Use bottom-up constructed heap.
+ *          Ver3. Use BFPRT to find the (N-k)th smallest, then collect k items by comparing to it.
  */
 public class Code02_MaxTopK {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     // O(N * logN)
     public static int[] maxTopK1(int[] arr, int k) {
@@ -35,15 +31,16 @@ public class Code02_MaxTopK {
             return new int[0];
         }
         int N = arr.length;
-        k = Math.min(N, k);
-        // O(N)
+        // O(N) for bottom-up construction
         for (int i = N - 1; i >= 0; i--) {
             heapify(arr, i, N);
         }
-        // O(K*longN)
+        // O(K * logN)
         int size = N;
         int count = 0;
-        while (size > 0 && count < k) {
+        k = Math.min(size, k);
+        // iteratively put the biggest items to the tail
+        while (count < k) {
             swap(arr, --size, 0);
             heapify(arr, 0, size);
             count++;
@@ -82,7 +79,7 @@ public class Code02_MaxTopK {
         }
         int N = arr.length;
         k = Math.min(N, k);
-        // O(N)
+        // O(N) for collecting unsorted result
         int nMinusKthMin = Code01_FindMinKth.minKth2(arr, N - k);
         int[] res = new int[k];
         int idx = 0;
@@ -94,7 +91,7 @@ public class Code02_MaxTopK {
         for (; idx < k; idx++) {
             res[idx] = nMinusKthMin;
         }
-        // O(K * logK)
+        // O(K * logK) for sorting the result
         Arrays.sort(res);
         for (int L = 0, R = k - 1; L < R; L++, R--) {
             swap(res, L, R);
@@ -130,11 +127,12 @@ public class Code02_MaxTopK {
         return true;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int testTime = 50000;
         int maxSize = 100;
         int maxValue = 100;
         boolean pass = true;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int k = (int) (Math.random() * maxSize) + 1;
             int[] arr = generateRandomArray(maxSize, maxValue);

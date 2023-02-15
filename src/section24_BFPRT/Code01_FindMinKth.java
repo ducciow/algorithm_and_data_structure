@@ -7,16 +7,13 @@ import java.util.PriorityQueue;
  * @Date: 10, 05, 2022
  * @Description: Given an integer array, find the k-th smallest value in it.
  * @Note:   Ver1. Use a maxHeap for storing k elements.
- *          Ver2. Modify quick sort by only enter left/right part after partition.
- *          Ver3. BFPRT that selects the optimal pivot for partition. To do that, firstly divide array in groups of size
- *                5, then sort each group, pick medians from each group to form an mArr, and pick the median of mArr
- *                as the pivot.
+ *          Ver2. Use quick sort to have [less area|equal area|bigger area], then see whether the k-th element falls
+ *                in the equal area and go to either left or right.
+ *          Ver3. BFPRT that selects the OPTIMAL pivot for partition. To do that, first divide array in groups of size
+ *                5, then sort each group, pick medians from each group to form an mArr, and finally use BFPRT again to
+ *                pick the median (k = 1/2) of mArr as the pivot.
  */
 public class Code01_FindMinKth {
-
-    public static void main(String[] args) {
-        validate();
-    }
 
     // O(N*logK)
     public static int minKth1(int[] arr, int k) {
@@ -24,9 +21,11 @@ public class Code01_FindMinKth {
             return -1;
         }
         PriorityQueue<Integer> heap = new PriorityQueue<>((o1, o2) -> (o2 - o1));
+        // add the first k elements into heap
         for (int i = 0; i < k; i++) {
             heap.add(arr[i]);
         }
+        // continue from i = k
         for (int i = k; i < arr.length; i++) {
             if (arr[i] < heap.peek()) {
                 heap.poll();
@@ -44,14 +43,15 @@ public class Code01_FindMinKth {
         int L = 0;
         int R = arr.length - 1;
         while (L < R) {
+            // choose pivot randomly
             int pivot = arr[L + (int) (Math.random() * (R - L + 1))];
-            int[] range = partition(arr, L, R, pivot);
-            if (k - 1 >= range[0] && k - 1 <= range[1]) {
-                return arr[k - 1];
-            } else if (k - 1 < range[0]) {
-                R = range[0] - 1;
+            int[] eq = partition(arr, L, R, pivot);
+            if (k >= eq[0] && k <= eq[1]) {
+                return arr[k];
+            } else if (k < eq[0]) {
+                R = eq[0] - 1;
             } else {
-                L = range[1] + 1;
+                L = eq[1] + 1;
             }
         }
         return arr[L];
@@ -91,14 +91,15 @@ public class Code01_FindMinKth {
         if (L == R) {
             return arr[L];
         }
+        // choose the optimal pivot
         int pivot = medianOfMedians(arr, L, R);
-        int[] range = partition(arr, L, R, pivot);
-        if (k >= range[0] && k <= range[1]) {
+        int[] eq = partition(arr, L, R, pivot);
+        if (k >= eq[0] && k <= eq[1]) {
             return arr[k];
-        } else if (k < range[0]) {
-            return bfprt(arr, L, range[0] - 1, k);
+        } else if (k < eq[0]) {
+            return bfprt(arr, L, eq[0] - 1, k);
         } else {
-            return bfprt(arr, range[1] + 1, R, k);
+            return bfprt(arr, eq[1] + 1, R, k);
         }
     }
 
@@ -111,6 +112,7 @@ public class Code01_FindMinKth {
             int groupR = Math.min(groupL + 4, R);
             mArr[i] = getMedian(arr, groupL, groupR);
         }
+        // call bfprt again
         return bfprt(mArr, 0, mArr.length - 1, mArr.length / 2);
     }
 
@@ -118,7 +120,6 @@ public class Code01_FindMinKth {
         insertionSort(arr, L, R);
         return arr[(L + R) / 2];
     }
-
 
     public static void insertionSort(int[] arr, int L, int R) {
         for (int i = L + 1; i <= R; i++) {
@@ -137,10 +138,11 @@ public class Code01_FindMinKth {
         return arr;
     }
 
-    public static void validate() {
+    public static void main(String[] args) {
         int testTime = 10000;
         int maxSize = 100;
         int maxValue = 100;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTime; i++) {
             int[] arr = generateRandomArray(maxSize, maxValue);
             int k = (int) (Math.random() * arr.length) + 1;
