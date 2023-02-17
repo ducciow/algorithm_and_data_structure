@@ -6,14 +6,15 @@ package section25_Reservoir;
  * @Description: A pipe automatically gives numbered balls. A box can contain at most 10 balls. Design a rule of
  *      putting balls into the box, so that at any time, the probability of any ball being in the box is equal.
  * @Note:   1. The first 10 balls directly go into the box.
- *          2. When the k-th ball comes, first, with prob of 10/k keep the ball, and then with prob of 1/10 choose
- *             a ball from the box to discard.
+ *          2. When the k-th ball comes (k > 10), first, with prob of 10/k keep the ball, and then with prob of
+ *             1/10 choose a ball from the box to be replaced with the k-th ball.
  */
 public class Code01_ReservoirSampling {
 
     public static void main(String[] args) {
         int numTest = 1000000;
-        int numBalls = 17;
+        int numBalls = 18;
+        // for verifying the result
         int[] count = new int[numBalls];
         for (int i = 0; i < numTest; i++) {
             int[] box = new int[10];
@@ -32,6 +33,7 @@ public class Code01_ReservoirSampling {
                 count[ball]++;
             }
         }
+        // to see result of each ball being put into the box
         for (int n : count) {
             System.out.println(n);
         }
