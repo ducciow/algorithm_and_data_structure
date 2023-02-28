@@ -4,13 +4,18 @@ package section26_Morris;
  * @Author: duccio
  * @Date: 12, 05, 2022
  * @Description: The minimum depth of a binary tree is the number of nodes along the shortest path from the root node
- *      down to the nearest leaf node.
+ *      down to the nearest leaf node. A leaf is a node with no children.
  *      https://leetcode.com/problems/minimum-depth-of-binary-tree/
- * @Note:   Ver1. Binary tree DP: base case is leaf node.
- *          Ver2. Morris: a) track the current level for each node, increase if first visit, and decrease the height
- *                           of corresponding left subtree if second visit.
- *                        b) when second visit, check leaf node, and get the current min depth.
- *                        c) finally, check the right boundary of entire tree.
+ * @Note:   Ver1. Binary tree DP: base case is leaf node rather than null node.
+ *          Ver2. Morris:
+ *              - Needs to keep tracking the level of each node, which is hard for right nodes due to redirection
+ *              - Needs to identify leaf nodes, which can only be done when visit-twice nodes are visited the second
+ *                time by checking if their rightmost node is a leaf.
+ *              ======
+ *              - So: a) track the current level for each node, increase when first visit, and decrease when second
+ *                       visit by the value of the height of the corresponding right subtree.
+ *                    b) when second visit, check if the rightmost node is a leaf node, and get the current min depth.
+ *                    c) finally, check the height of the right boundary of entire tree and see if it is a leaf node.
  */
 public class Code02_MinDepth {
 
@@ -32,6 +37,7 @@ public class Code02_MinDepth {
     }
 
     private static int process(TreeNode node) {
+        // check leaf node
         if (node.left == null && node.right == null) {
             return 1;
         }
@@ -57,7 +63,7 @@ public class Code02_MinDepth {
         while (cur != null) {
             rightMost = cur.left;
             if (rightMost != null) {
-                int rightLevel = 1;
+                int rightLevel = 1;  // track the level of right subtree
                 while (rightMost.right != null && rightMost.right != cur) {
                     rightLevel++;
                     rightMost = rightMost.right;
@@ -68,7 +74,7 @@ public class Code02_MinDepth {
                     cur = cur.left;
                     continue;
                 } else {  // visit-twice nodes, second time
-                    if (rightMost.left == null) {
+                    if (rightMost.left == null) {  // check if its rightMost is a leaf node
                         min = Math.min(min, level);
                     }
                     level -= rightLevel;
@@ -80,14 +86,14 @@ public class Code02_MinDepth {
             cur = cur.right;
         }
         // finally check the right boundary of entire tree
-        int finalRight = 1;
         cur = root;
+        level = 1;
         while (cur.right != null) {
-            finalRight++;
+            level++;
             cur = cur.right;
         }
-        if (cur.left == null) {
-            min = Math.min(min, finalRight);
+        if (cur.left == null) {  // check if it is a leaf node
+            min = Math.min(min, level);
         }
         return min;
     }

@@ -7,9 +7,10 @@ package section26_Morris;
  * @Note:   1. Morris to Pre: print at the first time all nodes are visited.
  *          2. Morris to In: print when visit-once nodes are visited and visit-twice nodes are visited the second time.
  *          3. Morris to Post: only print when visit-twice nodes are visited the second time, which reversely print the
- *             right boundary of its left subtree, and at the end, print the right boundary of root.
- *          4. Morris to IsBST: check if previous node is larger than current node before whenever current goes to its
- *             right, and revert to the original tree before return.
+ *             right boundary of its left subtree. Besides, at the very end, reversely print the right boundary of the
+ *             root.
+ *          4. Morris to IsBST: check if previous node is larger than the current node before whenever the current goes
+ *             to its right.
  */
 public class Code01_MorrisTraversal {
 
@@ -145,8 +146,8 @@ public class Code01_MorrisTraversal {
         System.out.println();
     }
 
-    private static void reversePrintRightBoundary(Node node) {
-        Node tail = reverse(node);
+    private static void reversePrintRightBoundary(Node head) {
+        Node tail = reverse(head);
         Node cur = tail;
         while (cur != null) {
             System.out.print(cur.val + " ");
@@ -173,8 +174,8 @@ public class Code01_MorrisTraversal {
         }
         Node cur = root;
         Node rightMost = null;
+        Node pre = null;  // tracking previous node
         boolean ans = true;
-        Node pre = null;
         while (cur != null) {
             rightMost = cur.left;
             if (rightMost != null) {
@@ -189,9 +190,11 @@ public class Code01_MorrisTraversal {
                     rightMost.right = null;
                 }
             }
+            // check if previous node is greater than the current node
             if (pre != null && pre.val > cur.val) {
                 ans = false;
             }
+            // set the previous node
             pre = cur;
             cur = cur.right;
         }
