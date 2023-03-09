@@ -26,8 +26,8 @@ public class Code04_BSLocalMin {
         if (arr[N - 1] < arr[N - 2]) {
             return N - 1;
         }
-        int L = 0;
-        int R = N - 1;
+        int L = 1;  // L = 0 also works
+        int R = N - 2;  // R = N - 1 also works
         while (L < R - 1) {  // means there must be at least three elements to consider
             int mid = L + ((R - L) >> 1);
             if (arr[mid - 1] < arr[mid]) {
@@ -38,7 +38,7 @@ public class Code04_BSLocalMin {
                 return mid;
             }
         }
-        return arr[L] < arr[R] ? L : R;  // only arr[L] and arr[R] are left, so the smaller on is the answer
+        return arr[L] < arr[R] ? L : R;  // only arr[L] and arr[R] are left, so the smaller one is the answer
     }
 
     // a different view on boundaries
@@ -53,8 +53,8 @@ public class Code04_BSLocalMin {
         if (arr[N - 1] < arr[N - 2]) {
             return N - 1;
         }
-        int L = 1;  // <---
-        int R = N - 2;  // <---
+        int L = 1;  // <--- must
+        int R = N - 2;  // <--- must
         while (L < R) {  // <---
             int mid = L + ((R - L) >> 1);
             if (arr[mid - 1] < arr[mid]) {

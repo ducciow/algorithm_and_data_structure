@@ -1,11 +1,10 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
  * @Description: Implement ring queue using array.
- * @Note:   - The constructor needs one argument: arr_size.
- *          - Key Variables:
+ * @Note:   - Key Variables:
  *              * two pointers for offer and poll, and remember to increase both pointers in a modulus way.
  *              * size, to decouple index checking.
  */

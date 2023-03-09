@@ -1,4 +1,4 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 import java.util.ArrayList;
 
@@ -126,7 +126,7 @@ public class Code08_LinkedListMid {
             head = head.next;
         }
         int N = arr.size();
-        return (N & 1) == 0 ? arr.get((N - 1) / 2) : arr.get(N / 2 - 1);
+        return arr.get((N / 2) - 1);
     }
 
 
@@ -145,7 +145,7 @@ public class Code08_LinkedListMid {
     }
 
     public static void main(String[] args) {
-        int numTest = 100;
+        int numTest = 10000;
         int maxL = 200;
         System.out.println("Test begin...");
         for (int i = 0; i < numTest; i++) {

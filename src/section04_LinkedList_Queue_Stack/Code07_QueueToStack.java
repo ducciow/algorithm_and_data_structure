@@ -1,4 +1,4 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -10,8 +10,8 @@ import java.util.Stack;
  * @Description: Implement stack using queue.
  * @Note:   - Use two queues mainQ and helperQ.
  *          - Every time for pop/peek:
- *              * dump from mainQ to helperQ until mainQ has only one item left, then return it.
-     *          * Swap those two queues, so that every time push can directly operate on mainQ.
+ *              a) dump from mainQ to helperQ until mainQ has only one item left, then return it.
+     *          b) Swap those two queues, so that every time push can directly operate on mainQ.
  */
 public class Code07_QueueToStack {
 

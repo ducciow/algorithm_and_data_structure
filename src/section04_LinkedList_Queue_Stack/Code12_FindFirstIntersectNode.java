@@ -1,4 +1,4 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 /**
  * @Author: duccio
@@ -44,7 +44,7 @@ public class Code12_FindFirstIntersectNode {
         Node loopNode1 = findFirstLoopNode(head1);
         Node loopNode2 = findFirstLoopNode(head2);
         if (loopNode1 == null && loopNode2 == null) {
-            return noLoop(head1, head2);
+            return bothNoLoop(head1, head2);
         } else if (loopNode1 == null || loopNode2 == null) {
             return null;
         } else {
@@ -73,9 +73,10 @@ public class Code12_FindFirstIntersectNode {
         return fast;
     }
 
-    private static Node noLoop(Node head1, Node head2) {
+    private static Node bothNoLoop(Node head1, Node head2) {
         Node cur1 = head1;
         Node cur2 = head2;
+        // get length difference
         int n = 0;
         while (cur1.next != null) {
             n++;
@@ -140,6 +141,7 @@ public class Code12_FindFirstIntersectNode {
         }
         return cur == loopNode2 ? loopNode1 : null;
     }
+
 
     public static void main(String[] args) {
 

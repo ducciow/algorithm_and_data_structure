@@ -1,4 +1,4 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 import java.util.HashMap;
 

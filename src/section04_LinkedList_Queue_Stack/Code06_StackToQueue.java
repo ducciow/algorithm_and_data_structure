@@ -1,4 +1,4 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 import java.util.Stack;
 
@@ -7,7 +7,7 @@ import java.util.Stack;
  * @Date: 30, 03, 2022
  * @Description: Implement queue using stack.
  * @Note:   - Use two stacks. Stack1 is only used for offer, and stack2 is only used for poll/peek.
- *          - At ant moment, stack1 can dump its items to stack2, requiring:
+ *          - Every time for pop/peek, stack1 dumps its items to stack2, requiring:
  *              a) stack2 is empty, and
  *              b) stack1 must dump all of its items to stack2.
  */

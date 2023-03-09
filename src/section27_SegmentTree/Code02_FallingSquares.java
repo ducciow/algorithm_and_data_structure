@@ -16,16 +16,20 @@ import java.util.TreeSet;
  *      landing on it. Once it lands, it freezes in place and cannot be moved. After each square is dropped, you must
  *      record the height of the current tallest stack of squares.
  *      https://leetcode.com/problems/falling-squares/
- * @Note:   1. Modify original segment tree so that its pushUp collects the maximum value.
- *          2. Only needs update and query.
- *          3. The input range needs to be compressed to avoid hitting memory limit. To do so, TreeSet is used because
- *             it is sorted, and HashSet gives wrong output.
+ * @Note:   - Modify segment tree so that its pushUp collects the maximum value rather than sum.
+ *          - For segment tree functions, add is not needed.
+ *          - For segment tree attributes, sum and sumLazy are redundant, arr is also unneeded because it will be
+ *            all 0's, and an int array max is introduced.
+ *          - For each square, its range is like [L,R-1], meaning it does not hinder a brushing square next to it.
+ *          - The input positions need to be converted to array indices and to be compressed to avoid memory limit.
+ *            To do that, must use a TreeSet, because it is sorted so that the mapping from original positions to
+ *            array indices keeps ordering and continuity.
  */
 public class Code02_FallingSquares {
 
     public List<Integer> fallingSquares(int[][] positions) {
         HashMap<Integer, Integer> map = rangeCompression(positions);
-        int N = map.size();
+        int N = map.size();  // this N is actually the number of positions rather than the maximum position value
         SegmentTree seg = new SegmentTree(map.size());
         int max = 0;
         List<Integer> res = new ArrayList<>();
@@ -41,6 +45,7 @@ public class Code02_FallingSquares {
         return res;
     }
 
+    // convert and compress positions to array indices
     public static HashMap<Integer, Integer> rangeCompression(int[][] positions) {
         TreeSet<Integer> set = new TreeSet<>();
         for (int[] position : positions) {

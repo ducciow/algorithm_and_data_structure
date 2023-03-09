@@ -15,19 +15,19 @@ public class Code02_BSNearLeft {
         if (arr == null) {
             return -1;
         }
-        int ret = -1;
+        int ans = -1;
         int L = 0;
         int R = arr.length - 1;
         while (L <= R) {
             int mid = L + ((R - L) >> 1);
             if (arr[mid] >= target) {
-                ret = mid;
+                ans = mid;
                 R = mid - 1;
             } else {
                 L = mid + 1;
             }
         }
-        return ret;
+        return ans;
     }
 
 

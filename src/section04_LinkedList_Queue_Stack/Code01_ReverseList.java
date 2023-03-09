@@ -1,17 +1,17 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
  * @Description: Reverse a uni-directional linked list and a bi-directional linked list.
  * @Note:   For both uni- and bi-directional linked lists:
- *          - Declare two variables: pre and next to be null.
- *          - Iterate until the head is null:
- *              * grab the next node.
- *              * redirect head.next.
- *              * reassign pre.
- *              * reassign head.
- *          - return pre.
+ *          1. Declare two variables: pre and next to be null.
+ *          2. Iterate until the head is null:
+ *              - grab the next node.
+ *              - redirect head.next.
+ *              - reassign pre.
+ *              - reassign head.
+ *          3. return pre.
  */
 public class Code01_ReverseList {
 

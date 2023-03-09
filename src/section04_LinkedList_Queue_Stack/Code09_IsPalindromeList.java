@@ -1,4 +1,4 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 import java.util.Stack;
 
@@ -9,10 +9,12 @@ import java.util.Stack;
  * @Note:   Ver1. Extra space O(N):
  *                - Use a stack to store the whole linked list.
  *          Ver2. Extra space O(N/2):
- *                - Use fast-slow pointers to just store half of the linked list to a stack.
+ *                - Use fast-slow pointers to find the half position of the list, then just store half to a stack.
  *          Ver3. Extra space O(1):
- *                - Use fast-slow pointers to reverse half of the linked list. Then reverse back after comparision.
- *                - The later half is preferable to reverse, because its head is always pointed that will not be lost.
+ *                - Use fast-slow pointers to find the half position of the list, reverse half on the original list.
+ *                - Reverse back before return.
+ *                - The later half is preferable to reverse, because it knows nothing about its previous node, while
+ *                  its previous node has its head, so that it will be convenient to reverse and reverse back.
  */
 public class Code09_IsPalindromeList {
 
@@ -48,24 +50,27 @@ public class Code09_IsPalindromeList {
         if (head == null || head.next == null) {
             return true;
         }
+        Stack<Node> stack = new Stack<>();
         Node fast = head;
         Node slow = head;
         while (fast.next != null && fast.next.next != null) {
+            stack.push(slow);
             fast = fast.next.next;
             slow = slow.next;
         }
-        slow = fast.next == null ? slow : slow.next;
-        Node midOrRightMid = slow;
-        Stack<Node> stack = new Stack<>();
-        while (slow != null) {
+        // the last slow was not pushed into stack
+        // if slow is left mid, push slow to stack
+        if (fast.next != null) {
             stack.push(slow);
-            slow = slow.next;
         }
-        while (head != midOrRightMid) {
-            if (head.value != stack.pop().value) {
+        // move slow to right mid
+        slow = slow.next;
+        // now stack has [head, left mid], and slow goes on [right mid, tail]
+        while (!stack.isEmpty()) {
+            if (slow.value != stack.pop().value) {
                 return false;
             }
-            head = head.next;
+            slow = slow.next;
         }
         return true;
     }
@@ -80,38 +85,33 @@ public class Code09_IsPalindromeList {
             fast = fast.next.next;
             slow = slow.next;
         }
-        slow = fast.next == null ? slow : slow.next;
-        Node midOrRightMid = slow;
-        // reverse list from (right)mid to end
-        Node pre = null;
-        Node next = null;
-        while (slow != null) {
-            next = slow.next;
-            slow.next = pre;
-            pre = slow;
-            slow = next;
-        }
-        Node reverseHead = pre;
-        Node cur1 = head;
-        Node cur2 = reverseHead;
+        // now slow is mid or left mid
+        Node reverseHead = reverse(slow.next);
+        Node cur = reverseHead;
         boolean ans = true;
-        while (cur1 != midOrRightMid) {
-            if (cur1.value != cur2.value) {
+        while (cur != null) {
+            if (cur.value != head.value) {
                 ans = false;
                 break;
             }
-            cur1 = cur1.next;
-            cur2 = cur2.next;
+            cur = cur.next;
+            head = head.next;
         }
         // reverse back
-        pre = null;
-        while (reverseHead != null) {
-            next = reverseHead.next;
-            reverseHead.next = pre;
-            pre = reverseHead;
-            reverseHead = next;
-        }
+        reverse(reverseHead);
         return ans;
+    }
+
+    public static Node reverse(Node node) {
+        Node pre = null;
+        Node next = null;
+        while (node != null) {
+            next = node.next;
+            node.next = pre;
+            pre = node;
+            node = next;
+        }
+        return pre;
     }
 
 

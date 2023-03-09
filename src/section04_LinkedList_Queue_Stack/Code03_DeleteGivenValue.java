@@ -1,14 +1,13 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 /**
  * @Author: duccio
  * @Date: 30, 03, 2022
  * @Description: In a linked list, delete all the occurrences of a given value.
- * @Note:   1. Filter the head nodes with the given value to make the head node either has an other value or is null.
+ * @Note:   1. Filter the head nodes with the given value to make the head node either has another value or is null.
  *          2. Declare two variables: pre and cur initialized to be the head.
  *          3. Iterate until cur is null:
- *             - if cur.val is the value, fix pre and move pre.next forward.
- *             - else move pre forward.
+ *             - if cur.val is the target, move pre.next forward, otherwise, move pre forward.
  *             - move cur forward.
  *          4. return head.
  */

@@ -1,4 +1,4 @@
-package section04_LinkedList;
+package section04_LinkedList_Queue_Stack;
 
 import java.util.ArrayList;
 
@@ -9,11 +9,11 @@ import static java.util.Collections.swap;
  * @Date: 07, 04, 2022
  * @Description: Partition a linked list according to a given value, ie., smaller, ..., equal, ..., bigger.
  * @Note:   Ver1. Extra space O(N):
- *                - Convert linked list to array, partition, and convert back to linked list.
+ *                - Convert linked list to array list, partition, and convert back to linked list.
  *          Ver2. Extra space O(1):
- *                - Use 3*2 pointers, distribute nodes to corresponding pointers, string them together.
+ *                - Use 3*2 pointers, assign nodes to corresponding pointers, string them together.
  *          ======
- *          Make sure the original node.next is clear, otherwise might result in infinite loops.
+ *          - Make sure the original node.next is clear, otherwise might result in infinite loops.
  */
 public class Code10_SmallerEqualBigger {
 
@@ -68,6 +68,7 @@ public class Code10_SmallerEqualBigger {
         Node eTail = null;
         Node bHead = null;
         Node bTail = null;
+        // assign nodes
         while (node != null) {
             if (node.value < pivot) {
                 if (sHead == null) {
@@ -94,11 +95,12 @@ public class Code10_SmallerEqualBigger {
                     bTail = node;
                 }
             }
+            // clear the original node.next
             Node next = node.next;
             node.next = null;
             node = next;
         }
-
+        // string them together
         Node head;
         if (sHead != null) {
             head = sHead;

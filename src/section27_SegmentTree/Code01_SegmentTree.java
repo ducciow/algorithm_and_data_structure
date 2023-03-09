@@ -3,25 +3,26 @@ package section27_SegmentTree;
 /**
  * @Author: duccio
  * @Date: 12, 05, 2022
- * @Description: An implementation of Segment Tree, which performs in-range add, update, and query in O(logN). The index
- *      starts from 1 in convention.
- * @Note:   1. Use array to simulate tree structure, with root node covers the sum of entire range and child nodes take
- *             charge of respective separated ranges. It is like a heap with starting index 1.
- *          2. The enough length of operating array is 4 times of original array.
- *          3. Use lazy arrays to mark the current necessary add/update, accumulate values in current node until it can
- *             no longer keep the laziness.
- *          4. When current node must communicate its child node, distribute its accumulated value to its children, and
- *             zero out itself.
+ * @Description: An implementation of Segment Tree, which performs range-wise add, update, and query in O(logN).
+ * @Note:   - Key Idea:
+ *              1. Use array to simulate tree structure, and assign each node a cover range referring to the index
+ *                 range of the original given array. Root node covers the sum of entire range and child nodes take
+ *                 charge of respective separated ranges. It is like a heap structure with starting index 1.
+ *              2. When new command comes, hold the information as lazy as possible to high-level nodes, and distribute
+ *                 the held information to children nodes only when it must to.
  *          ======
- *          When can it be utilized ?
- *          For a segment node, it has the left info and right info, meanwhile it does not require the inspection of
- *          sub info details, just needing to simply process the info in O(1).
+ *          1. Introduce auxiliary arrays to mark the current accumulated add/update information.
+ *          2. Keep lazy if it comes to a node that right takes charge of the given index range. Otherwise, distribute
+ *             its accumulated information to its children and zero out itself.
+ *          3. The enough length of operating arrays is 4 times of the original array.
+ *          ======
+ *          - When can it be utilized ?
+ *          : For a segment node, it has the left info and right info, meanwhile it does not require the inspection of
+ *            sub info details, just needing to simply process the info in O(1).
  */
 public class Code01_SegmentTree {
 
     public static void main(String[] args) {
-        validate();
-
 //        int[] arr = { 2, 1, 1, 2, 3, 4, 5 };
 //        SegmentTree seg = new SegmentTree(arr);
 //        int S = 1; // starting idx of entire range
@@ -39,15 +40,17 @@ public class Code01_SegmentTree {
 //        // query
 //        long sum = seg.query(L, R, S, N, root);
 //        System.out.println(sum);
+
+        validate();
     }
 
     public static class SegmentTree {
-        int MAXN;  // original array length + 1
-        int[] arr;  // original array shifted one item right
+        int MAXN;  // given array length + 1
+        int[] arr;  // copied array from the given array shifted one item right
         int[] sum;  // sum in range
-        int[] sumLazy;  // lazy marking of sum
-        int[] update;  // update value
-        boolean[] updateLazy;  // lazy marking of update value
+        int[] sumLazy;  // auxiliary array of lazy info of add, ie, the accumulated value to be added to a single node
+        int[] update;  // update value in range
+        boolean[] updateLazy;  // auxiliary array of lazy info indicating whether a node needs update
 
         public SegmentTree(int[] original) {
             MAXN = original.length + 1;
@@ -61,20 +64,23 @@ public class Code01_SegmentTree {
             updateLazy = new boolean[MAXN << 2];
         }
 
+        // collect sum values from children nodes to the current node
         public void pushUp(int rt) {
             sum[rt] = sum[rt << 1] + sum[rt << 1 | 1];
         }
 
+        // distribute accumulated info to child nodes
         // ln: number of left nodes
         // rn: number of right nodes
+        // operate on children, and for rt, only unmark it
         public void pushDown(int rt, int ln, int rn) {
             if (updateLazy[rt]) {
-                // update left and right child
+                // update left and right children
                 updateLazy[rt << 1] = true;
                 updateLazy[rt << 1 | 1] = true;
                 update[rt << 1] = update[rt];
                 update[rt << 1 | 1] = update[rt];
-                // check out left and right sums
+                // update accumulated sum info of left and right nodes
                 sumLazy[rt << 1] = 0;
                 sumLazy[rt << 1 | 1] = 0;
                 sum[rt << 1] = update[rt] * ln;
@@ -83,7 +89,7 @@ public class Code01_SegmentTree {
                 updateLazy[rt] = false;
             }
             if (sumLazy[rt] != 0) {
-                // distribute to left and right child
+                // distribute to left and right children
                 sumLazy[rt << 1] += sumLazy[rt];
                 sumLazy[rt << 1 | 1] += sumLazy[rt];
                 sum[rt << 1] += sumLazy[rt] * ln;
@@ -94,71 +100,82 @@ public class Code01_SegmentTree {
         }
 
         // build sum from arr
-        public void build(int L, int R, int idx) {
+        // L, R: index range of arr
+        public void build(int L, int R, int rt) {
+            // base case: rt now is a leaf node, which only covers one element
             if (L == R) {
-                sum[idx] = arr[L];
+                sum[rt] = arr[L];
                 return;
             }
             int mid = L + ((R - L) >> 1);
-            build(L, mid, idx << 1);
-            build(mid + 1, R, idx << 1 | 1);
-            pushUp(idx);
+            build(L, mid, rt << 1);
+            build(mid + 1, R, rt << 1 | 1);
+            pushUp(rt);
         }
 
-        public void add(int aimL, int aimR, int aimV, int L, int R, int idx) {
-            // [aimL, aimR] covers [L, R]
+        // add values to an index range
+        public void add(int aimL, int aimR, int aimV, int L, int R, int rt) {
+            // if [L, R] totally falls within [aimL, aimR]
             if (L >= aimL && R <= aimR) {
-                sumLazy[idx] += aimV;
-                sum[idx] += aimV * (R - L + 1);
+                // operate on rt
+                sumLazy[rt] += aimV;
+                sum[rt] += aimV * (R - L + 1);
                 return;
             }
-            // otherwise
+            // otherwise, distribute lazy values
             int mid = L + ((R - L) >> 1);
-            // distribute lazy value
-            pushDown(idx, mid - L + 1, R - mid);
+            pushDown(rt, mid - L + 1, R - mid);
             if (aimL <= mid) {
-                add(aimL, aimR, aimV, L, mid, idx << 1);
+                add(aimL, aimR, aimV, L, mid, rt << 1);
             }
             if (aimR > mid) {
-                add(aimL, aimR, aimV, mid + 1, R, idx << 1 | 1);
+                add(aimL, aimR, aimV, mid + 1, R, rt << 1 | 1);
             }
-            pushUp(idx);
+            // collect sum value for rt
+            pushUp(rt);
         }
 
-        public void update(int aimL, int aimR, int aimV, int L, int R, int idx) {
-            // [aimL, aimR] covers [L, R]
+        // update values for an index range
+        public void update(int aimL, int aimR, int aimV, int L, int R, int rt) {
+            // if [L, R] totally falls within [aimL, aimR]
             if (L >= aimL && R <= aimR) {
-                updateLazy[idx] = true;
-                update[idx] = aimV;
-                sumLazy[idx] = 0;
-                sum[idx] = aimV * (R - L + 1);
+                // operate on rt
+                updateLazy[rt] = true;
+                update[rt] = aimV;
+                sumLazy[rt] = 0;
+                sum[rt] = aimV * (R - L + 1);
                 return;
             }
-            // otherwise
+            // otherwise, distribute lazy values
             int mid = L + ((R - L) >> 1);
-            // distribute lazy value
-            pushDown(idx, mid - L + 1, R - mid);
+            pushDown(rt, mid - L + 1, R - mid);
             if (aimL <= mid) {
-                update(aimL, aimR, aimV, L, mid, idx << 1);
+                update(aimL, aimR, aimV, L, mid, rt << 1);
             }
             if (aimR > mid) {
-                update(aimL, aimR, aimV, mid + 1, R, idx << 1 | 1);
+                update(aimL, aimR, aimV, mid + 1, R, rt << 1 | 1);
             }
-            pushUp(idx);
+            // collect sum value for rt
+            pushUp(rt);
         }
 
-        public long query(int aimL, int aimR, int L, int R, int idx) {
+        // query the sum value of a given index range
+        // notice that unlike add() and update(), it does not pushUp() in the end because it does not change sum
+        public long query(int aimL, int aimR, int L, int R, int rt) {
+            // if [L, R] totally falls within [aimL, aimR]
             if (L >= aimL && R <= aimR) {
-                return sum[idx];
+                return sum[rt];
             }
+            // otherwise, distribute its accumulated information to get the latest value
             int mid = L + ((R - L) >> 1);
-            pushDown(idx, mid - L + 1, R - mid);
+            pushDown(rt, mid - L + 1, R - mid);
+            // collect answer
             long ans = 0;
             if (aimL <= mid) {
-                ans += query(aimL, aimR, L, mid, idx << 1);
+                ans += query(aimL, aimR, L, mid, rt << 1);
             }
             if (aimR > mid) {
-                ans += query(aimL, aimR, mid + 1, R, idx << 1 | 1);
+                ans += query(aimL, aimR, mid + 1, R, rt << 1 | 1);
             }
             return ans;
         }
@@ -211,6 +228,7 @@ public class Code01_SegmentTree {
         int maxVal = 1000;
         int addOrUpdateTimes = 1000;
         int queryTimes = 500;
+        System.out.println("Test begin...");
         for (int i = 0; i < testTimes; i++) {
             int[] arr = generateRandomArray(maxLen, maxVal);
             SegmentTree seg = new SegmentTree(arr);
